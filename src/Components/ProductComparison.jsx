@@ -228,7 +228,7 @@ const ProductComparison = () => {
           ))}
 
           {/* Add Product Button */}
-          <div className="w-[250px] mt-10">
+          <div className="w-[250px] mt-10 ml-12">
             <button className="w-full bg-[#B88E2F] text-white px-6 py-3 rounded flex items-center justify-between hover:bg-[#9e7a29] transition-colors">
               <span>Choose a Product</span>
               <KeyboardArrowDownIcon />

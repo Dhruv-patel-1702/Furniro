@@ -13,6 +13,17 @@ const CartPopup = ({ onClose }) => {
     onClose(); // Close the popup when navigating
   };
 
+  // Add new handler for navigation buttons
+  const handleNavigation = (path) => {
+    navigate(path);
+    setIsCartOpen(false); // Close cart popup
+    // Find and hide the sidebar if it exists
+    const sidebar = document.querySelector('.blog-sidebar');
+    if (sidebar) {
+      sidebar.style.display = 'none';
+    }
+  };
+
   if (!isCartOpen) return null;
 
   return (
@@ -87,24 +98,24 @@ const CartPopup = ({ onClose }) => {
                 {/* Action Buttons */}
                 <p className='border-t mb-6'></p>
                 <div className="grid grid-cols-3 gap-2 ">
-                  <Link 
-                    to="/cart" 
+                  <button 
+                    onClick={() => handleNavigation('/cart')}
                     className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
                   >
                     Cart
-                  </Link>
-                  <Link 
-                    to="/checkout" 
+                  </button>
+                  <button 
+                    onClick={() => handleNavigation('/checkout')}
                     className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
                   >
                     Checkout
-                  </Link>
-                  <Link 
-                    to="/compare" 
-                    className="col-span-1 py-2 px-4 border  border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
+                  </button>
+                  <button 
+                    onClick={() => handleNavigation('/compare')}
+                    className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
                   >
                     Comparison
-                  </Link>
+                  </button>
                 </div>
               </div>
             </>

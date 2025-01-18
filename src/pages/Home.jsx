@@ -8,20 +8,20 @@ const Home = () => {
       id: "01",
       type: "Bed Room",
       title: "Inner Peace",
-      image: "./assets/scroll1.png"
+      image: "./assets/scroll1.png",
     },
     {
       id: "02",
       type: "Living Room",
       title: "Modern Space",
-      image: "./assets/scroll2.png"
+      image: "./assets/scroll2.png",
     },
     {
       id: "03",
       type: "Kitchen",
       title: "Classic Design",
-      image: "./assets/scroll3.png"
-    }
+      image: "./assets/scroll3.png",
+    },
   ];
 
   return (
@@ -58,8 +58,6 @@ const Home = () => {
         </div>
 
         <div className="w-full h-[650px] flex flex-col items-center justify-center overflow-hidden">
-          
-
           <div className="flex justify-center gap-8 h-[480px]">
             {/* Dining Card */}
             <div className="w-[380px] group cursor-pointer">
@@ -70,7 +68,9 @@ const Home = () => {
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-2xl font-semibold mt-4 text-center text-[#333]">Dining</h3>
+              <h3 className="text-2xl font-semibold mt-4 text-center text-[#333]">
+                Dining
+              </h3>
             </div>
 
             {/* Living Card */}
@@ -82,7 +82,9 @@ const Home = () => {
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-2xl font-semibold mt-4 text-center text-[#333]">Living</h3>
+              <h3 className="text-2xl font-semibold mt-4 text-center text-[#333]">
+                Living
+              </h3>
             </div>
 
             {/* Bedroom Card */}
@@ -94,23 +96,25 @@ const Home = () => {
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-2xl font-semibold mt-4 text-center text-[#333]">Bedroom</h3>
+              <h3 className="text-2xl font-semibold mt-4 text-center text-[#333]">
+                Bedroom
+              </h3>
             </div>
           </div>
         </div>
 
         <Products />
         <div className="flex justify-center mb-12">
-        <button 
-          className="px-20 py-3 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white transition-colors duration-300"
-          onClick={() => {
-            // Add your show more functionality here
-            console.log("Show more clicked");
-          }}
-        >
-          Show More
-        </button>
-      </div>
+          <button
+            className="px-20 py-3 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white transition-colors duration-300"
+            onClick={() => {
+              // Add your show more functionality here
+              console.log("Show more clicked");
+            }}
+          >
+            Show More
+          </button>
+        </div>
 
         {/* Room Inspiration Section */}
         <div className="w-full bg-[#FCF8F3] h-[600px] flex items-center">
@@ -120,10 +124,12 @@ const Home = () => {
               <div className="w-[35%]">
                 <div>
                   <h2 className="text-[40px] leading-tight font-bold text-[#3A3A3A] mb-4">
-                    50+ Beautiful rooms <br />inspiration
+                    50+ Beautiful rooms <br />
+                    inspiration
                   </h2>
                   <p className="text-[#616161] text-lg mb-6">
-                    Our designer already made a lot of beautiful prototipe of rooms that inspire you
+                    Our designer already made a lot of beautiful prototipe of
+                    rooms that inspire you
                   </p>
                   <button className="bg-[#B88E2F] text-white px-8 py-3 flex items-center gap-2 hover:bg-[#967524] transition-colors">
                     Explore More
@@ -142,7 +148,7 @@ const Home = () => {
                         alt="Bed Room"
                         className="w-full h-[460px] object-cover"
                       />
-                      
+
                       {/* White Card Overlay */}
                       <div className="absolute bottom-6 left-6 right-6 bg-white p-6">
                         <div className="flex items-center gap-2 mb-2">
@@ -158,14 +164,12 @@ const Home = () => {
                         </button>
                       </div>
                       <div className="absolute -bottom-6 left-6 flex gap-2 ">
-                      <span className="w-3 h-3 rounded-full bg-[#B88E2F]"></span>
-                      <span className="w-3 h-3 rounded-full bg-[#D8D8D8]"></span>
-                      <span className="w-3 h-3 rounded-full bg-[#D8D8D8]"></span>
-                      <span className="w-3 h-3 rounded-full bg-[#D8D8D8]"></span>
+                        <span className="w-3 h-3 rounded-full bg-[#B88E2F]"></span>
+                        <span className="w-3 h-3 rounded-full bg-[#D8D8D8]"></span>
+                        <span className="w-3 h-3 rounded-full bg-[#D8D8D8]"></span>
+                        <span className="w-3 h-3 rounded-full bg-[#D8D8D8]"></span>
+                      </div>
                     </div>
-      </div>
-
-                
                   </div>
 
                   {/* Second Card */}
@@ -201,24 +205,28 @@ const Home = () => {
         <div className="w-full bg-white py-24">
           <div className="w-[90%] mx-auto px-28">
             <div className="text-center mb-12">
-              <p className="text-lg text-[#616161] mb-2">Share your setup with</p>
-              <h2 className="text-4xl font-bold text-[#3A3A3A]">#FuniroFurniture</h2>
+              <p className="text-lg text-[#616161] mb-2">
+                Share your setup with
+              </p>
+              <h2 className="text-4xl font-bold text-[#3A3A3A]">
+                #FuniroFurniture
+              </h2>
             </div>
 
             <div className="grid grid-cols-4 gap-4 h-[600px]">
               {/* Column 1 */}
               <div className="grid gap-4">
                 <div className="h-[240px] overflow-hidden">
-                  <img 
-                    src="./assets/card1.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card1.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="h-[320px] overflow-hidden">
-                  <img 
-                    src="./assets/card2.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card2.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
@@ -227,16 +235,16 @@ const Home = () => {
               {/* Column 2 */}
               <div className="grid gap-4">
                 <div className="h-[400px] overflow-hidden">
-                  <img 
-                    src="./assets/card3.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card3.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="h-[160px] overflow-hidden">
-                  <img 
-                    src="./assets/card4.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card4.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
@@ -245,16 +253,16 @@ const Home = () => {
               {/* Column 3 */}
               <div className="grid gap-4">
                 <div className="h-[280px] overflow-hidden">
-                  <img 
-                    src="./assets/card5.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card5.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="h-[280px] overflow-hidden">
-                  <img 
-                    src="./assets/card6.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card6.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
@@ -262,22 +270,20 @@ const Home = () => {
 
               <div className="grid gap-4">
                 <div className="h-[400px] overflow-hidden">
-                  <img 
-                    src="./assets/card3.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card3.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="h-[160px] overflow-hidden">
-                  <img 
-                    src="./assets/card4.png" 
-                    alt="furniture" 
+                  <img
+                    src="./assets/card4.png"
+                    alt="furniture"
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
                 </div>
               </div>
-
-              
             </div>
           </div>
         </div>

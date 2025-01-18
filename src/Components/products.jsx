@@ -18,10 +18,10 @@ const Products = () => {
       oldPrice: "Rp 3.500.000",
       image: "./assets/Syltherine.png",
       images: [
-        "./assets/Syltherine.png",
-        "./assets/Syltherine-2.png",
-        "./assets/Syltherine-3.png",
-        "./assets/Syltherine-4.png"
+        "./assets/Muggo.png",
+        "./assets/Muggo.png",
+        "./assets/Muggo.png",
+        "./assets/Muggo.png"
       ],
       discount: "-30%"
     },
@@ -61,10 +61,10 @@ const Products = () => {
       image: "./assets/Respira.png",
       isNew: true,
       images: [
-        "./assets/Respira.png",
-        "./assets/Respira.png",
-        "./assets/Respira.png",
-        "./assets/Respira.png"
+        "./assets/Pingky.png",
+        "./assets/Pingky.png",
+        "./assets/Pingky.png",
+        "./assets/Pingky.png"
       ]
     },
     {

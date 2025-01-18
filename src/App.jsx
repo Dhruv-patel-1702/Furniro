@@ -11,6 +11,7 @@ import { CartProvider } from './context/CartContext';
 import ProductComparison from './Components/ProductComparison';
 import { CompareProvider } from './context/CompareContext';
 import Cart from './Components/cart';
+import Checkout from './pages/checkout';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             />
             <Route path="*" element={<Navigate to="/shop" replace />} />
             <Route path="/cart" element={<Cart/>}/>
+            <Route path="/checkout" element={<Checkout/>}/>
           </Routes>
           <Footer />
         </BrowserRouter>

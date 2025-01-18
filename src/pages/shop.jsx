@@ -15,7 +15,7 @@ const Shop = () => {
       description: "Stylish cafe chair",
       price: "Rp 2.500.000",
       oldPrice: "Rp 3.500.000",
-      image: "./assets/Syltherine.png",
+      image: "./assets/Muggo.png",
       discount: "-30%",
     },
     {
@@ -39,7 +39,7 @@ const Shop = () => {
       name: "Respira",
       description: "Outdoor bar table and stool",
       price: "Rp 500.000",
-      image: "./assets/Respira.png",
+      image: "./assets/Pingky.png",
       isNew: true,
     },
     {

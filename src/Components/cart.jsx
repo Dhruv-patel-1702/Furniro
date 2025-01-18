@@ -74,10 +74,10 @@ const Cart = () => {
           </div>
 
           {/* Cart Totals Section */}
-          <div className="w-[400px]">
-            <div className="bg-[#f9f1e7] p-8 rounded-lg">
-              <h2 className="text-2xl font-medium mb-6">Cart Totals</h2>
-              <div className="space-y-4">
+          <div className="w-[380px]">
+            <div className="bg-[#f9f1e7] p-8 rounded-lg h-[380px]">
+              <h2 className="text-2xl font-medium mb-8 pt-5  text-center">Cart Totals</h2>
+              <div className="space-y-4 ">
                 <div className="flex justify-between pb-4 border-b">
                   <span>Subtotal</span>
                   <span>Rs. {subtotal.toLocaleString()}</span>
@@ -86,9 +86,11 @@ const Cart = () => {
                   <span className="font-medium">Total</span>
                   <span className="text-[#B88E2F] font-bold">Rs. {subtotal.toLocaleString()}</span>
                 </div>
+                <div className='flex justify-center'>
                 <button className="px-20 bg-white text-black py-3 rounded border border-black hover:bg-black hover:text-white transition-colors">
                   Check Out
                 </button>
+                </div>
               </div>
             </div>
           </div>

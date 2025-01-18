@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // Material UI Icons
 import SearchIcon from "@mui/icons-material/Search";
@@ -79,6 +79,14 @@ const Blog = () => {
     },
   ];
 
+  // Add state for sidebar visibility
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  // Add click handler for Cart/Checkout/Comparison buttons
+  const handleButtonClick = () => {
+    setShowSidebar(false);
+  };
+
   return (
     <div className="mt-[75px] min-h-screen bg-white">
       {/* Header Section */}
@@ -127,67 +135,69 @@ const Blog = () => {
           </div>
 
           {/* Sticky Sidebar */}
-          <div className="w-[300px] space-y-8 sticky top-[100px] h-fit">
-            {/* Search */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full p-3 pr-12 border rounded-lg focus:outline-none focus:border-[#B88E2F]"
-              />
-              <button className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#B88E2F]">
-                <SearchIcon sx={{ fontSize: 20 }} />
-              </button>
-            </div>
-
-            {/* Categories */}
-            <div className="bg-[#F9F1E7] p-6 rounded-lg">
-              <h3 className="text-xl font-medium mb-6">Categories</h3>
-              <div className="space-y-4">
-                {categories.map((category, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center text-gray-600 hover:text-[#B88E2F] cursor-pointer group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-gray-400 group-hover:text-[#B88E2F] transition-colors">
-                        {category.icon}
-                      </span>
-                      <span>{category.name}</span>
-                    </div>
-                    <span className="bg-white px-2 py-1 rounded-full text-sm">
-                      {category.count}
-                    </span>
-                  </div>
-                ))}
+          {showSidebar && (
+            <div className="w-[300px] space-y-8 sticky top-[100px] h-fit blog-sidebar">
+              {/* Search */}
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full p-3 pr-12 border rounded-lg focus:outline-none focus:border-[#B88E2F]"
+                />
+                <button className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#B88E2F]">
+                  <SearchIcon sx={{ fontSize: 20 }} />
+                </button>
               </div>
-            </div>
 
-            {/* Recent Posts */}
-            <div className="bg-[#F9F1E7] p-6 rounded-lg">
-              <h3 className="text-xl font-medium mb-6">Recent Posts</h3>
-              <div className="space-y-10">
-                {recentPosts.map((post, index) => (
-                  <div key={index} className="flex gap-4 cursor-pointer group">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                    <div>
-                      <h4 className="text-sm font-medium group-hover:text-[#B88E2F] transition-colors">
-                        {post.title}
-                      </h4>
-                      <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
-                        <AccessTimeIcon sx={{ fontSize: 14 }} />
-                        <span>{post.date}</span>
+              {/* Categories */}
+              <div className="bg-[#F9F1E7] p-6 rounded-lg">
+                <h3 className="text-xl font-medium mb-6">Categories</h3>
+                <div className="space-y-4">
+                  {categories.map((category, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center text-gray-600 hover:text-[#B88E2F] cursor-pointer group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-gray-400 group-hover:text-[#B88E2F] transition-colors">
+                          {category.icon}
+                        </span>
+                        <span>{category.name}</span>
+                      </div>
+                      <span className="bg-white px-2 py-1 rounded-full text-sm">
+                        {category.count}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Recent Posts */}
+              <div className="bg-[#F9F1E7] p-6 rounded-lg">
+                <h3 className="text-xl font-medium mb-6">Recent Posts</h3>
+                <div className="space-y-10">
+                  {recentPosts.map((post, index) => (
+                    <div key={index} className="flex gap-4 cursor-pointer group">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                      <div>
+                        <h4 className="text-sm font-medium group-hover:text-[#B88E2F] transition-colors">
+                          {post.title}
+                        </h4>
+                        <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                          <AccessTimeIcon sx={{ fontSize: 14 }} />
+                          <span>{post.date}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="flex justify-center gap-5 pt-8">
               <button className="w-10 h-10 flex items-center justify-center bg-[#B88E2F] text-white rounded">
@@ -292,18 +302,16 @@ const Blog = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"
-                  />
+                  />  
                 </svg>
               </div>
-              <div>
+              <div></div>
                 <h3 className="font-bold text-lg">24 / 7 Support</h3>
                 <p className="text-[#898989] text-sm">Dedicated support</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      
     </div>
   );
 };
