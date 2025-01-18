@@ -24,11 +24,11 @@ const Navbar = () => {
             <Link to="/shop" className="hover:text-[#B88E2F] transition-colors">
               Shop
             </Link>
-            <Link
-              to="/about"
+            <Link 
+              to="/blog"
               className="hover:text-[#B88E2F] transition-colors"
             >
-              About
+              Blog
             </Link>
             <Link
               to="/contact"

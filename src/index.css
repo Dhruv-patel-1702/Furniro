@@ -11,6 +11,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: white;
+  overflow-y: scroll;
 }
 
 .container {
@@ -53,4 +54,8 @@ body {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+html {
+  scroll-behavior: smooth;
 }
