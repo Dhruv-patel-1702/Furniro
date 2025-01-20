@@ -38,10 +38,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link 
-                  to="/about" 
+                  to="/blog" 
                   className="text-sm md:text-base text-black hover:text-[#B88E2F] transition-colors"
                 >
-                  About
+                  Blog
                 </Link>
               </li>
               <li>

@@ -153,7 +153,7 @@ const Products = () => {
           <div
             key={product.id}
             onClick={() => handleProductClick(product)}
-            className="bg-[#F4F5F7] group relative w-full cursor-pointer mx-auto max-w-[340px]"
+            className="bg-[#F4F5F7] group relative w-full cursor-pointer mx-auto max-w-[450px]"
           >
             <div className="relative overflow-hidden">
               <div className="relative">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ViewModule, ViewList, KeyboardArrowDown, Menu } from "@mui/icons-material";
 import ShareIcon from "@mui/icons-material/Share";
 import CompareIcon from "@mui/icons-material/Compare";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Shop = () => {
   const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const products = [
     {
@@ -88,6 +89,20 @@ const Shop = () => {
     });
   };
 
+  // Add this function to handle dot clicks
+  const handleDotClick = (index) => {
+    const container = document.getElementById('scrollContainer');
+    if (container) {
+      const itemWidth = container.querySelector('div').offsetWidth;
+      const newPosition = itemWidth * index * 2;
+      container.scrollTo({
+        left: newPosition,
+        behavior: 'smooth'
+      });
+      setCurrentSlide(index);
+    }
+  };
+
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -150,7 +165,7 @@ const Shop = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="max-w-[1500px] mx-auto px-4 md:px-8 lg:px-28 py-8 md:py-12">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-8 lg:px-22 py-8 md:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
           {products.map((product) => (
             <div
@@ -220,6 +235,101 @@ const Shop = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Scroll Products Section */}
+        <div className="mt-16 mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Related Products</h2>
+          <div className="relative">
+            <div 
+              id="scrollContainer"
+              className="flex gap-8 overflow-x-auto no-scrollbar pb-6"
+            >
+              {products.slice(0, 6).map((product) => (
+                <div
+                  key={product.id}
+                  className="min-w-[280px] md:min-w-[310px] bg-[#F4F5F7] group relative cursor-pointer"
+                >
+                  <div className="relative overflow-hidden">
+                    <div className="relative">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover transition-all duration-300 group-hover:blur-sm"
+                      />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+
+                    {product.discount && (
+                      <span className="absolute top-3 right-3 bg-[#E97171] text-white px-3 py-1 rounded-sm z-10 text-xs md:text-sm">
+                        {product.discount}
+                      </span>
+                    )}
+
+                    {product.isNew && (
+                      <span className="absolute top-5 right-5 bg-[#2EC1AC] text-white px-4 py-1.5 rounded-sm z-10 text-sm">
+                        New
+                      </span>
+                    )}
+
+                    <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-9 py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-base">
+                      Add to cart
+                    </button>
+
+                    <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-7 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+                      <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
+                        <ShareIcon fontSize="small" />
+                        <span className="text-sm">Share</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
+                        <CompareIcon fontSize="small" />
+                        <span className="text-sm">Compare</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
+                        <FavoriteBorderIcon fontSize="small" />
+                        <span className="text-sm">Like</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-3 md:p-5 text-center">
+                    <h3 className="text-lg md:text-xl font-semibold text-[#3A3A3A]">
+                      {product.name}
+                    </h3>
+                    <p className="text-[#898989] my-2 text-sm md:text-base">
+                      {product.description}
+                    </p>
+                    <div className="flex justify-center items-center gap-2">
+                      <span className="font-bold text-[#3A3A3A] text-base md:text-lg">
+                        {product.price}
+                      </span>
+                      {product.oldPrice && (
+                        <span className="text-[#B0B0B0] line-through text-sm md:text-base">
+                          {product.oldPrice}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Scroll Dots */}
+            <div className="flex justify-center items-center gap-3 mt-6">
+              {[0, 1, 2].map((index) => (
+                <button
+                  key={index}
+                  onClick={() => handleDotClick(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'bg-[#B88E2F] scale-110' 
+                      : 'bg-gray-300 hover:bg-[#B88E2F]/60'
+                  }`}
+                  aria-label={`View slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Pagination */}

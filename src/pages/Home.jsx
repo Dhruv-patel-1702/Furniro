@@ -8,7 +8,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="w-full min-h-[100vh] bg-[url('./assets/Homebg.jpg')] bg-cover bg-center relative">
         <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="w-full max-w-[500px] md:max-w-none md:w-[35%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
+          <div className="w-full max-w-[500px] md:max-w-none md:w-[32%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
             <div>
               <h3 className="text-black text-xs md:text-sm">New Arrival</h3>
               <h1 className="text-[#b88e2f] text-2xl md:text-4xl lg:text-5xl font-bold mt-2 mb-3">
@@ -43,7 +43,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {["Dining", "Living", "Bedroom"].map((room) => (
               <div key={room} className="group cursor-pointer">
-                <div className="overflow-hidden rounded-lg h-[250px] md:h-[350px] lg:h-[420px]">
+                <div className="overflow-hidden rounded-lg h-[250px] md:h-[350px] lg:h-[450px]">
                   <img
                     src={`./assets/${room}.png`}
                     alt={room}
@@ -69,8 +69,8 @@ const Home = () => {
 
       {/* Room Inspiration Section */}
       <div className="w-full bg-[#FCF8F3] py-10 md:py-16">
-        <div className="px-4 md:px-8 lg:px-52 ">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-20">
+        <div className="px-4 md:px-8 lg:px-56 ">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
             {/* Left Content */}
             <div className="w-full lg:w-[35%] text-center lg:text-left">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#3A3A3A] mb-4">
@@ -115,7 +115,7 @@ const Home = () => {
 
                 {/* Additional Cards with reduced opacity */}
                 <div className="min-w-[260px] md:min-w-[320px] shrink-0 opacity-60">
-                  <div className="h-[280px] md:h-[380px]">
+                  <div className="h-[280px] md:h-[390px]">
                     <img
                       src="./assets/scroll2.png"
                       alt="Living Room"
@@ -123,9 +123,18 @@ const Home = () => {
                     />
                   </div>
                 </div>
+                <div className="min-w-[260px] md:min-w-[320px] shrink-0 opacity-60">
+                  <div className="h-[280px] md:h-[390px]">
+                    <img
+                      src="./assets/Dining.png"
+                      alt="Living Room"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+                </div>
 
                 <div className="min-w-[240px] md:min-w-[300px] shrink-0 opacity-60">
-                  <div className="h-[260px] md:h-[360px]">
+                  <div className="h-[280px] md:h-[390px]">
                     <img
                       src="./assets/scroll1.png"
                       alt="Kitchen"
