@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
@@ -87,9 +88,9 @@ const Cart = () => {
                   <span className="text-[#B88E2F] font-bold">Rs. {subtotal.toLocaleString()}</span>
                 </div>
                 <div className='flex justify-center'>
-                <button className="px-20 bg-white text-black py-3 rounded border border-black hover:bg-black hover:text-white transition-colors">
+               <Link to="/checkout"> <button className="px-20 bg-white text-black py-3 rounded border border-black hover:bg-black hover:text-white transition-colors">
                   Check Out
-                </button>
+                </button></Link>
                 </div>
               </div>
             </div>

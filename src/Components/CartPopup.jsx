@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 
 const CartPopup = ({ onClose }) => {
@@ -10,14 +9,12 @@ const CartPopup = ({ onClose }) => {
 
   const handleViewCart = () => {
     navigate('/cart');
-    onClose(); // Close the popup when navigating
+    onClose(); 
   };
 
-  // Add new handler for navigation buttons
   const handleNavigation = (path) => {
     navigate(path);
-    setIsCartOpen(false); // Close cart popup
-    // Find and hide the sidebar if it exists
+    setIsCartOpen(false); 
     const sidebar = document.querySelector('.blog-sidebar');
     if (sidebar) {
       sidebar.style.display = 'none';

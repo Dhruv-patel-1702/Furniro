@@ -79,10 +79,8 @@ const SingleProduct = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
   
-  // Use product images if available, otherwise use the main image
   const images = product?.images || [product?.image, product?.image, product?.image, product?.image];
 
-  // Tab click handler
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };

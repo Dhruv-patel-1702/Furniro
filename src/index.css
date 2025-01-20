@@ -34,6 +34,22 @@ body {
     flex-direction: column;
     text-align: center;
   }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .h-[600px] {
+    height: auto;
+  }
+  
+  .h-[140px] { height: 140px; }
+  .h-[180px] { height: 160px; }
+  .h-[220px] { height: 180px; }
+  .h-[160px] { height: 140px; }
+  .h-[280px] { height: 200px; }
+  .h-[200px] { height: 180px; }
+  .h-[120px] { height: 120px; }
 }
 
 /* Hide scrollbar but keep functionality */

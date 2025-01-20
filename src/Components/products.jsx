@@ -132,77 +132,75 @@ const Products = () => {
     };
     
     navigate('/singleproduct', { 
-      state: { 
-        product: productData
-      }
+      state: { product: productData }
     });
   };
 
   const handleCompareClick = (event, product) => {
-    event.stopPropagation(); // Prevent product card click
+    event.stopPropagation();
     addToCompare(product);
     navigate('/compare');
   };
 
   return (
-    <div className="w-full mx-auto px-40 py-16">
-      <div className="text-center mb-[32px]">
-        <h2 className="text-[40px] font-bold text-[#3A3A3A] mb-3">Our Products</h2>
+    <div className="w-full mx-auto py-8 md:py-16">
+      <div className="text-center mb-6 md:mb-[32px]">
+        <h2 className="text-2xl md:text-[40px] font-bold text-[#3A3A3A] mb-3">Our Products</h2>
       </div>
 
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
         {products.map((product) => (
           <div
             key={product.id}
             onClick={() => handleProductClick(product)}
-            className="bg-[#F4F5F7] group relative w-[340px] cursor-pointer"
+            className="bg-[#F4F5F7] group relative w-full cursor-pointer mx-auto max-w-[340px]"
           >
             <div className="relative overflow-hidden">
               <div className="relative">
                 <img
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-full h-[320px] object-cover transition-all duration-300 group-hover:blur-sm"
+                  className="w-full h-[200px] sm:h-[280px] md:h-[320px] object-cover transition-all duration-300 group-hover:blur-sm"
                 />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
               {product.discount && (
-                <span className="absolute top-5 right-5 bg-[#E97171] text-white px-4 py-1.5 rounded-sm z-10 text-sm">
+                <span className="absolute top-3 right-3 md:top-5 md:right-5 bg-[#E97171] text-white px-3 md:px-4 py-1 md:py-1.5 rounded-sm z-10 text-xs md:text-sm">
                   {product.discount}
                 </span>
               )}
 
-              <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-9 py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-base">
+              <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-6 md:px-9 py-2 md:py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-sm md:text-base whitespace-nowrap">
                 Add to cart
               </button>
 
-              <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-7 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
-                <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
+              <div className="absolute bottom-4 md:bottom-6 left-0 right-0 flex justify-center gap-4 md:gap-7 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+                <div className="flex items-center gap-1 md:gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
                   <ShareIcon fontSize="small" />
-                  <span className="text-sm">Share</span>
+                  <span className="text-xs md:text-sm">Share</span>
                 </div>
                 <div 
-                  className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors"
+                  className="flex items-center gap-1 md:gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors"
                   onClick={(e) => handleCompareClick(e, product)}
                 >
                   <CompareIcon fontSize="small" />
-                  <span className="text-sm">Compare</span>
+                  <span className="text-xs md:text-sm">Compare</span>
                 </div>
-                <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
+                <div className="flex items-center gap-1 md:gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
                   <FavoriteBorderIcon fontSize="small" />
-                  <span className="text-sm">Like</span>
+                  <span className="text-xs md:text-sm">Like</span>
                 </div>
               </div>
             </div>
 
-            <div className="p-5 text-center">
-              <h3 className="text-2xl font-semibold text-[#3A3A3A]">{product.name}</h3>
-              <p className="text-[#898989] my-2.5 text-base">{product.description}</p>
-              <div className="flex justify-center items-center gap-3">
-                <span className="font-bold text-[#3A3A3A] text-lg">{product.price}</span>
+            <div className="p-3 md:p-5 text-center">
+              <h3 className="text-lg md:text-2xl font-semibold text-[#3A3A3A]">{product.name}</h3>
+              <p className="text-[#898989] my-2 md:my-2.5 text-sm md:text-base">{product.description}</p>
+              <div className="flex justify-center items-center gap-2 md:gap-3">
+                <span className="font-bold text-[#3A3A3A] text-base md:text-lg">{product.price}</span>
                 {product.oldPrice && (
-                  <span className="text-[#B0B0B0] line-through text-base">
+                  <span className="text-[#B0B0B0] line-through text-sm md:text-base">
                     {product.oldPrice}
                   </span>
                 )}
