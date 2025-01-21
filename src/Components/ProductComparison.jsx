@@ -188,8 +188,9 @@ const ProductComparison = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="max-w-[1440px] mx-auto px-4 md:px-28 py-16">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-16">
+     <div className="w-[1600px] mx-auto">
+     <div className="w-[1600px] mx-auto px-4 md:px-28 py-16 flex justify-center items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-16">
           {/* Go to Product Card */}
           <div className="w-full md:w-[250px] mb-4">
             <h3 className="font-medium text-2xl mb-4 w-[200px] mt-10">Go to Product page for more Products</h3>
@@ -239,6 +240,7 @@ const ProductComparison = () => {
           </div>
         </div>
       </div>
+     </div>
 
       {/* Specifications Table */}
       {renderSpecificationTable()}

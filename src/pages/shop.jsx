@@ -350,8 +350,8 @@ const Shop = () => {
       </div>
 
       {/* Features Section */}
-      <div className="w-full bg-[#FAF3EA] py-8 md:py-12">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-28">
+      <div className="w-full bg-[#FAF3EA] py-8 md:py-12 ">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-28 ">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {/* High Quality */}
             <div className="flex items-center gap-4">

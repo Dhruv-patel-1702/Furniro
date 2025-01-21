@@ -26,7 +26,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-16  ">
+          <div className="hidden lg:flex items-center gap-14  text-xl ">
             <Link to="/" className="hover:text-[#B88E2F] transition-colors">
               Home
             </Link>
@@ -42,18 +42,18 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Icons */}
-          <div className="hidden lg:flex items-center gap-10">
-            <button className="hover:text-[#B88E2F] transition-colors">
-              <PersonOutlineIcon />
+          <div className="hidden lg:flex items-center gap-8">
+            <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+              <PersonOutlineIcon className="w-full h-full" />
             </button>
-            <button className="hover:text-[#B88E2F] transition-colors">
-              <SearchIcon />
+            <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+              <SearchIcon className="w-full h-full" />
             </button>
-            <button className="hover:text-[#B88E2F] transition-colors">
-              <FavoriteBorderIcon />
+            <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+              <FavoriteBorderIcon className="w-full h-full" />
             </button>
             <button
-              className="relative hover:text-[#B88E2F] transition-colors"
+              className="relative hover:text-[#B88E2F] transition-colors w-8 h-8"
               onClick={() => setIsCartOpen(true)}
             >
               <svg
@@ -62,7 +62,7 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-full h-full"
               >
                 <path
                   strokeLinecap="round"
@@ -121,17 +121,17 @@ const Navbar = () => {
 
                 {/* Mobile Icons */}
                 <div className="flex items-center gap-8 mt-8">
-                  <button className="hover:text-[#B88E2F] transition-colors">
-                    <PersonOutlineIcon />
+                  <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+                    <PersonOutlineIcon className="w-full h-full" />
                   </button>
-                  <button className="hover:text-[#B88E2F] transition-colors">
-                    <SearchIcon />
+                  <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+                    <SearchIcon className="w-full h-full" />
                   </button>
-                  <button className="hover:text-[#B88E2F] transition-colors">
-                    <FavoriteBorderIcon />
+                  <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+                    <FavoriteBorderIcon className="w-full h-full" />
                   </button>
                   <button
-                    className="relative hover:text-[#B88E2F] transition-colors"
+                    className="relative hover:text-[#B88E2F] transition-colors w-8 h-8"
                     onClick={() => {
                       setIsCartOpen(true);
                       setIsMenuOpen(false);
@@ -143,7 +143,7 @@ const Navbar = () => {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="w-6 h-6"
+                      className="w-full h-full"
                     >
                       <path
                         strokeLinecap="round"

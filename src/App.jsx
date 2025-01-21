@@ -19,11 +19,11 @@ function App() {
       <CompareProvider>
         <BrowserRouter>
           <Navbar/>
-          <Routes>  
+          <Routes >  
             <Route path="/" element={<Home/>}/>
             <Route path="/shop" element={<Shop/>}/>
             <Route path="/blog" element={<Blog/>}/>
-            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/contact" element={<Contact/>}/> 
             <Route path="/compare" element={<ProductComparison/>}/>
             <Route 
               path="/singleproduct" 
