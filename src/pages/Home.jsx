@@ -147,7 +147,7 @@ const Home = () => {
               {/* Navigation Dots */}
               <div className="flex justify-center items-center gap-4">
                 {[1, 2, 3, 4].map((_, index) => (
-                  <div key={index} className="relative bottom-20 left-2">
+                  <div key={index} className="relative bottom-5 left-2">
                     <button 
                       className={`w-3 h-3 rounded-full transition-all duration-300 ${
                         index === 0 

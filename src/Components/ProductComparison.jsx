@@ -51,8 +51,8 @@ const ProductComparison = () => {
       },
       { 
         label: "Warranty Service Type", 
-        value1: "For Warranty Claims or Any Product Related Issues Please Email at operations@trevifurniture.com", 
-        value2: "For Warranty Claims or Any Product Related Issues Please Email at support@xyz.com" 
+        value1: "For Warranty Claims or Any Product Related Issues ", 
+        value2: "For Warranty Claims or Any Product Related Issues " 
       },
       { 
         label: "Covered in Warranty", 
@@ -61,8 +61,8 @@ const ProductComparison = () => {
       },
       { 
         label: "Not Covered in Warranty", 
-        value1: "The Warranty Does Not Cover Damages Due To Usage Of The Product Beyond Its Intended Use And Wear & Tear In The Natural Course Of Product Usage.", 
-        value2: "The Warranty Does Not Cover Damages Due To Usage Of The Product Beyond Its Intended Use And Wear & Tear In The Natural Course Of Product Usage." 
+        value1: "The Warranty Does Not Cover Damages Due To Wear & sage.", 
+        value2: "The Warranty Does Not Cover Damages Due T WearOf Produge." 
       },
       { 
         label: "Domestic Warranty", 
@@ -91,7 +91,7 @@ const ProductComparison = () => {
 
   const renderSpecificationTable = () => {
     return (
-      <div className="max-w-[1440px] mx-auto px-28 py-16">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-28 py-16">
         <div className="border-t border-gray-200">
           {/* General Section */}
           <div className="py-8">
@@ -188,10 +188,10 @@ const ProductComparison = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="max-w-[1440px] mx-auto px-28 py-16">
-        <div className="flex justify-between items-start gap-16">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-28 py-16">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:gap-16">
           {/* Go to Product Card */}
-          <div className="w-[250px]">
+          <div className="w-full md:w-[250px] mb-4">
             <h3 className="font-medium text-2xl mb-4 w-[200px] mt-10">Go to Product page for more Products</h3>
             <Link 
               to="/shop"
@@ -202,38 +202,40 @@ const ProductComparison = () => {
           </div>
 
           {/* Product Cards */}
-          {comparisonProducts.map((product) => (
-            <div key={product.id} className="w-[300px]">
-              <div className="space-y-4">
-                <div className="bg-[#F9F1E7] p-4 flex items-center justify-center h-[200px]">
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="w-[400px] h-full object-contain"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-medium text-xl">{product.name}</h3>
-                  <p className="text-[#B88E2F] font-medium">{product.price}</p>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center">
-                      {renderStars(product.rating)}
-                      <span className="ml-2 text-base">{product.rating}</span>
+          <div className="flex flex-col md:flex-row gap-4 w-full">
+            {comparisonProducts.map((product) => (
+              <div key={product.id} className="w-full md:w-[300px] mb-4">
+                <div className="space-y-4">
+                  <div className="bg-[#F9F1E7] p-4 flex items-center justify-center h-[200px]">
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="font-medium text-xl">{product.name}</h3>
+                    <p className="text-[#B88E2F] font-medium">{product.price}</p>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center">
+                        {renderStars(product.rating)}
+                        <span className="ml-2 text-base">{product.rating}</span>
+                      </div>
+                      <span className="text-sm text-gray-500">({product.reviews})</span>
                     </div>
-                    <span className="text-sm text-gray-500">({product.reviews})</span>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-          {/* Add Product Button */}
-          <div className="w-[250px] mt-10 ml-12">
-            <button className="w-full bg-[#B88E2F] text-white px-6 py-3 rounded flex items-center justify-between hover:bg-[#9e7a29] transition-colors">
-              <span>Choose a Product</span>
-              <KeyboardArrowDownIcon />
-            </button>
-            <p className="text-gray-500 mt-4 text-center">Add product to compare</p>
+            {/* Add Product Button */}
+            <div className="w-full md:w-[250px] mt-10 ">
+              <button className=" w-full bg-[#B88E2F] text-white px-6 py-3 rounded flex items-center justify-between hover:bg-[#9e7a29] transition-colors">
+                <span>Choose a Product</span>
+                <KeyboardArrowDownIcon />
+              </button>
+              <p className="text-gray-500 mt-4 text-center">Add product to compare</p>
+            </div>
           </div>
         </div>
       </div>
@@ -242,22 +244,9 @@ const ProductComparison = () => {
       {renderSpecificationTable()}
 
       {/* Add to Cart Buttons */}
-      <div className="max-w-[1440px] mx-auto px-28 pb-16">
-        <div className="flex justify-between items-start gap-16">
-          <div className="w-[250px]"></div>
-          {comparisonProducts.slice(0, 2).map(product => (
-            <div key={product.id} className="w-[300px]">
-              <button className="w-full bg-[#B88E2F] text-white py-3 rounded hover:bg-[#9e7a29] transition-colors">
-                Add To Cart
-              </button>
-            </div>
-          ))}
-          <div className="w-[250px]"></div>
-        </div>
-      </div>
-      <div className=" flex  items-center w-full bg-[#FAF3EA] py-12 h-44">
-        <div className="max-w-[1440px] mx-auto px-28 ">
-          <div className="grid grid-cols-4 gap-40">
+      <div className="w-full bg-[#FAF3EA] py-8 md:py-12">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-28">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {/* High Quality */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12">
@@ -333,7 +322,7 @@ const ProductComparison = () => {
             <div className="flex items-center gap-4">
               <div className="w-12 h-12">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="http://www.w3.org/2000/svg"  
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
