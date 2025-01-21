@@ -1,6 +1,6 @@
 import React from "react";
 import Products from "../Components/products";
-import { ChevronRight } from "@mui/icons-material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Home = () => {
   return (
@@ -60,8 +60,8 @@ const Home = () => {
 
         {/* Products Section */}
         <Products />
-        <div className="flex justify-center my-10">
-          <button className="px-8 md:px-12 py-2.5 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white transition-colors duration-300 text-sm md:text-base">
+        <div className="flex justify-center my-10 ">
+          <button className="px-8 md:px-12 py-2.5 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white focus:bg-[#B88E2F] focus:text-white transition-colors duration-300 text-sm md:text-base ">
             Show More
           </button>
         </div>
@@ -97,17 +97,17 @@ const Home = () => {
                       alt="Bed Room"
                       className="w-full h-full object-cover rounded-lg"
                     />
-                    <div className="absolute bottom-4 md:bottom-6 left-4 right-4 bg-white p-3 md:p-4 rounded">
-                      <div className="flex items-center gap-2 mb-1 md:mb-2">
+                    <div className=" w-[255px] h-[150px] absolute bottom-4 md:bottom-6 left-4 right-4 bg-white p-3 md:p-4 rounded opacity-80">
+                      <div className="flex justify-center items-center gap-2 mt-5 mb-1 md:mb-2">
                         <span className="text-[#B88E2F] font-bold text-sm md:text-base">01</span>
-                        <span className="text-[#616161]">—</span>
-                        <span className="text-[#616161] text-sm md:text-base">Bed Room</span>
+                        <span className="text-[#616161]">---</span>
+                        <span className="text-[#616161] text-sm md:text-xl">Bed Room</span>
                       </div>
-                      <h3 className="text-lg md:text-xl font-bold text-[#3A3A3A]">
+                      <h3 className="flex justify-center items-center text-lg md:text-2xl font-bold text-[#3A3A3A]">
                         Inner Peace
                       </h3>
-                      <button className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-[#B88E2F] rounded-full flex items-center justify-center">
-                        <ChevronRight className="text-white text-xl" />
+                      <button className="absolute right-3 md:left-64 top-32 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-[#B88E2F] flex items-center justify-center">
+                        <ArrowForwardIcon className="text-white text-xl" />
                       </button>
                     </div>
                   </div>
@@ -142,6 +142,25 @@ const Home = () => {
                     />
                   </div>
                 </div>
+              </div>
+
+              {/* Navigation Dots */}
+              <div className="flex justify-center items-center gap-4">
+                {[1, 2, 3, 4].map((_, index) => (
+                  <div key={index} className="relative bottom-20 left-2">
+                    <button 
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === 0 
+                          ? 'bg-[#B88E2F] scale-110 ring-4 ring-[#B88E2F]/20' 
+                          : 'bg-[#D8D8D8] hover:bg-[#B88E2F]/60'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                    {index === 0 && (
+                      <div className="absolute rounded-full animate-pulse bg-[#B88E2F]/10" />
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

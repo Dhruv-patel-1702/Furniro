@@ -6,99 +6,96 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 const Contact = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center w-full bg-white">
       {/* Contact Header */}
-      <div className="w-full h-[316px] bg-[url('./assets/contactbg.png')] bg-cover bg-center flex flex-col justify-center items-center relative mt-[75px]">
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+      <div className="w-full h-[200px] sm:h-[316px] bg-[url('./assets/contactbg.png')] bg-cover bg-center flex flex-col justify-center items-center relative mt-[75px]">
         
-
       </div>
 
       {/* Get In Touch Section */}
-      <div className="max-w-[1440px] mx-auto px-28 py-16">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Get In Touch With Us</h2>
-          <p className="text-[#9F9F9F] max-w-2xl mx-auto">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 md:py-16">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">Get In Touch With Us</h2>
+          <p className="text-[#9F9F9F] max-w-md mx-auto text-sm sm:text-base">
             For More Information About Our Product & Services. Please Feel Free To Drop Us An Email. Our Staff Always Be There To Help You Out. Do Not Hesitate!
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-20">
           {/* Left Side - Contact Info */}
-          <div className="space-y-8">
-            <div className="flex items-start gap-4">
-              <LocationOnIcon className="text-[#B88E2F] mt-1" />
+          <div className="space-y-6">
+            <div className="flex items-start gap-3">
+              <LocationOnIcon className="text-[#B88E2F] w-6 h-6 sm:w-8 sm:h-8" />
               <div>
-                <h3 className="font-bold text-xl mb-2">Address</h3>
-                <p className="text-[#9F9F9F]">236 5th SE Avenue, New York NY10000, United States</p>
+                <h3 className="font-bold text-lg">Address</h3>
+                <p className="text-[#9F9F9F] text-sm">236 5th SE Avenue, New York NY10000, United States</p>
               </div>
             </div>
             
-            <div className="flex items-start gap-4">
-              <PhoneIcon className="text-[#B88E2F] mt-1" /> 
+            <div className="flex items-start gap-3">
+              <PhoneIcon className="text-[#B88E2F] w-6 h-6 sm:w-8 sm:h-8" /> 
               <div>
-                <h3 className="font-bold text-xl mb-2">Phone</h3>
-                <p className="text-[#9F9F9F]">Mobile: +(84) 546-6789</p>
-                <p className="text-[#9F9F9F]">Hotline: +(84) 456-6789</p>
+                <h3 className="font-bold text-lg">Phone</h3>
+                <p className="text-[#9F9F9F] text-sm">Mobile: +(84) 546-6789</p>
+                <p className="text-[#9F9F9F] text-sm">Hotline: +(84) 456-6789</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
-              <AccessTimeIcon className="text-[#B88E2F] mt-1" />
+            <div className="flex items-start gap-3">
+              <AccessTimeIcon className="text-[#B88E2F] w-6 h-6 sm:w-8 sm:h-8" />
               <div>
-                <h3 className="font-bold text-xl mb-2">Working Time</h3>
-                <p className="text-[#9F9F9F]">Monday-Friday: 9:00 - 22:00</p>
-                <p className="text-[#9F9F9F]">Saturday-Sunday: 9:00 - 21:00</p>
+                <h3 className="font-bold text-lg">Working Time</h3>
+                <p className="text-[#9F9F9F] text-sm">Monday-Friday: 9:00 - 22:00</p>
+                <p className="text-[#9F9F9F] text-sm">Saturday-Sunday: 9:00 - 21:00</p>
               </div>
             </div>
           </div>
 
           {/* Right Side - Contact Form */}
           <div>
-            <form className="space-y-8">
+            <form className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Your name</label>
+                <label className="block text-sm font-medium mb-1">Your name</label>
                 <input 
                   type="text" 
                   placeholder="Abc" 
-                  className="w-full px-4 py-3 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F]"
+                  className="w-full px-4 py-2 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F]"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Email address</label>
+                <label className="block text-sm font-medium mb-1">Email address</label>
                 <input 
                   type="email" 
                   placeholder="Abc@def.com" 
-                  className="w-full px-4 py-3 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F]"
+                  className="w-full px-4 py-2 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F]"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Subject</label>
+                <label className="block text-sm font-medium mb-1">Subject</label>
                 <input 
                   type="text" 
                   placeholder="This is an optional" 
-                  className="w-full px-4 py-3 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F]"
+                  className="w-full px-4 py-2 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F]"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Message</label>
+                <label className="block text-sm font-medium mb-1">Message</label>
                 <textarea 
-                  placeholder="Hi! i'd like to ask about" 
-                  rows="6" 
-                  className="w-full px-4 py-3 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F] resize-none"
+                  placeholder="Hi! I'd like to ask about" 
+                  rows="4" 
+                  className="w-full px-4 py-2 border border-[#9F9F9F] rounded focus:outline-none focus:border-[#B88E2F] resize-none"
                   required
                 ></textarea>
               </div>
 
               <button 
                 type="submit" 
-                className="w-[250px] bg-[#B88E2F] text-white py-3 rounded hover:bg-opacity-90 transition-colors font-bold"
+                className="w-full md:w-[250px] bg-[#B88E2F] text-white py-2 rounded hover:bg-opacity-90 transition-colors font-bold"
               >
                 Submit
               </button>
@@ -109,18 +106,19 @@ const Contact = () => {
         </div>
         
       </div>
-      <div className=" flex  items-center w-full bg-[#FAF3EA] py-12 h-44">
-        <div className="max-w-[1440px] mx-auto px-28 ">
-          <div className="grid grid-cols-4 gap-40">
+      <div className=" flex  items-center w-full bg-[#FAF3EA] py-8 md:py-12">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-28">
             {/* High Quality */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
+                  className="w-full h-full"
                 >
                   <path
                     strokeLinecap="round"
@@ -138,14 +136,15 @@ const Contact = () => {
             </div>
 
             {/* Warranty Protection */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
+                  className="w-full h-full"
                 >
                   <path
                     strokeLinecap="round"
@@ -161,14 +160,15 @@ const Contact = () => {
             </div>
 
             {/* Free Shipping */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
+                  className="w-full h-full"
                 >
                   <path
                     strokeLinecap="round"
@@ -184,14 +184,15 @@ const Contact = () => {
             </div>
 
             {/* 24/7 Support */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
+                  className="w-full h-full"
                 >
                   <path
                     strokeLinecap="round"
