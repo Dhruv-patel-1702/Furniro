@@ -17,13 +17,13 @@ const Checkout = () => {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-28 py-16">
-        <div className="flex gap-20">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-28 py-16">
+        <div className="flex flex-col sm:flex-row gap-10">
           {/* Billing Details Form */}
           <div className="flex-1">
             <h2 className="text-2xl font-bold mb-6">Billing details</h2>
             <form className="space-y-4">
-              <div className="grid grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
                 <div>
                   <label className="block text-sm mb-2">First Name</label>
                   <input
@@ -114,7 +114,7 @@ const Checkout = () => {
           </div>
 
           {/* Order Summary */}
-          <div className="w-[400px] mt-14">
+          <div className="w-full sm:w-[400px] mt-14">
             <div className="space-y-4">
               <div className="flex justify-between items-center font-bold text-xl">
                 <span className="text-sm">Product</span>
@@ -174,20 +174,18 @@ const Checkout = () => {
                 <a href="/privacy-policy" className="text-black underline">privacy policy</a>.
               </div>
 
-             <div className='flex justify-center'>
-             <button className="w-[200px]  bg-white text-black border border-gray-300 py-2.5 rounded text-sm hover:bg-black hover:text-white transition-colors mt-4">
-                Place order
-              </button>
-             </div>
+              <div className='flex justify-center'>
+                <button className="w-full sm:w-[200px] bg-white text-black border border-gray-300 py-2.5 rounded text-sm hover:bg-black hover:text-white transition-colors mt-4">
+                  Place order
+                </button>
+              </div>
             </div>
           </div>
-          
         </div>
-        
       </div>
-      <div className=" flex  items-center w-full bg-[#FAF3EA] py-12 h-44">
-        <div className="max-w-[1440px] mx-auto px-28 ">
-          <div className="grid grid-cols-4 gap-40">
+      <div className=" flex  items-center w-full bg-[#FAF3EA] py-12 h-auto">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-28 ">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
             {/* High Quality */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12">

@@ -32,26 +32,26 @@ const Cart = () => {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-20 py-16">
-        <div className="flex gap-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-20 py-16">
+        <div className="flex flex-col sm:flex-row gap-12">
           {/* Cart Items Section */}
           <div className="flex-1">
             {/* Table Header */}
-            <div className="grid grid-cols-5 gap-4 p-4 bg-[#f9f1e7] rounded-t-lg ">
-              <div className="col-span-2 pl-16">Product</div>
-              <div>Price</div>
-              <div>Quantity</div>
-              <div>Subtotal</div>
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-[#f9f1e7] rounded-t-lg ">
+              <div className="col-span-2 pl-4 sm:pl-16">Product</div>
+              <div className="hidden sm:block">Price</div>
+              <div className="hidden sm:block">Quantity</div>
+              <div className="hidden sm:block">Subtotal</div>
             </div>
 
             {/* Cart Items */}
             {cartItems.map((item) => (
-              <div key={item.id} className="grid grid-cols-5 gap-4 p-4 border-b items-center">
+              <div key={item.id} className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 border-b items-center">
                 <div className="col-span-2 flex gap-4 items-center">
-                  <img src={item.image} alt={item.name} className="w-[105px] h-[105px] object-cover" />
-                  <h3 className="font-medium">{item.name}</h3>
+                  <img src={item.image} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
+                  <h3 className="font-medium text-sm sm:text-base">{item.name}</h3>
                 </div>
-                <div>{item.price}</div>
+                <div className="hidden sm:block">{item.price}</div>
                 <div>
                   <input 
                     type="number" 
@@ -75,10 +75,10 @@ const Cart = () => {
           </div>
 
           {/* Cart Totals Section */}
-          <div className="w-[380px]">
-            <div className="bg-[#f9f1e7] p-8 rounded-lg h-[380px]">
-              <h2 className="text-2xl font-medium mb-8 pt-5  text-center">Cart Totals</h2>
-              <div className="space-y-4 ">
+          <div className="w-full sm:w-[380px]">
+            <div className="bg-[#f9f1e7] p-4 sm:p-8 rounded-lg h-auto sm:h-[380px]">
+              <h2 className="text-xl sm:text-2xl font-medium mb-4 pt-5 text-center">Cart Totals</h2>
+              <div className="space-y-4">
                 <div className="flex justify-between pb-4 border-b">
                   <span>Subtotal</span>
                   <span>Rs. {subtotal.toLocaleString()}</span>
@@ -88,21 +88,23 @@ const Cart = () => {
                   <span className="text-[#B88E2F] font-bold">Rs. {subtotal.toLocaleString()}</span>
                 </div>
                 <div className='flex justify-center'>
-               <Link to="/checkout"> <button className="px-20 bg-white text-black py-3 rounded border border-black hover:bg-black hover:text-white transition-colors">
-                  Check Out
-                </button></Link>
+                  <Link to="/checkout">
+                    <button className="px-16 sm:px-20 bg-white text-black py-2 sm:py-3 rounded border border-black hover:bg-black hover:text-white transition-colors">
+                      Check Out
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
         
       </div>
 
- <div className=" flex  items-center w-full bg-[#FAF3EA] py-12 h-44">
-        <div className="max-w-[1440px] mx-auto px-28 ">
-          <div className="grid grid-cols-4 gap-40">
+      {/* Footer Section */}
+      <div className="flex items-center w-full bg-[#FAF3EA] py-12 h-auto">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-28">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
             {/* High Quality */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12">
@@ -199,7 +201,6 @@ const Cart = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
