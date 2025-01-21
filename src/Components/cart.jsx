@@ -48,7 +48,7 @@ const Cart = () => {
             {cartItems.map((item) => (
               <div key={item.id} className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 border-b items-center">
                 <div className="col-span-2 flex gap-4 items-center">
-                  <img src={item.image} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
+                  <img src={item.images[0]} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
                   <h3 className="font-medium text-sm sm:text-base">{item.name}</h3>
                 </div>
                 <div className="hidden sm:block">{item.price}</div>
@@ -104,7 +104,7 @@ const Cart = () => {
       {/* Footer Section */}
       <div className="flex items-center w-full bg-[#FAF3EA] py-12 h-auto">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-28">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-28">
             {/* High Quality */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12">

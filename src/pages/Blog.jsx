@@ -214,9 +214,9 @@ const Blog = () => {
         </button>
       </div>
     </div>
-    <div className="flex items-center w-full bg-[#FAF3EA] py-12 h-auto">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 mt-10 md:px-16 lg:px-28">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+    <div className="flex justify-center items-center w-full bg-[#FAF3EA] py-8 h-auto">
+      <div className="max-w-[1440px] content-center mx-auto px-4 sm:px-8 md:px-16 lg:px-28">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-24 ">
           {/* High Quality */}
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 sm:w-12 sm:h-12">
