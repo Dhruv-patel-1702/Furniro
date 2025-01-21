@@ -366,14 +366,14 @@ const SingleProduct = () => {
                   <img
                     src="./assets/bad.png"
                     alt="Product front view"
-                    className="w-full h-[250px] object-contain"
+                    className="w-full h-auto object-contain"
                   />
                 </div>
                 <div className="bg-[#F9F1E7] p-4">
                   <img
                     src="./assets/bad.png"
                     alt="Product side view"
-                    className="w-full h-[250px] object-contain"
+                    className="w-full h-auto object-contain"
                   />
                 </div>
               </div>
