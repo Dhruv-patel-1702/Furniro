@@ -48,7 +48,7 @@ const Cart = () => {
             {cartItems.map((item) => (
               <div key={item.id} className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 border-b items-center">
                 <div className="col-span-2 flex gap-4 items-center">
-                  <img src={item.images[0]} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
+                  <img src={item.image} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
                   <h3 className="font-medium text-sm sm:text-base">{item.name}</h3>
                 </div>
                 <div className="hidden sm:block">{item.price}</div>

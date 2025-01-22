@@ -382,14 +382,14 @@ const SingleProduct = () => {
         </div>
       </div>
       <div>
-        <div className="w-full mx-auto px-4 py-16 sm:px-2">
+        <div className="w-full mx-auto px-4 py-16  sm:px-2">
           <div className="text-center mb-[32px]">
             <h2 className="text-[30px] sm:text-[40px] font-bold text-[#3A3A3A] mb-3">
               Related Products
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-52">
             {products.map((product) => (
               <div
                 key={product.id}
