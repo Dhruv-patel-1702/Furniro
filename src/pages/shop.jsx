@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ViewModule, ViewList, KeyboardArrowDown, Menu } from "@mui/icons-material";
+import {
+  ViewModule,
+  ViewList,
+  KeyboardArrowDown,
+  Menu,
+} from "@mui/icons-material";
 import ShareIcon from "@mui/icons-material/Share";
 import CompareIcon from "@mui/icons-material/Compare";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -79,25 +84,25 @@ const Shop = () => {
   ];
 
   const handleProductClick = (product) => {
-    navigate('/singleproduct', { 
-      state: { 
+    navigate("/singleproduct", {
+      state: {
         product: {
           ...product,
-          images: [product.image, product.image, product.image, product.image]
-        } 
-      }
+          images: [product.image, product.image, product.image, product.image],
+        },
+      },
     });
   };
 
   // Add this function to handle dot clicks
   const handleDotClick = (index) => {
-    const container = document.getElementById('scrollContainer');
+    const container = document.getElementById("scrollContainer");
     if (container) {
-      const itemWidth = container.querySelector('div').offsetWidth;
+      const itemWidth = container.querySelector("div").offsetWidth;
       const newPosition = itemWidth * index * 2;
       container.scrollTo({
         left: newPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
       setCurrentSlide(index);
     }
@@ -106,7 +111,7 @@ const Shop = () => {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <div className="w-full h-[200px] md:h-[316px] bg-[url('./assets/shopbg.png')] bg-cover bg-center mt-[75px]">
+      <div className="w-full h-[200px] md:h-[316px] bg-[url('/assets/shopbg.png')] bg-cover bg-center mt-[75px]">
         <div className="flex items-center gap-2 text-[#9F9F9F]"></div>
       </div>
 
@@ -114,7 +119,7 @@ const Shop = () => {
       <div className="w-full mx-auto px-4 md:px-8 lg:px-28 py-4 md:py-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b bg-[#f9f1e7] space-y-4 md:space-y-0">
         {/* Left Side */}
         <div className="flex flex-wrap items-center gap-4 md:gap-8">
-          <button 
+          <button
             className="flex items-center gap-2 text-[#9F9F9F]"
             onClick={() => setIsFilterOpen(!isFilterOpen)}
           >
@@ -239,9 +244,11 @@ const Shop = () => {
 
         {/* Scroll Products Section */}
         <div className="mt-16 mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Related Products</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+            Related Products
+          </h2>
           <div className="relative">
-            <div 
+            <div
               id="scrollContainer"
               className="flex gap-8 overflow-x-auto no-scrollbar pb-6"
             >
@@ -321,9 +328,9 @@ const Shop = () => {
                   key={index}
                   onClick={() => handleDotClick(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentSlide === index 
-                      ? 'bg-[#B88E2F] scale-110' 
-                      : 'bg-gray-300 hover:bg-[#B88E2F]/60'
+                    currentSlide === index
+                      ? "bg-[#B88E2F] scale-110"
+                      : "bg-gray-300 hover:bg-[#B88E2F]/60"
                   }`}
                   aria-label={`View slide ${index + 1}`}
                 />
