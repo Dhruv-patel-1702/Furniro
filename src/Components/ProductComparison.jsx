@@ -91,13 +91,13 @@ const ProductComparison = () => {
 
   const renderSpecificationTable = () => {
     return (
-      <div className="max-w-[1440px] mx-auto px-4 md:px-28 py-16">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-32 py-16">
         <div className="border-t border-gray-200">
           {/* General Section */}
-          <div className="py-8">
+          <div className="py-4">
             <h2 className="text-2xl font-medium mb-6">General</h2>
             <div className="grid grid-cols-4 divide-x divide-gray-200">
-              <div className="pr-8 space-y-4">
+              <div className="text-black font-bold pr-8 space-y-4">
                 {specifications.general.map((spec, index) => (
                   <div key={index} className="text-gray-600">{spec.label}</div>
                 ))}
@@ -124,7 +124,7 @@ const ProductComparison = () => {
           <div className="py-8">
             <h2 className="text-2xl font-medium mb-6">Product</h2>
             <div className="grid grid-cols-4 divide-x divide-gray-200">
-              <div className="pr-8 space-y-4">
+              <div className="text-black font-bold  pr-8 space-y-4">
                 {specifications.product.map((spec, index) => (
                   <div key={index} className="text-gray-600">{spec.label}</div>
                 ))}
@@ -151,7 +151,7 @@ const ProductComparison = () => {
           <div className="py-8">
             <h2 className="text-2xl font-medium mb-6">Warranty</h2>
             <div className="grid grid-cols-4 divide-x divide-gray-200">
-              <div className="pr-8 space-y-4">
+              <div className="text-black font-bold  pr-8 space-y-4">
                 {specifications.warranty.map((spec, index) => (
                   <div key={index} className="text-gray-600">{spec.label}</div>
                 ))}
@@ -171,6 +171,15 @@ const ProductComparison = () => {
                   <div key={index} className="text-center"></div>
                 ))}
               </div>
+            </div>
+            {/* Add To Cart Buttons */}
+            <div className="w-[600px] grid grid-cols-2 gap-10 mt-6 mx-auto ">
+              <button className="bg-[#B88E2F] text-white px-4 py-3 w-[200px] mr-20 ml-10  hover:bg-[#9e7a29] transition-colors">
+                Add To Cart
+              </button>
+              <button className="bg-[#B88E2F] text-white px-4 py-3 mr-20  hover:bg-[#9e7a29] transition-colors">
+                Add To Cart
+              </button>
             </div>
           </div>
         </div>

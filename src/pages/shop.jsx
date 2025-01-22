@@ -20,8 +20,8 @@ const Shop = () => {
       id: 1,
       name: "Syltherine",
       description: "Stylish cafe chair",
-      price: "Rp 2.500.000",
-      oldPrice: "Rp 3.500.000",
+      price: "Rs 2.500.000",
+      oldPrice: "Rs 3.500.000",
       image: "./assets/Muggo.png",
       discount: "-30%",
     },
@@ -29,15 +29,15 @@ const Shop = () => {
       id: 2,
       name: "Leviosa",
       description: "Stylish cafe chair",
-      price: "Rp 2.500.000",
+      price: "Rs 2.500.000",
       image: "./assets/Pingky.png",
     },
     {
       id: 3,
       name: "Lolito",
       description: "Luxury big sofa",
-      price: "Rp 7.000.000",
-      oldPrice: "Rp 14.000.000",
+      price: "Rs 7.000.000",
+      oldPrice: "Rs 14.000.000",
       image: "./assets/Lolito.png",
       discount: "-50%",
     },
@@ -45,7 +45,7 @@ const Shop = () => {
       id: 4,
       name: "Respira",
       description: "Outdoor bar table and stool",
-      price: "Rp 500.000",
+      price: "Rs 500.000",
       image: "./assets/Pingky.png",
       isNew: true,
     },
@@ -53,14 +53,14 @@ const Shop = () => {
       id: 5,
       name: "Grifo",
       description: "Night lamp",
-      price: "Rp 1.500.000",
+      price: "Rs 1.500.000",
       image: "./assets/Grifo.png",
     },
     {
       id: 6,
       name: "Muggo",
       description: "Small mug",
-      price: "Rp 150.000",
+      price: "Rs 150.000",
       image: "./assets/Muggo.png",
       isNew: true,
     },
@@ -68,8 +68,8 @@ const Shop = () => {
       id: 7,
       name: "Pingky",
       description: "Cute bed set",
-      price: "Rp 7.000.000",
-      oldPrice: "Rp 14.000.000",
+      price: "Rs 7.000.000",
+      oldPrice: "Rs 14.000.000",
       image: "./assets/Pingky.png",
       discount: "-50%",
     },
@@ -77,7 +77,7 @@ const Shop = () => {
       id: 8,
       name: "Potty",
       description: "Minimalist flower pot",
-      price: "Rp 500.000",
+      price: "Rs 500.000",
       image: "./assets/Potty.png",
       isNew: true,
     },
@@ -109,7 +109,7 @@ const Shop = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       {/* Hero Section */}
       <div className="w-full h-[200px] md:h-[316px] bg-[url('/assets/shopbg.png')] bg-cover bg-center mt-[75px]">
         <div className="flex items-center gap-2 text-[#9F9F9F]"></div>
@@ -118,52 +118,60 @@ const Shop = () => {
       {/* Filter and Sort Section */}
       <div className="w-full mx-auto px-4 md:px-8 lg:px-28 py-4 md:py-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b bg-[#f9f1e7] space-y-4 md:space-y-0">
         {/* Left Side */}
-        <div className="flex flex-wrap items-center gap-4 md:gap-8">
-          <button
-            className="flex items-center gap-2 text-[#9F9F9F]"
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-          >
-            <Menu className="md:hidden" />
-            <span>Filter</span>
-            <KeyboardArrowDown />
-          </button>
+        <div className=" flex justify-between items-center  w-[1440px] mx-auto">
+          <div className="flex flex-wrap items-center gap-4  md:gap-8">
+            <button
+              className="flex items-center gap-2 text-[#9F9F9F]"
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+            >
+              <Menu className="md:hidden" />
+              <span>
+                Filter{" "}
+                <var>
+                  <KeyboardArrowDown />
+                </var>
+              </span>
+            </button>
 
-          <div className="hidden md:flex items-center gap-4">
-            <ViewModule className="text-[#B88E2F] cursor-pointer" />
-            <ViewList className="text-[#9F9F9F] cursor-pointer" />
-          </div>
-
-          <div className="hidden md:block h-6 w-[1px] bg-[#9F9F9F]"></div>
-
-          <p className="text-[#9F9F9F] text-sm md:text-base">
-            Showing 1-16 of 32 results
-          </p>
-        </div>
-
-        {/* Right Side */}
-        <div className="flex flex-wrap items-center gap-4 md:gap-8 w-full md:w-auto">
-          <div className="flex items-center gap-2 w-full md:w-auto">
-            <span className="text-[#9F9F9F] text-sm md:text-base">Show</span>
-            <div className="relative flex-1 md:flex-none">
-              <select className="w-full md:w-auto appearance-none bg-transparent border px-4 py-1 pr-8 rounded outline-none cursor-pointer text-sm md:text-base">
-                <option>16</option>
-                <option>32</option>
-                <option>48</option>
-              </select>
-              <KeyboardArrowDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#9F9F9F] pointer-events-none" />
+            <div className="hidden md:flex items-center gap-4">
+              <ViewModule className="text-[#B88E2F] cursor-pointer" />
+              <ViewList className="text-[#9F9F9F] cursor-pointer" />
             </div>
+
+            <div className="hidden md:block h-6 w-[1px] bg-[#9F9F9F]"></div>
+
+            <p className="text-[#9F9F9F] text-sm md:text-base">
+              Showing 1-16 of 32 results
+            </p>
           </div>
 
-          <div className="flex items-center gap-2 w-full md:w-auto">
-            <span className="text-[#9F9F9F] text-sm md:text-base">Sort by</span>
-            <div className="relative flex-1 md:flex-none">
-              <select className="w-full md:w-auto appearance-none bg-transparent border px-4 py-1 pr-8 rounded outline-none cursor-pointer text-sm md:text-base">
-                <option>Default</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest</option>
-              </select>
-              <KeyboardArrowDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#9F9F9F] pointer-events-none" />
+          {/* Right Side */}
+          <div className="flex flex-wrap items-center gap-4 md:gap-8 w-full md:w-auto">
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <span className="text-[#9F9F9F] text-sm md:text-base">Show</span>
+              <div className="relative flex-1 md:flex-none">
+                <select className="w-[80px] md:w-auto appearance-none bg-white border px-2 py-1 pr-8 rounded outline-none cursor-pointer text-sm md:text-base">
+                  <option>16</option>
+                  <option>32</option>
+                  <option>48</option>
+                </select>
+                <KeyboardArrowDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#9F9F9F] pointer-events-none" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <span className="text-[#9F9F9F] text-sm md:text-base">
+                Sort by
+              </span>
+              <div className="relative flex-1 md:flex-none">
+                <select className="w-[120px] md:w-auto appearance-none bg-white  border px-2 py-1 pr-8 rounded outline-none cursor-pointer text-sm md:text-base">
+                  <option>Default</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Newest</option>
+                </select>
+                <KeyboardArrowDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#9F9F9F] pointer-events-none" />
+              </div>
             </div>
           </div>
         </div>

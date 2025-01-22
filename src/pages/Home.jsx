@@ -60,7 +60,7 @@ const Home = () => {
 
         {/* Products Section */}
         <Products />
-        <div className="flex justify-center mb-36">
+        <div className="flex justify-center mb-32">
           <button className="px-8 md:px-12 py-2.5 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white focus:bg-[#B88E2F] focus:text-white transition-colors duration-300 text-sm md:text-base ">
             Show More
           </button>
@@ -169,7 +169,7 @@ const Home = () => {
 
       {/* Share Setup Section */}
       <div className="px-4 md:px-8 lg:px-48 py-10 md:py-16">
-        <div className="text-center mb-8 md:mb-8 mt-12">
+        <div className="text-center mb-8 md:mb-12 mt-12">
           <p className="text-sm md:text-base text-[#616161] mb-2">
             Share your setup with
           </p>

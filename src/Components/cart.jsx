@@ -37,7 +37,7 @@ const Cart = () => {
           {/* Cart Items Section */}
           <div className="flex-1">
             {/* Table Header */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-[#f9f1e7] rounded-t-lg ">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-[#f9f1e7] font-medium  ">
               <div className="col-span-2 pl-4 sm:pl-16">Product</div>
               <div className="hidden sm:block">Price</div>
               <div className="hidden sm:block">Quantity</div>
@@ -76,8 +76,8 @@ const Cart = () => {
 
           {/* Cart Totals Section */}
           <div className="w-full sm:w-[380px]">
-            <div className="bg-[#f9f1e7] p-4 sm:p-8 rounded-lg h-auto sm:h-[380px]">
-              <h2 className="text-xl sm:text-2xl font-medium mb-4 pt-5 text-center">Cart Totals</h2>
+            <div className="bg-[#f9f1e7] p-4 sm:p-8 h-auto sm:h-[380px]">
+              <h2 className="text-xl sm:text-2xl font-medium mb-16 text-center">Cart Totals</h2>
               <div className="space-y-4">
                 <div className="flex justify-between pb-4 border-b">
                   <span>Subtotal</span>
@@ -102,8 +102,8 @@ const Cart = () => {
       </div>
 
       {/* Footer Section */}
-      <div className="flex items-center w-full bg-[#FAF3EA] py-12 h-auto">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-28">
+      <div className="flex items-center w-full bg-[#FAF3EA] h-auto">
+        <div className="max-w-[1440px] mx-auto px-4 py-10 sm:px-28">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-28">
             {/* High Quality */}
             <div className="flex items-center gap-4">

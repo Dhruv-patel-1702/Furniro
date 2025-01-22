@@ -125,11 +125,11 @@ const SingleProduct = () => {
 
       {/* Product Details */}
       <div className="max-w-[1440px] mx-auto px-4 mt-10 md:px-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
           {/* Left - Image Gallery */}
           <div className="flex flex-col md:flex-row gap-6">
             {/* Thumbnail Images */}
-            <div className="flex flex-row md:flex-col gap-2 md:gap-6">
+            <div className="flex flex-row md:flex-col gap-2 md:gap-3">
               {images.map((image, index) => (
                 <div
                   key={index}
@@ -144,7 +144,7 @@ const SingleProduct = () => {
                   <img
                     src={image}
                     alt={`View ${index + 1}`}
-                    className="w-full h-full object-contain p-2"
+                    className="w-full h-full object-contain p-1"
                   />
                 </div>
               ))}
@@ -164,7 +164,7 @@ const SingleProduct = () => {
 
           {/* Right - Product Info */}
           <div className="space-y-4 md:space-y-8 pt-4">
-            <h1 className="text-[24px] md:text-[42px] font-medium text-[#3A3A3A]">
+            <h1 className="text-[24px] md:text-[40px] font-normal text-[#3A3A3A]">    
               {product?.name}
             </h1>
             <span className="text-[18px] md:text-[28px] text-[#9F9F9F] font-medium">
@@ -188,7 +188,7 @@ const SingleProduct = () => {
               <span className="text-[#9F9F9F]">5 Customer Review</span>
             </div>
 
-            <p className="text-[#9F9F9F] leading-relaxed text-[16px]">
+            <p className="text-black leading-relaxed text-[16px]">
               Setting the bar as one of the loudest speakers in its class, the
               Kilburn is a compact, stout-hearted hero with a well-balanced
               audio which boasts a clear midrange and extended highs for a

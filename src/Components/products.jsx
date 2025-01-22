@@ -14,8 +14,8 @@ const Products = () => {
       id: 1,
       name: "Syltherine",
       description: "Stylish cafe chair",
-      price: "Rp 2.500.000",
-      oldPrice: "Rp 3.500.000",
+      price: "Rs 2.500.000",
+      oldPrice: "Rs 3.500.000",
       image: "./assets/Syltherine.png",
       images: [
         "./assets/Muggo.png",
@@ -29,7 +29,7 @@ const Products = () => {
       id: 2,
       name: "Leviosa",
       description: "Stylish cafe chair",
-      price: "Rp 2.500.000",
+      price: "Rs 2.500.000",
       image: "./assets/Pingky.png",
       images: [
         "./assets/Pingky.png",
@@ -42,8 +42,8 @@ const Products = () => {
       id: 3,
       name: "Lolito",
       description: "Luxury big sofa",
-      price: "Rp 7.000.000",
-      oldPrice: "Rp 14.000.000",
+      price: "Rs 7.000.000",
+      oldPrice: "Rs 14.000.000",
       image: "./assets/Lolito.png",
       discount: "-50%",
       images: [
@@ -57,7 +57,7 @@ const Products = () => {
       id: 4,
       name: "Respira",
       description: "Outdoor bar table and stool",
-      price: "Rp 500.000",
+      price: "Rs 500.000",
       image: "./assets/Respira.png",
       isNew: true,
       images: [
@@ -71,7 +71,7 @@ const Products = () => {
       id: 5,
       name: "Grifo",
       description: "Night lamp",
-      price: "Rp 1.500.000",
+      price: "Rs 1.500.000",
       images: [
         "./assets/Grifo.png",
         "./assets/Grifo.png",
@@ -83,7 +83,7 @@ const Products = () => {
       id: 6,
       name: "Muggo",
       description: "Small mug",
-      price: "Rp 150.000",
+      price: "Rs 150.000",
       images: [
         "./assets/Muggo.png",
         "./assets/Muggo.png",
@@ -96,8 +96,8 @@ const Products = () => {
       id: 7,
       name: "Pingky",
       description: "Cute bed set",
-      price: "Rp 7.000.000",
-      oldPrice: "Rp 14.000.000",
+      price: "Rs 7.000.000",
+      oldPrice: "Rs 14.000.000",
       images: [
         "./assets/Pingky.png",
         "./assets/Pingky.png",
@@ -111,7 +111,7 @@ const Products = () => {
       id: 8,
       name: "Potty",
       description: "Minimalist flower pot",
-      price: "Rp 500.000",
+      price: "Rs 500.000",
       images: [
         "./assets/Potty.png",
         "./assets/Potty.png",
@@ -144,7 +144,7 @@ const Products = () => {
 
   return (
     <div className="w-full mx-auto py-8 md:py-16">
-      <div className="text-center mb-6 md:mb-[32px]">
+      <div className="text-center mb-16 md:mt-16 ">
         <h2 className="text-2xl md:text-[40px] font-bold text-[#3A3A3A] mb-3">Our Products</h2>
       </div>
 

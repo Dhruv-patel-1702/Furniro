@@ -117,23 +117,23 @@ const Checkout = () => {
           <div className="w-full sm:w-[400px] mt-14">
             <div className="space-y-4">
               <div className="flex justify-between items-center font-bold text-xl">
-                <span className="text-sm">Product</span>
-                <span className="text-sm">Subtotal</span>
+                <span className="text-base">Product</span>
+                <span className="text-base">Subtotal</span>
               </div>
 
-              <div className="flex justify-between items-center text-sm text-gray-600">
+              <div className="flex justify-between items-center text-base text-gray-600 ">
                 <span>Asgaard sofa × 1</span>
                 <span>Rs. 250,000.00</span>
               </div>
               
-              <div className="flex justify-between items-center text-sm pt-4 border-t">
+              <div className="flex justify-between items-center text-base pt-4 border-t">
                 <span>Subtotal</span>
                 <span>Rs. 250,000.00</span>
               </div>
               
-              <div className="flex justify-between items-center">
-                <span className="text-sm">Total</span>
-                <span className="text-[#B88E2F] font-medium">Rs. 250,000.00</span>
+              <div className="flex justify-between items-center ">
+                <span className="text-base">Total</span>
+                <span className="text-[#B88E2F] text-base font-medium">Rs. 250,000.00</span>
               </div>
 
               {/* Payment Methods */}
@@ -150,7 +150,7 @@ const Checkout = () => {
                   <div>
                     <label htmlFor="bank" className="text-sm">Direct Bank Transfer</label>
                     {paymentMethod === 'bank' && (
-                      <p className="text-xs text-gray-500 mt-2">
+                      <p className="text-sm text-gray-500 mt-2">
                         Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
                       </p>
                     )}
@@ -169,7 +169,7 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="text-xs text-gray-500 pt-4">
+              <div className="text-sm text-gray-500 pt-4 ml-6">
                 Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our{' '}
                 <a href="/privacy-policy" className="text-black underline">privacy policy</a>.
               </div>
