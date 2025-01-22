@@ -8,7 +8,7 @@ const Contact = () => {
   return (
     <div className="flex flex-col items-center w-full bg-white">
       {/* Contact Header */}
-      <div className="w-full h-[200px] sm:h-[316px] bg-[url('./assets/contactbg.png')] bg-cover bg-center flex flex-col justify-center items-center relative mt-[75px]">
+      <div className="w-full h-[200px] sm:h-[316px] bg-[url('/assets/contactbg.png')] bg-cover bg-center flex flex-col justify-center items-center relative mt-[75px]">
         
       </div>
 

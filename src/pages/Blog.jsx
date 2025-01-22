@@ -90,7 +90,7 @@ const Blog = () => {
  return (
   <div className="mt-[75px] min-h-screen bg-white">
     {/* Header Section */}
-    <div className="w-full h-[316px] bg-[url('./assets/Blogbg.png')] bg-cover bg-center relative">
+    <div className="w-full h-[316px] bg-[url('/assets/Blogbg.png')] bg-cover bg-center relative">
       <div className="absolute inset-0 bg-black/40" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
         <div className="flex flex-col items-center gap-4">
