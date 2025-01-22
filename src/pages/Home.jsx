@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
-      <div className="w-full min-h-[100vh] bg-[url('/assets/Homebg.jpg')] bg-cover bg-center relative">
+      <div className="w-full min-h-[100vh] bg-[url('/assets/Homebg.png')] bg-cover bg-center relative">
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="w-full max-w-[500px] md:max-w-none md:w-[32%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
             <div>
