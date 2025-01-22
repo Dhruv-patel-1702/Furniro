@@ -99,6 +99,11 @@ const SingleProduct = () => {
     navigate("/compare");
   };
 
+  const handleProductClick = (product) => {
+    // Implement the logic for handling product click
+    console.log("Product clicked:", product);
+  };
+
   return (
     <div className="mt-[75px]">
       <div className="bg-[#F9F1E7] py-6">
@@ -382,14 +387,14 @@ const SingleProduct = () => {
         </div>
       </div>
       <div>
-        <div className="w-full mx-auto px-4 py-16  sm:px-2">
+        <div className="w-full mx-auto px-4 py-16 sm:px-2">
           <div className="text-center mb-[32px]">
             <h2 className="text-[30px] sm:text-[40px] font-bold text-[#3A3A3A] mb-3">
               Related Products
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-52">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-2 sm:px-52">
             {products.map((product) => (
               <div
                 key={product.id}
@@ -400,7 +405,7 @@ const SingleProduct = () => {
                   <img
                     src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-[200px] sm:h-[250px] object-cover transition-all duration-300 group-hover:blur-sm"
+                    className="w-full h-[150px] sm:h-[200px] md:h-[250px] object-cover transition-all duration-300 group-hover:blur-sm"
                   />
                   {product.discount && (
                     <span className="absolute top-5 right-5 bg-[#E97171] text-white px-3 py-1 rounded-sm z-10 text-sm">
@@ -408,7 +413,7 @@ const SingleProduct = () => {
                     </span>
                   )}
 
-                  <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-6 py-2 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-base">
+                  <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-base">
                     Add to cart
                   </button>
 
@@ -431,19 +436,19 @@ const SingleProduct = () => {
                   </div>
                 </div>
 
-                <div className="p-4 text-center">
-                  <h3 className="text-lg sm:text-2xl font-semibold text-[#3A3A3A]">
+                <div className="p-2 text-center">
+                  <h3 className="text-sm sm:text-lg md:text-lg sm:text-2xl font-semibold text-[#3A3A3A]">
                     {product.name}
                   </h3>
-                  <p className="text-[#898989] my-2 text-sm sm:text-base">
+                  <p className="text-[#898989] my-1 text-xs sm:text-sm">
                     {product.description}
                   </p>
-                  <div className="flex justify-center items-center gap-2">
-                    <span className="font-bold text-[#3A3A3A] text-lg">
+                  <div className="flex justify-center items-center gap-1">
+                    <span className="font-bold text-[#3A3A3A] text-sm sm:text-lg">
                       {product.price}
                     </span>
                     {product.oldPrice && (
-                      <span className="text-[#B0B0B0] line-through text-sm">
+                      <span className="text-[#B0B0B0] line-through text-xs sm:text-sm">
                         {product.oldPrice}
                       </span>
                     )}
