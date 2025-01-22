@@ -26,7 +26,7 @@ const Cart = () => {
   return (
     <div className="mt-[75px] min-h-screen bg-white">
       {/* Header Section */}
-      <div className="w-full h-[316px] bg-[url('./assets/cartbg.png')] bg-cover bg-center flex flex-col justify-center items-center relative">
+      <div className="w-full h-[316px] bg-[url('/assets/cartbg.png')] bg-cover bg-center flex flex-col justify-center items-center relative">
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center text-white">
         </div>
@@ -45,33 +45,33 @@ const Cart = () => {
             </div>
 
             {/* Cart Items */}
-            {cartItems.map((item) => (
-              <div key={item.id} className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 border-b items-center">
-                <div className="col-span-2 flex gap-4 items-center">
-                  <img src={item.image} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
-                  <h3 className="font-medium text-sm sm:text-base">{item.name}</h3>
+              {cartItems.map((item) => (
+                <div key={item.id} className="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 border-b items-center">
+                  <div className="col-span-2 flex gap-4 items-center">
+                    <img src={item.image} alt={item.name} className="w-[80px] h-[80px] sm:w-[105px] sm:h-[105px] object-cover" />
+                    <h3 className="font-medium text-sm sm:text-base">{item.name}</h3>
+                  </div>
+                  <div className="hidden sm:block">{item.price}</div>
+                  <div>
+                    <input 
+                      type="number" 
+                      value={item.quantity}
+                      onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                      className="w-16 p-2 border rounded text-center"
+                      min="1"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Rs. {(parseFloat(item.price.replace(/[^0-9.-]+/g, '')) * item.quantity).toLocaleString()}</span>
+                    <button 
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-gray-500 hover:text-red-500"
+                    >
+                      <DeleteOutlineIcon />
+                    </button>
+                  </div>
                 </div>
-                <div className="hidden sm:block">{item.price}</div>
-                <div>
-                  <input 
-                    type="number" 
-                    value={item.quantity}
-                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
-                    className="w-16 p-2 border rounded text-center"
-                    min="1"
-                  />
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Rs. {(parseFloat(item.price.replace(/[^0-9.-]+/g, '')) * item.quantity).toLocaleString()}</span>
-                  <button 
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-gray-500 hover:text-red-500"
-                  >
-                    <DeleteOutlineIcon />
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           {/* Cart Totals Section */}

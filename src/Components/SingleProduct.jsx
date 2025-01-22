@@ -163,8 +163,8 @@ const SingleProduct = () => {
           </div>
 
           {/* Right - Product Info */}
-          <div className="space-y-4 md:space-y-8 pt-4">
-            <h1 className="text-[24px] md:text-[40px] font-normal text-[#3A3A3A]">    
+          <div className="space-y-4 md:space-y-4 pt-4">
+            <h1 className="text-[24px] md:text-[36px] font-medium text-[#3A3A3A]">    
               {product?.name}
             </h1>
             <span className="text-[18px] md:text-[28px] text-[#9F9F9F] font-medium">

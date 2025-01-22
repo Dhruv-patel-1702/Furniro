@@ -190,7 +190,7 @@ const ProductComparison = () => {
   return (
     <div className="mt-[75px] min-h-screen">
       {/* Header Section */}
-      <div className="w-full h-[316px] bg-[url('./assets/comparebg.png')] bg-cover bg-center flex flex-col justify-center items-center relative">
+      <div className="w-full h-[316px] bg-[url('/assets/comparebg.png')] bg-cover bg-center flex flex-col justify-center items-center relative">
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center text-white">
         </div>
