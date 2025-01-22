@@ -13,7 +13,7 @@ const Contact = () => {
       </div>
 
       {/* Get In Touch Section */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 md:py-16">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-8 md:py-16">
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold mb-4">Get In Touch With Us</h2>
           <p className="text-[#9F9F9F] max-w-md mx-auto text-sm sm:text-base">

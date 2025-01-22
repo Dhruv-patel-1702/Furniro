@@ -8,7 +8,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="w-full min-h-[100vh] bg-[url('/assets/Homebg.png')] bg-cover bg-center relative">
         <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="w-full max-w-[500px] md:max-w-none md:w-[32%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
+          <div className="w-full max-w-[500px] md:max-w-none md:w-[37%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
             <div>
               <h3 className="text-black text-xs md:text-sm">New Arrival</h3>
               <h1 className="text-[#b88e2f] text-2xl md:text-4xl lg:text-5xl font-bold mt-2 mb-3">
@@ -30,7 +30,7 @@ const Home = () => {
       </div>
 
       {/* Browse Range Section */}
-      <div className="w-full px-4 md:px-8 lg:px-40 mt-10 md:mt-16">
+      <div className="w-full px-4 md:px-8 lg:px-40 mt-10 md:mt-28">
         <div className="text-center">
           <h1 className="text-xl md:text-3xl font-bold mb-3">Browse The Range</h1>
           <p className="text-sm md:text-base text-gray-600 max-w-md mx-auto">
@@ -60,7 +60,7 @@ const Home = () => {
 
         {/* Products Section */}
         <Products />
-        <div className="flex justify-center my-10 ">
+        <div className="flex justify-center mb-36">
           <button className="px-8 md:px-12 py-2.5 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white focus:bg-[#B88E2F] focus:text-white transition-colors duration-300 text-sm md:text-base ">
             Show More
           </button>
@@ -169,7 +169,7 @@ const Home = () => {
 
       {/* Share Setup Section */}
       <div className="px-4 md:px-8 lg:px-48 py-10 md:py-16">
-        <div className="text-center mb-8 md:mb-12">
+        <div className="text-center mb-8 md:mb-8 mt-12">
           <p className="text-sm md:text-base text-[#616161] mb-2">
             Share your setup with
           </p>

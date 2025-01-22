@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="w-full bg-white py-8 md:py-12 border-t">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-48">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
           {/* Column 1 - Address */}
           <div className="space-y-4 md:space-y-6 text-center sm:text-left">
             <h2 className="text-xl md:text-2xl font-bold">Funiro.</h2>
@@ -90,7 +90,7 @@ const Footer = () => {
           <div className="space-y-4 md:space-y-6 text-center sm:text-left">
             <h4 className="text-base md:text-lg font-medium text-[#9F9F9F]">Newsletter</h4>
             <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-              <div className="w-full max-w-[280px] sm:max-w-none border-b border-black pb-2">
+              <div className="w-[450px] max-w-[280px] sm:max-w-none border-b border-black pb-2">
                 <input 
                   type="email" 
                   placeholder="Enter Your Email Address" 
