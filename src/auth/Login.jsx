@@ -44,18 +44,22 @@ const Login = () => {
       console.log("API Response:", result);
 
       if (response.status === 200 && result.success && result.data) {
-        localStorage.setItem("userToken", result.data);
+        localStorage.setItem("token", result.data);
+        
+        if (result.userId) {
+          localStorage.setItem("userId", result.userId);
+        }
 
         alert("Login successful!");
         navigate("/home");
       } else {
-        const errorMessage =
-          result.message || "Login failed. Please try again.";
+        const errorMessage = result.message || "Login failed. Please try again.";
         alert(errorMessage);
       }
     } catch (error) {
       console.error("API Error:", error);
-      alert("Network error or server not responding. Please try again later.");
+      const errorMessage = error.response?.data?.message || "Network error or server not responding. Please try again later.";
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -75,6 +79,7 @@ const Login = () => {
         onSubmit={handleLogin}
         className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
       >
+        
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
@@ -102,7 +107,7 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-yellow-500 text-white py-2 rounded-md"
+          className="w-full bg-[#b88e2f] text-white py-2 rounded-md hover:bg-[#a07d2a] transition-colors"
           disabled={loading}
         >
           {loading ? "Logging in..." : "Login"}
@@ -110,7 +115,7 @@ const Login = () => {
         <button
           type="button"
           onClick={() => navigate("/register")}
-          className="w-full bg-gray-500 text-white py-2 rounded-md mt-2"
+          className="w-full bg-gray-500 text-white py-2 rounded-md mt-2 hover:bg-gray-600 transition-colors"
         >
           Register
         </button>

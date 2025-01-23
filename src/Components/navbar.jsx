@@ -27,7 +27,7 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-14  text-lg ">
-            <Link to="/" className="hover:text-[#B88E2F] transition-colors">
+            <Link to="/home" className="hover:text-[#B88E2F] transition-colors">
               Home
             </Link>
             <Link to="/shop" className="hover:text-[#B88E2F] transition-colors">
@@ -92,7 +92,7 @@ const Navbar = () => {
             <div className="fixed inset-0 bg-white z-10 lg:hidden">
               <div className="flex flex-col items-center justify-center h-full space-y-8">
                 <Link 
-                  to="/" 
+                  to="/home" 
                   className="text-xl hover:text-[#B88E2F] transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
