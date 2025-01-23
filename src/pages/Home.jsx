@@ -9,21 +9,21 @@ const Home = () => {
       <div className="w-full min-h-[100vh] bg-[url('/assets/Homebg.png')] bg-cover bg-center relative">
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="w-full max-w-[500px] md:max-w-none md:w-[37%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
-            <div>
+    <div>
               <h3 className="text-black text-xs md:text-sm">New Arrival</h3>
               <h1 className="text-[#b88e2f] text-2xl md:text-4xl lg:text-5xl font-bold mt-2 mb-3">
-                Discover Our <br />
-                New Collection
-              </h1>
+              Discover Our <br />
+              New Collection
+            </h1>
               <p className="text-sm md:text-base lg:text-lg">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-                tellus, luctus nec ullamcorper mattis.
-              </p>
-            </div>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+              tellus, luctus nec ullamcorper mattis.
+            </p>
+          </div>
             <div className="mt-4 md:mt-6">
               <button className="bg-[#b88e2f] py-2 md:py-3 px-6 md:px-8 text-white rounded-sm text-sm font-bold hover:bg-[#9c7827] transition-colors">
-                BUY NOW
-              </button>
+              BUY NOW
+            </button>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ const Home = () => {
                     />
                   </div>
                 </div>
-              </div>
+          </div>
 
               {/* Navigation Dots */}
               <div className="flex justify-center items-center gap-4">

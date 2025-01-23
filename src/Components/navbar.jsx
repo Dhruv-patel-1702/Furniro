@@ -41,11 +41,12 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Icons */}
           <div className="hidden lg:flex items-center gap-8">
-            <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+           <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+           <button className="hover:text-[#B88E2F] transition-colors w-8 h-8" >
               <PersonOutlineIcon className="w-full h-full" />
             </button>
+           </Link>
             <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
               <SearchIcon className="w-full h-full" />
             </button>
@@ -121,9 +122,11 @@ const Navbar = () => {
 
                 {/* Mobile Icons */}
                 <div className="flex items-center gap-8 mt-8">
-                  <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
-                    <PersonOutlineIcon className="w-full h-full" />
-                  </button>
+                  <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                    <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
+                      <PersonOutlineIcon className="w-full h-full" />
+                    </button>
+                  </Link>
                   <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
                     <SearchIcon className="w-full h-full" />
                   </button>
