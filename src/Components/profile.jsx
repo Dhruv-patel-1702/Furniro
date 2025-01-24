@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [isCartOpen, setCartOpen] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -18,14 +19,9 @@ const Profile = () => {
     setPopupOpen(false);
   };
 
-  const toggleCart = () => {
-    setCartOpen(!isCartOpen);
-  };
-
   const fetchData = async () => {
     try {
       setLoading(true);
-      // Get token from localStorage (stored during login)
       const token = localStorage.getItem("token");
       
       if (!token) {
@@ -38,7 +34,7 @@ const Profile = () => {
         "https://ecommerce-shop-qg3y.onrender.com/api/user/profileDisplay",
         {
           headers: {
-            'Authorization': `${token}`, // Using Bearer token format
+            'Authorization': `${token}`,
             'Content-Type': 'application/json'
           },
         }
@@ -64,6 +60,44 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleChangePassword = async () => {
+    if (!oldPassword || !newPassword) {
+      setError("Both old and new passwords are required");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        "https://ecommerce-shop-qg3y.onrender.com/api/user/changePassword",
+        { oldPassword, newPassword },
+        {
+          headers: {
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json'
+          },
+        }
+      );
+
+      if (response.data && response.data.success) {
+        setError("");
+        setOldPassword("");
+        setNewPassword("");
+        closePopup();
+      } else {
+        setError("Failed to change password");
+      }
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setError(error.response?.data?.message || "Error changing password");
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -121,34 +155,8 @@ const Profile = () => {
               className="border rounded p-2 mb-2 bg-gray-50"
             />
             <label className="font-semibold">Gender:</label>
-            <div className="flex mb-2">
-              <label className="mr-4">
-                <input 
-                  type="radio" 
-                  name="gender" 
-                  value="Male" 
-                  checked={userDetails?.gender === 'Male'} 
-                  readOnly 
-                /> Male
-              </label>
-              <label className="mr-4">
-                <input 
-                  type="radio" 
-                  name="gender" 
-                  value="Female" 
-                  checked={userDetails?.gender === 'Female'} 
-                  readOnly 
-                /> Female
-              </label>
-              <label>
-                <input 
-                  type="radio" 
-                  name="gender" 
-                  value="Other" 
-                  checked={userDetails?.gender === 'Other'} 
-                  readOnly 
-                /> Other
-              </label>
+            <div className="mb-2">
+              <span>{userDetails?.gender || 'Not specified'}</span>
             </div>
 
             <div className="mt-4">
@@ -157,6 +165,12 @@ const Profile = () => {
                 className="w-full bg-[#b88e2f] text-white rounded py-2 px-4 hover:bg-[#a07d2a] transition-colors"
               >
                 Change Password
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full bg-red-500 text-white rounded py-2 px-4 hover:bg-red-600 transition-colors mt-2"
+              >
+                Logout
               </button>
             </div>
           </div>
@@ -170,13 +184,23 @@ const Profile = () => {
                     ×
                   </button>
                 </div>
+                {error && <p className="text-red-500 mb-4">{error}</p>}
+                <input
+                  type="password"
+                  placeholder="Old Password"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  className="w-full border rounded p-2 mb-4"
+                />
                 <input
                   type="password"
                   placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   className="w-full border rounded p-2 mb-4"
                 />
                 <button
-                  onClick={closePopup}
+                  onClick={handleChangePassword}
                   className="w-full bg-[#b88e2f] text-white rounded py-2 hover:bg-[#a07d2a] transition-colors"
                 >
                   Update Password
@@ -184,20 +208,6 @@ const Profile = () => {
               </div>
             </div>
           )}
-        </div>
-
-        <div
-          className={`fixed right-0 top-0 w-1/3 bg-white shadow-lg transition-transform ${
-            isCartOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-        >
-          <button onClick={toggleCart} className="absolute top-2 right-2">
-            ✖
-          </button>
-          <h2 className="text-xl font-bold p-4">Shopping Cart</h2>
-          <div className="p-4">
-            <p>Your cart is empty</p>
-          </div>
         </div>
       </div>
     </div>

@@ -15,6 +15,8 @@ import Checkout from "./pages/checkout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Profile from "./Components/profile";
+
+
 function App() {
   return (
     <CartProvider>
