@@ -144,24 +144,7 @@ const Home = () => {
                 </div>
           </div>
 
-              {/* Navigation Dots */}
-              <div className="flex justify-center items-center gap-4">
-                {[1, 2, 3, 4].map((_, index) => (
-                  <div key={index} className="relative bottom-5 left-2">
-                    <button 
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                        index === 0 
-                          ? 'bg-[#B88E2F] scale-110 ring-4 ring-[#B88E2F]/20' 
-                          : 'bg-[#D8D8D8] hover:bg-[#B88E2F]/60'
-                      }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                    {index === 0 && (
-                      <div className="absolute rounded-full animate-pulse bg-[#B88E2F]/10" />
-                    )}
-                  </div>
-                ))}
-              </div>
+              
             </div>
           </div>
         </div>

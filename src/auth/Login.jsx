@@ -97,7 +97,6 @@ const Login = () => {
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            required
           />
         </div>
         <div className="mb-4">
@@ -111,6 +110,15 @@ const Login = () => {
             className="mt-1 block w-full border border-gray-300 rounded-md p-2"
             required
           />
+          <div className="text-right mt-1">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-[#b88e2f] hover:text-[#a07d2a] transition-colors"
+            >
+              Forgot Password?
+            </button>
+          </div>
         </div>
         <button
           type="submit"

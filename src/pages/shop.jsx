@@ -202,30 +202,7 @@ const Shop = () => {
                   </span>
                 )}
 
-                {product.isNew && (
-                  <span className="absolute top-5 right-5 bg-[#2EC1AC] text-white px-4 py-1.5 rounded-sm z-10 text-sm">
-                    New
-                  </span>
-                )}
-
-                <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-9 py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-base">
-                  Add to cart
-                </button>
-
-                <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-7 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
-                  <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
-                    <ShareIcon fontSize="small" />
-                    <span className="text-sm">Share</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
-                    <CompareIcon fontSize="small" />
-                    <span className="text-sm">Compare</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
-                    <FavoriteBorderIcon fontSize="small" />
-                    <span className="text-sm">Like</span>
-                  </div>
-                </div>
+                
               </div>
 
               <div className="p-3 md:p-5 text-center">

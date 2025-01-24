@@ -15,6 +15,7 @@ import Checkout from "./pages/checkout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Profile from "./Components/profile";
+import ForgotPassword from "./auth/ForgotPassword";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/compare" element={<ProductComparison />} />
             <Route path="/singleproduct" element={<SingleProduct />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<Navigate to="/shop" replace />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />

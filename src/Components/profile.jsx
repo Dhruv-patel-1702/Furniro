@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
+  const [editableDetails, setEditableDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -100,9 +101,67 @@ const Profile = () => {
     navigate("/");
   };
 
+  const handleSaveInformation = async () => {
+    try {
+      if (!editableDetails?.name || !editableDetails?.email || !editableDetails?.mobile) {
+        setError("Please fill in all required fields");
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(editableDetails.email)) {
+        setError("Please enter a valid email address");
+        return;
+      }
+
+      const mobileRegex = /^\d{10}$/;
+      if (!mobileRegex.test(editableDetails.mobile)) {
+        setError("Please enter a valid 10-digit mobile number");
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Please login to save changes");
+        navigate("/login");
+        return;
+      }
+
+      setError(""); 
+      
+      const response = await axios.put(
+        "https://ecommerce-shop-qg3y.onrender.com/api/user/update",
+        editableDetails,
+        {
+          headers: {
+            'Authorization': `${token}`, 
+            'Content-Type': 'application/json'
+          },
+        }
+      );
+
+      if (response.data && response.data.success) {
+        setUserDetails(editableDetails);
+        setError("");
+        alert("Profile updated successfully!");
+      } else {
+        throw new Error(response.data?.message || "Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError(error.response?.data?.message || error.message || "Error updating profile");
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (userDetails) {
+      setEditableDetails({ ...userDetails });
+    }
+  }, [userDetails]);
 
   if (loading) {
     return (
@@ -113,7 +172,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[100vh] bg-[url('https://t4.ftcdn.net/jpg/03/17/30/63/240_F_317306393_XTASW9Dx8kpxcm6xNOpOTY4ARdyBVBYt.jpg')] bg-cover bg-center relative">
+    <div className="flex flex-col items-center justify-center mt-10 w-full min-h-[100vh] bg-[url('https://t4.ftcdn.net/jpg/03/17/30/63/240_F_317306393_XTASW9Dx8kpxcm6xNOpOTY4ARdyBVBYt.jpg')] bg-cover bg-center relative">
       <div className="w-full max-w-md mx-auto">
         <div className="mx-auto p-6 bg-white rounded-lg shadow-md">
           {error && (
@@ -134,37 +193,50 @@ const Profile = () => {
             <label className="font-semibold">Name:</label>
             <input
               type="text"
-              value={userDetails?.name || ''}
-              readOnly
-              className="border rounded p-2 mb-2 bg-gray-50"
+              value={editableDetails?.name || ''}
+              onChange={(e) => setEditableDetails({ ...editableDetails, name: e.target.value })}
+              className="border rounded p-2 mb-2"
             />
 
             <label className="font-semibold">Email Address:</label>
             <input
               type="email"
-              value={userDetails?.email || ''}
-              readOnly
-              className="border rounded p-2 mb-2 bg-gray-50"
+              value={editableDetails?.email || ''}
+              onChange={(e) => setEditableDetails({ ...editableDetails, email: e.target.value })}
+              className="border rounded p-2 mb-2"
             />
 
             <label className="font-semibold">Mobile Number:</label>
             <input
               type="text"
-              value={userDetails?.mobile || ''}
-              readOnly
-              className="border rounded p-2 mb-2 bg-gray-50"
+              value={editableDetails?.mobile || ''}
+              onChange={(e) => setEditableDetails({ ...editableDetails, mobile: e.target.value })}
+              className="border rounded p-2 mb-2"
             />
             <label className="font-semibold">Gender:</label>
-            <div className="mb-2">
-              <span>{userDetails?.gender || 'Not specified'}</span>
-            </div>
+            <select
+              value={editableDetails?.gender || ''}
+              onChange={(e) => setEditableDetails({ ...editableDetails, gender: e.target.value })}
+              className="border rounded p-2 mb-2"
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
 
-            <div className="mt-4">
+            <div className="mt-4 space-y-2">
               <button
                 onClick={handleButtonClick}
                 className="w-full bg-[#b88e2f] text-white rounded py-2 px-4 hover:bg-[#a07d2a] transition-colors"
               >
                 Change Password
+              </button>
+              <button
+                onClick={handleSaveInformation}
+                className="w-full bg-[#4ac01c] text-white rounded py-2 px-4 hover:bg-[#24962e] transition-colors"
+              >
+                Save Information
               </button>
               <button
                 onClick={handleLogout}
