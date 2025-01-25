@@ -1,6 +1,6 @@
 import React from "react";
 import Products from "../Components/products";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const Home = () => {
   return (
@@ -9,21 +9,21 @@ const Home = () => {
       <div className="w-full min-h-[100vh] bg-[url('/assets/Homebg.png')] bg-cover bg-center relative">
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="w-full max-w-[500px] md:max-w-none md:w-[37%] bg-[#fff3e3] p-5 md:p-8 lg:p-10 rounded-lg md:relative md:left-[15%]">
-    <div>
+            <div>
               <h3 className="text-black text-xs md:text-sm">New Arrival</h3>
               <h1 className="text-[#b88e2f] text-2xl md:text-4xl lg:text-5xl font-bold mt-2 mb-3">
-              Discover Our <br />
-              New Collection
-            </h1>
+                Discover Our <br />
+                New Collection
+              </h1>
               <p className="text-sm md:text-base lg:text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis.
-            </p>
-          </div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+                tellus, luctus nec ullamcorper mattis.
+              </p>
+            </div>
             <div className="mt-4 md:mt-6">
               <button className="bg-[#b88e2f] py-2 md:py-3 px-6 md:px-8 text-white rounded-sm text-sm font-bold hover:bg-[#9c7827] transition-colors">
-              BUY NOW
-            </button>
+                BUY NOW
+              </button>
             </div>
           </div>
         </div>
@@ -32,7 +32,9 @@ const Home = () => {
       {/* Browse Range Section */}
       <div className="w-full px-4 md:px-8 lg:px-40 mt-10 md:mt-28">
         <div className="text-center">
-          <h1 className="text-xl md:text-3xl font-bold mb-3">Browse The Range</h1>
+          <h1 className="text-xl md:text-3xl font-bold mb-3">
+            Browse The Range
+          </h1>
           <p className="text-sm md:text-base text-gray-600 max-w-md mx-auto">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iste
             fugit delectus dolorum ipsam?
@@ -78,8 +80,8 @@ const Home = () => {
                 inspiration
               </h2>
               <p className="text-[#616161] text-sm md:text-base mb-6 max-w-md mx-auto lg:mx-0">
-                Our designer already made a lot of beautiful prototipe of
-                rooms that inspire you
+                Our designer already made a lot of beautiful prototipe of rooms
+                that inspire you
               </p>
               <button className="bg-[#B88E2F] text-white px-6 py-2.5 md:py-3 flex items-center gap-2 hover:bg-[#967524] transition-colors mx-auto lg:mx-0 text-sm md:text-base">
                 Explore More
@@ -99,9 +101,13 @@ const Home = () => {
                     />
                     <div className=" w-[255px] h-[150px] absolute bottom-4 md:bottom-6 left-4 right-4 bg-white p-3 md:p-4 rounded opacity-80">
                       <div className="flex justify-center items-center gap-2 mt-5 mb-1 md:mb-2">
-                        <span className="text-[#B88E2F] font-bold text-sm md:text-base">01</span>
+                        <span className="text-[#B88E2F] font-bold text-sm md:text-base">
+                          01
+                        </span>
                         <span className="text-[#616161]">---</span>
-                        <span className="text-[#616161] text-sm md:text-xl">Bed Room</span>
+                        <span className="text-[#616161] text-sm md:text-xl">
+                          Bed Room
+                        </span>
                       </div>
                       <h3 className="flex justify-center items-center text-lg md:text-2xl font-bold text-[#3A3A3A]">
                         Inner Peace
@@ -142,9 +148,7 @@ const Home = () => {
                     />
                   </div>
                 </div>
-          </div>
-
-              
+              </div>
             </div>
           </div>
         </div>
