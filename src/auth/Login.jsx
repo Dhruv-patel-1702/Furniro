@@ -24,11 +24,6 @@ const Login = () => {
     const isEmail = emailRegex.test(identifier);
     const isMobile = mobileRegex.test(identifier);
 
-    if (!isEmail && !isMobile) {
-      alert("Please enter a valid email address or 10-digit mobile number");
-      return;
-    }
-
     try {
       setLoading(true);
 

@@ -29,7 +29,6 @@ const Products = () => {
         setLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
   console.log(products);
@@ -89,14 +88,10 @@ const Products = () => {
                   className="w-full h-[250px] object-contain bg-white p-2 transition-all duration-300 group-hover:blur-sm"
                   onError={(e) => {
                     const baseUrl = 'https://ecommerce-shop-qg3y.onrender.com';
-                    // Try with base URL if relative path fails
+                  
                     if (!e.target.src.startsWith(baseUrl) && product.product_images?.[0]) {
                       e.target.src = baseUrl + product.product_images[0];
-                    } else if (product.image) {
-                      e.target.src = product.image;
-                    } else {
-                      e.target.src = '/placeholder-image.jpg';
-                    }
+                    } 
                   }}
                   style={{ objectFit: 'contain', objectPosition: 'center' }}
                 />
