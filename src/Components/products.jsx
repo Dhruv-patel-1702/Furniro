@@ -29,6 +29,7 @@ const Products = () => {
         setLoading(false);
       }
     };
+
     fetchProducts();
   }, []);
   console.log(products);
@@ -72,7 +73,7 @@ const Products = () => {
         {products.map((product, index) => (
           <div
             key={product.id || `product-${index}`}
-            onClick={() => handleProductClick(product)}
+
             className="bg-[#F4F5F7] group relative w-full cursor-pointer mx-auto max-w-[300px] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
           >
             <div className="relative overflow-hidden">
@@ -88,7 +89,7 @@ const Products = () => {
                   className="w-full h-[250px] object-contain bg-white p-2 transition-all duration-300 group-hover:blur-sm"
                   onError={(e) => {
                     const baseUrl = 'https://ecommerce-shop-qg3y.onrender.com';
-                  
+                    // Try with base URL if relative path fails
                     if (!e.target.src.startsWith(baseUrl) && product.product_images?.[0]) {
                       e.target.src = baseUrl + product.product_images[0];
                     } 
@@ -104,7 +105,8 @@ const Products = () => {
                 </span>
               )}
 
-              <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-6 md:px-9 py-2 md:py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-sm md:text-base whitespace-nowrap">
+              <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-6 md:px-9 py-2 md:py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-sm md:text-base whitespace-nowrap"
+               onClick={() => handleProductClick(product)}>
                 Add to cart
               </button>
 

@@ -5,10 +5,11 @@ import CompareIcon from "@mui/icons-material/Compare";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useCart } from "../context/CartContext";
 import { useCompare } from "../context/CompareContext";
+import { TbBackground } from "react-icons/tb";
 
 const SingleProduct = () => {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   const { addToCompare } = useCompare();
   const location = useLocation();
   const product = location.state?.product;
@@ -91,7 +92,20 @@ const SingleProduct = () => {
   };
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    const productToAdd = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.product_images?.[selectedImage] || product.image,
+      images: product.product_images || [product.image],
+      quantity: quantity,
+      selectedSize: selectedSize,
+      selectedColor: selectedColor,
+      timestamp: Date.now(),
+    };
+
+    addToCart(productToAdd);
+    setIsCartOpen(true);
   };
 
   const handleCompareClick = () => {
@@ -100,7 +114,6 @@ const SingleProduct = () => {
   };
 
   const handleProductClick = (product) => {
-    // Implement the logic for handling product click
     console.log("Product clicked:", product);
   };
 
@@ -121,23 +134,20 @@ const SingleProduct = () => {
           </div>
         </div>
       </div>
-      {/* Breadcrumb */}
-
-      {/* Product Details */}
       <div className="max-w-[1440px] mx-auto px-4 mt-10 md:px-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-          {/* Left - Image Gallery */}
-          <div className="flex flex-col md:flex-row gap-6">
-            {/* Thumbnail Images */}
-            <div className="flex flex-row md:flex-col gap-2 md:gap-3">
-              {images.map((image, index) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
+          {/* Product Images Section */}
+          <div className="flex flex-col-reverse lg:flex-row gap-4">
+            {/* Thumbnails */}
+            <div className="flex flex-row lg:flex-col gap-2 justify-start">
+              {product?.product_images?.map((image, index) => (
                 <div
                   key={index}
-                  className={`w-[70px] h-[70px] md:w-[95px] md:h-[95px] cursor-pointer transition-all
+                  className={`w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] cursor-pointer transition-all
                     ${
                       selectedImage === index
                         ? "border-2 border-[#B88E2F] bg-[#F9F1E7]"
-                        : "border border-[#D9D9D9] hover:border-[#B88E2F] bg-white"
+                        : "border border-[#D9D9D9] hover:border-[#B88E2F]"
                     }`}
                   onClick={() => setSelectedImage(index)}
                 >
@@ -152,141 +162,124 @@ const SingleProduct = () => {
 
             {/* Main Image */}
             <div className="flex-1">
-              <div className="w-full h-[300px] md:h-[550px] bg-[#F9F1E7] p-2 md:p-6">
+              <div className="w-full h-[250px] sm:h-[400px] lg:h-[500px] bg-[#F9F1E7] p-2 lg:p-6">
                 <img
-                  src={images[selectedImage]}
-                  alt={product?.name || "Product view"}
-                  className="w-full h-full object-cover"
+                  src={product?.product_images?.[selectedImage]}
+                  alt={product?.name}
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
           </div>
 
-          {/* Right - Product Info */}
-          <div className="space-y-4 md:space-y-4 pt-4">
-            <h1 className="text-[24px] md:text-[36px] font-medium text-[#3A3A3A]">    
+          {/* Product Info Section */}
+          <div className="space-y-4 px-2 mt-6 sm:px-4">
+            <h1 className="text-xl mb-1 sm:text-2xl lg:text-3xl font-medium">
               {product?.name}
             </h1>
-            <span className="text-[18px] md:text-[28px] text-[#9F9F9F] font-medium">
-              {product?.price}
+            <span className="text-lg sm:text-xl lg:text-xl text-[#9F9F9F]  ">
+              Rs : {product?.price}
             </span>
-
-            {/* Rating */}
-            <div className="flex items-center gap-4">
-              <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <svg
-                    key={star}
-                    className="w-5 h-5 text-[#FFC700]"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <span className="text-[#9F9F9F]">5 Customer Review</span>
-            </div>
-
-            <p className="text-black leading-relaxed text-[16px]">
-              Setting the bar as one of the loudest speakers in its class, the
-              Kilburn is a compact, stout-hearted hero with a well-balanced
-              audio which boasts a clear midrange and extended highs for a
-              sound.
-            </p>
-
+            <p>{product?.description}</p>
             {/* Size Selection */}
-            <div className="space-y-4">
-              <h3 className="font-bold text-[16px]">Size</h3>
-              <div className="flex flex-wrap gap-4">
-                {["L", "XL", "XS"].map((size) => (
-                  <button
-                    key={size}
-                    className={`w-[30px] h-[30px] border ${
-                      selectedSize === size
-                        ? "border-[#B88E2F] text-[#B88E2F]"
-                        : "border-[#9F9F9F] text-[#9F9F9F]"
-                    } hover:border-[#B88E2F] hover:text-[#B88E2F] transition-colors`}
+            <div className="space-y-2">
+              <h3 className="font-bold text-lg">Size</h3>
+              <div className="flex flex-wrap gap-2">
+                {product?.size?.map((size, index) => (
+                  <div
+                    key={index}
+                    className={`py-1 px-3 rounded border border-[#bf9943] cursor-pointer
+                      ${
+                        selectedSize === size
+                          ? "bg-[#bf9943] text-white"
+                          : "hover:bg-[#bf9943] hover:text-white"
+                      }`}
                     onClick={() => setSelectedSize(size)}
                   >
                     {size}
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Color Selection */}
-            <div className="space-y-4">
-              <h3 className="font-bold text-lg">Color</h3>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { name: "brown", color: "#816DFA" },
-                  { name: "gray", color: "#000000" },
-                  { name: "blue", color: "#CDBA7B" },
-                ].map((color) => (
+            {/* Color and Quantity */}
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+              {/* Color Selection */}
+              <div className="flex items-center gap-2 mt-2">
+                <h3 className="font-bold text-lg">Color:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product?.colour?.map((colour, index) => (
+                    <div
+                      key={index}
+                      className={`py-1 px-3 rounded border border-[#bf9943] cursor-pointer
+                        ${
+                          selectedColor === colour
+                            ? "bg-[#bf9943] text-white"
+                            : "hover:bg-[#bf9943] hover:text-white"
+                        }`}
+                      onClick={() => setSelectedColor(colour)}
+                    >
+                      {colour}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quantity Selector */}
+              <div className="flex items-center gap-2 mt-2">
+                <h3 className="font-bold text-lg">Quantity:</h3>
+                <div className="border border-[#9F9F9F] rounded-md inline-flex">
                   <button
-                    key={color.name}
-                    className={`w-10 h-10 rounded-full ${
-                      selectedColor === color.name
-                        ? "ring-2 ring-offset-2 ring-[#B88E2F]"
-                        : ""
-                    }`}
-                    style={{ backgroundColor: color.color }}
-                    onClick={() => setSelectedColor(color.name)}
-                  />
-                ))}
+                    className="px-3 py-1"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  >
+                    -
+                  </button>
+                  <span className="px-4 py-1 border-x border-[#9F9F9F]">
+                    {quantity}
+                  </span>
+                  <button
+                    className="px-3 py-1"
+                    onClick={() => setQuantity(quantity + 1)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Quantity and Add to Cart */}
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-              <div className="flex items-center border border-[#9F9F9F] rounded-md">
-                <button
-                  className="px-3 py-2 text-xl"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                >
-                  -
-                </button>
-                <span className="px-4 py-2 border-x border-[#9F9F9F]">
-                  {quantity}
-                </span>
-                <button
-                  className="px-3 py-2 text-xl"
-                  onClick={() => setQuantity(quantity + 1)}
-                >
-                  +
-                </button>
-              </div>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleAddToCart}
-                className="bg-[#B88E2F] text-white px-6 py-3 hover:bg-[#9e7a29] transition-colors w-full md:w-auto"
+                className="w-full mt-2 sm:w-auto bg-[#B88E2F] text-white px-6 py-2 rounded hover:bg-[#9e7a29] transition-colors"
               >
                 Add To Cart
               </button>
               <button
                 onClick={handleCompareClick}
-                className="px-6 py-3 bg-[#B88E2F] text-white hover:bg-opacity-90 transition-colors w-full md:w-auto"
+                className="w-full mt-2 sm:w-auto bg-[#B88E2F] text-white px-6 py-2 rounded hover:bg-opacity-90 transition-colors"
               >
                 Compare
               </button>
             </div>
 
-            {/* Additional Info */}
-            <div className="border-t pt-8 space-y-4">
+            {/* Product Details */}
+            <div className="border-t pt-4 space-y-3">
               <div className="flex items-center gap-8 text-[#9F9F9F]">
-                <span>SKU</span>
+                <span>stock</span>
                 <span>:</span>
-                <span>SS001</span>
+                <span>{product?.stock}</span>
               </div>
               <div className="flex items-center gap-8 text-[#9F9F9F]">
-                <span>Category</span>
+                <span>categoryName</span>
                 <span>:</span>
-                <span>Sofas</span>
+                <span>{product?.categoryName}</span>
               </div>
               <div className="flex items-center gap-8 text-[#9F9F9F]">
-                <span>Tags</span>
+                <span>Product details</span>
                 <span>:</span>
-                <span>Sofa, Chair, Home, Shop</span>
+                <span>{product?.product_details}</span>
               </div>
               <div className="flex items-center gap-8 text-[#9F9F9F]">
                 <span>Share</span>
@@ -463,7 +456,6 @@ const SingleProduct = () => {
             <button
               className="px-16 py-3 border border-[#B88E2F] text-[#B88E2F] hover:bg-[#B88E2F] hover:text-white transition-colors duration-300"
               onClick={() => {
-                // Add your show more functionality here
                 console.log("Show more clicked");
               }}
             >

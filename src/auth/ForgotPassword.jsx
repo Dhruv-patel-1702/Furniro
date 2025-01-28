@@ -104,7 +104,6 @@ const ForgotPassword = () => {
     setOtpValues(newOtpValues);
     setOtp(newOtpValues.join(''));
 
-    // Auto-focus next input
     if (value !== '' && index < 3) {
       const nextInput = document.querySelector(`input[name='otp-${index + 1}']`);
       if (nextInput) nextInput.focus();
@@ -144,26 +143,6 @@ const ForgotPassword = () => {
           </div>
         ) : (
           <>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Enter OTP (Use 1234)
-              </label>
-              <div className="flex gap-2 justify-between w-48">
-                {[0, 1, 2, 3].map((index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    name={`otp-${index}`}
-                    maxLength="1"
-                    value={otpValues[index]}
-                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-14 h-14 text-center text-xl border border-gray-300 rounded-md focus:border-[#b88e2f] focus:ring-1 focus:ring-[#b88e2f] outline-none"
-                    required
-                  />
-                ))}
-              </div>
-            </div>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 New Password

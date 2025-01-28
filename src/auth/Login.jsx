@@ -33,7 +33,7 @@ const Login = () => {
 
       if (isEmail) {
         loginData.email = identifier.toLowerCase().trim();
-      } else {
+      } else {  
         loginData.mobile = identifier.trim();
       }
 

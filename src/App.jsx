@@ -16,6 +16,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Profile from "./Components/profile";
 import ForgotPassword from "./auth/ForgotPassword";
+import MyAddress from "./Components/myAddress";
 
 
 function App() {
@@ -35,9 +36,10 @@ function App() {
             <Route path="/compare" element={<ProductComparison />} />
             <Route path="/singleproduct" element={<SingleProduct />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="*" element={<Navigate to="/shop" replace />} />
+            <Route path="/shop" element={<Navigate to="/shop" replace />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/myAddress" element={<MyAddress />} />
           </Routes>
           <Footer />
         </BrowserRouter>
