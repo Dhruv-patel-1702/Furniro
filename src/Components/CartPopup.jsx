@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CloseIcon from "@mui/icons-material/Close";
-
+import axios from "axios";
+import { toast } from "react-toastify";
 const CartPopup = ({ onClose }) => {
   const navigate = useNavigate();
   const {
@@ -12,7 +13,107 @@ const CartPopup = ({ onClose }) => {
     isCartOpen,
     setIsCartOpen,
     cartTotal,
+    setCartItems,
   } = useCart();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchCartData = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please login to view your cart");
+        setIsLoading(false);
+        return;
+      }
+      const response = await axios.get(
+        "https://ecommerce-shop-qg3y.onrender.com/api/cart/displayCart",
+        {
+          headers: {
+            Authorization: `${token}`,
+          }
+        }
+      );
+
+      if (response.data.success && response.data.data.length > 0) {
+        const cartData = response.data.data[0];
+        const transformedItems = cartData.items.map(item => ({
+          cartId: item.productId,
+          name: item.productName,
+          image: item.productImage,
+          price: item.price,
+          quantity: item.quantity,
+          selectedSize: item.size || item.productSize || (item.productDetails?.size?.[0] || 'N/A'),
+          selectedColor: item.colour || item.productColour || (item.productDetails?.colour?.[0] || 'N/A')
+        }));
+        setCartItems(transformedItems);
+      } else {
+        setCartItems([]);
+      }
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+      if (error.response?.status === 401) {
+        toast.error("Please login to view your cart");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleQuantityChange = async (itemId, action) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error('Please login to update cart');
+        return;
+      }
+
+      const currentItem = cartItems.find(item => item.cartId === itemId);
+      if (!currentItem) return;
+
+      let newQuantity;
+      if (action === 'increase') {
+        newQuantity = parseInt(currentItem.quantity) + 1;
+      } else if (action === 'decrease') {
+        newQuantity = Math.max(1, parseInt(currentItem.quantity) - 1);
+      } else {
+        return;
+      }
+
+      const response = await axios.put(
+        'https://ecommerce-shop-qg3y.onrender.com/api/cart/updateCart',
+        {
+          productId: itemId,
+          quantity: newQuantity
+        },
+        { 
+          headers: { 
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Cart updated successfully");
+        const updatedCartItems = cartItems.map(item =>
+          item.cartId === itemId ? { ...item, quantity: newQuantity } : item
+        );
+        setCartItems(updatedCartItems);
+      } else {
+        toast.error(response.data.message || "Failed to update cart");
+      }
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      toast.error('Failed to update cart');
+    }
+  };
+
+  useEffect(() => {
+    if (isCartOpen) {
+      fetchCartData();
+    }
+  }, [isCartOpen, setCartItems]);
 
   const handleViewCart = () => {
     navigate("/cart");
@@ -28,6 +129,47 @@ const CartPopup = ({ onClose }) => {
     }
   };
 
+  const handleRemoveItem = async (productId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please login to remove items");
+        navigate("/");
+        return;
+      }
+
+      const response = await axios.delete(
+        'https://ecommerce-shop-qg3y.onrender.com/api/cart/removeCart',
+        {
+          headers: {
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json'
+          },
+          data: {
+            productId: productId,
+          }
+        }
+      );
+
+      if (response.data.success) {
+        const updatedCartItems = cartItems.filter(item => item.cartId !== productId);
+        setCartItems(updatedCartItems);
+        toast.success("Item removed from cart");
+        fetchCartData();
+      } else {
+        toast.error(response.data.message || "Failed to remove item");
+      }
+    } catch (error) {
+      console.error("Error removing item:", error);
+      toast.error('Failed to remove item from cart');
+    }
+  };
+
+
+  if (isLoading) {
+    return <div className="text-center py-8">Loading cart...</div>;
+  }
+
   if (!isCartOpen) return null;
 
   return (
@@ -38,7 +180,6 @@ const CartPopup = ({ onClose }) => {
         onClick={() => setIsCartOpen(false)}
       ></div>
 
-      {/* Cart Panel */}
       <div className="relative w-[450px] h-screen bg-white shadow-lg ">
         <div className="p-5">
           {/* Header */}
@@ -59,7 +200,7 @@ const CartPopup = ({ onClose }) => {
               {/* Cart Items */}
               <div className="py-4 space-y-6">
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex gap-4">
+                  <div key={item.cartId} className="flex gap-4">
                     <div className="w-[100px] h-[100px] bg-[#F9F1E7] p-2">
                       <img
                         src={item.image}
@@ -71,9 +212,11 @@ const CartPopup = ({ onClose }) => {
                     {/* Product Details */}
                     <div className="flex-1">
                       <div className="flex justify-between items-start">
-                        <h3 className="font-semibold truncate max-w-[200px]">{item.name}</h3>
+                        <h3 className="font-semibold truncate max-w-[200px]">
+                          {item.name}
+                        </h3>
                         <button
-                          onClick={() => removeFromCart(item.cartId)}
+                          onClick={() => handleRemoveItem(item.cartId)}
                           className="text-gray-400 hover:text-gray-600 cursor-pointer"
                           aria-label={`Remove ${item.name} from cart`}
                         >
@@ -118,7 +261,7 @@ const CartPopup = ({ onClose }) => {
                   <p className="border-t mb-6"></p>
                   <div className="grid grid-cols-3 gap-2 px-6">
                     <button
-                      onClick={() => handleNavigation("/cart")}
+                      onClick={() => handleNavigation("/order")}
                       className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
                     >
                       Cart

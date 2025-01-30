@@ -17,6 +17,10 @@ import Register from "./auth/Register";
 import Profile from "./Components/profile";
 import ForgotPassword from "./auth/ForgotPassword";
 import MyAddress from "./Components/myAddress";
+import Order from "./pages/order";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import MyOrders from './pages/MyOrders';
 
 
 function App() {
@@ -36,13 +40,16 @@ function App() {
             <Route path="/compare" element={<ProductComparison />} />
             <Route path="/singleproduct" element={<SingleProduct />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/shop" element={<Navigate to="/shop" replace />} />
+            <Route path="/shop" element={<Shop />} /> 
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/myAddress" element={<MyAddress />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/my-orders" element={<MyOrders />} />
           </Routes>
           <Footer />
         </BrowserRouter>
+        <ToastContainer />
       </CompareProvider>
     </CartProvider>
   );

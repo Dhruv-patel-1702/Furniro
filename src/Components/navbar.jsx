@@ -39,6 +39,9 @@ const Navbar = () => {
             <Link to="/contact" className="hover:text-[#B88E2F] transition-colors">
               Contact
             </Link>
+            <Link to="/myorders" className="hover:text-[#B88E2F] transition-colors">
+              My Orders
+            </Link>
           </div>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -118,6 +121,13 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
+                </Link>
+                <Link 
+                  to="/myorders" 
+                  className="text-xl hover:text-[#B88E2F] transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  My Orders
                 </Link>
 
                 {/* Mobile Icons */}

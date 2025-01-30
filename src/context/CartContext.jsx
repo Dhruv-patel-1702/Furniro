@@ -47,16 +47,19 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const value = {
+    cartItems,
+    setCartItems,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    isCartOpen,
+    setIsCartOpen,
+    cartTotal
+  };
+
   return (
-    <CartContext.Provider value={{
-      cartItems,
-      addToCart,
-      removeFromCart,
-      updateQuantity,
-      isCartOpen,
-      setIsCartOpen,
-      cartTotal
-    }}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

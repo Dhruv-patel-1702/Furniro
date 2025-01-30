@@ -161,6 +161,7 @@ const Checkout = () => {
       );
       if (response.data) {
         alert("Order placed successfully!");
+        navigate("/order");
       }
     } catch (error) {
       if (error.response?.status === 403) {
@@ -366,27 +367,7 @@ const Checkout = () => {
           {/* Order Summary */}
           <div className="lg:pl-8">
             <div className="space-y-4">
-              <div className="flex justify-between items-center font-bold text-xl">
-                <span className="text-base">Product</span>
-                <span className="text-base">Subtotal</span>
-              </div>
-
-              <div className="flex justify-between items-center text-base text-gray-600 ">
-                <span>Asgaard sofa × 1</span>
-                <span>Rs. 250,000.00</span>
-              </div>
-
-              <div className="flex justify-between items-center text-base pt-4 border-t">
-                <span>Subtotal</span>
-                <span>Rs. 250,000.00</span>
-              </div>
-
-              <div className="flex justify-between items-center ">
-                <span className="text-base">Total</span>
-                <span className="text-[#B88E2F] text-base font-medium">
-                  Rs. 250,000.00
-                </span>
-              </div>
+              
 
               {/* Payment Methods */}
               <div className="space-y-3 pt-4">
@@ -453,7 +434,7 @@ const Checkout = () => {
                     disabled={isLoading}
                     className="w-full sm:w-[200px] bg-white text-black border border-gray-300 py-2.5 rounded text-sm hover:bg-black hover:text-white transition-colors mt-4 disabled:opacity-50"
                   >
-                    {isLoading ? "Placing Order..." : "Place order"}
+                    {isLoading ? "Proceed to Payment..." : "Proceed to Payment"}
                   </button>
                 )}
                 <Link to="/myAddress">

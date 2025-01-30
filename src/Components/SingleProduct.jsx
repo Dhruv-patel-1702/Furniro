@@ -6,6 +6,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useCart } from "../context/CartContext";
 import { useCompare } from "../context/CompareContext";
 import { TbBackground } from "react-icons/tb";
+import axios from "axios";
 
 const SingleProduct = () => {
   const navigate = useNavigate();
@@ -79,6 +80,7 @@ const SingleProduct = () => {
   const [selectedColor, setSelectedColor] = useState("brown");
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
+  const [isLoading, setIsLoading] = useState(false);
 
   const images = product?.images || [
     product?.image,
@@ -91,22 +93,67 @@ const SingleProduct = () => {
     setActiveTab(tab);
   };
 
-  const handleAddToCart = () => {
-    const productToAdd = {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.product_images?.[selectedImage] || product.image,
-      images: product.product_images || [product.image],
-      quantity: quantity,
-      selectedSize: selectedSize,
-      selectedColor: selectedColor,
-      timestamp: Date.now(),
-    };
+const handleAddToCart = () => {
+  const url = "https://ecommerce-shop-qg3y.onrender.com/api/cart/addToCart";
+  const token = localStorage.getItem("token");
 
-    addToCart(productToAdd);
-    setIsCartOpen(true);
+  if (!token) {
+    alert("You need to log in to add items to the cart.");
+    return;
+  }
+
+  if (!product?._id) {
+    alert("Invalid product. Please try again.");
+    console.error("Error: Missing productId", product);
+    return;
+  }
+
+  const totalPrice = quantity * parseFloat(product.price);
+
+  const data = {
+    productId: product._id,
+    quantity: quantity,
+    price: parseFloat(product.price),
+    totalPrice: totalPrice,
+    productSize: selectedSize,
+    productColour: selectedColor,
   };
+
+  setIsLoading(true);
+
+  axios
+    .post(url, data, {
+      headers: {
+        Authorization: `${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      if (response.data.success) {
+        // Add to cart context to update cart count
+        addToCart({
+          ...product,
+          quantity,
+          selectedSize,
+          selectedColor,
+          totalPrice
+        });
+        alert(`✅ ${product.name} has been added to your cart successfully!`);
+      } else {
+        throw new Error(response.data.message || "Failed to add to cart");
+      }
+    })
+    .catch((error) => {
+      const errorMessage = error.response?.data?.message || "Failed to add product to cart. Please try again.";
+      alert(`❌ Error: ${errorMessage}`);
+      console.error("Error adding to cart:", error);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+};
+
+  
 
   const handleCompareClick = () => {
     addToCompare(product);
@@ -252,9 +299,10 @@ const SingleProduct = () => {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleAddToCart}
-                className="w-full mt-2 sm:w-auto bg-[#B88E2F] text-white px-6 py-2 rounded hover:bg-[#9e7a29] transition-colors"
+                disabled={isLoading}
+                className="w-full mt-2 sm:w-auto bg-[#B88E2F] text-white px-6 py-2 rounded hover:bg-[#9e7a29] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Add To Cart
+                {isLoading ? "Adding..." : "Add To Cart"}
               </button>
               <button
                 onClick={handleCompareClick}
