@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -52,7 +53,7 @@ const Login = () => {
           localStorage.setItem("userId", result.userId);
         }
 
-        alert("Login successful!");
+        toast.success("Login successful!");
         navigate("/home");
       } else {
         const errorMessage = result.message || "Login failed. Please try again.";

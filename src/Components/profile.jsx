@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify'
 
 const Profile = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -143,7 +144,7 @@ const Profile = () => {
       if (response.data && response.data.success) {
         setUserDetails(editableDetails);
         setError("");
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
       } else {
         throw new Error(response.data?.message || "Failed to update profile");
       }

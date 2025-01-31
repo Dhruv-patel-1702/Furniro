@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify'
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("bank");
@@ -142,7 +143,7 @@ const Checkout = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Please login to place order");
+        toast.warning("Please login to place order");
         return;
       }
       console.log("Token:", token);
@@ -160,14 +161,14 @@ const Checkout = () => {
         }
       );
       if (response.data) {
-        alert("Order placed successfully!");
+        toast.success("Order placed successfully!");
         navigate("/order");
       }
     } catch (error) {
       if (error.response?.status === 403) {
-        alert("Session expired. Please login again.");
+        toast.error("Session expired. Please login again.");
       } else {
-        alert("Failed to place order. Please try again.");
+        toast.error("Failed to place order. Please try again.");
       }
       console.error("Error:", error);
     } finally {
@@ -183,7 +184,7 @@ const Checkout = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Please login to update address");
+        toast.warning("Please login to update address");
         return;
       }
       
@@ -199,14 +200,14 @@ const Checkout = () => {
       );
       
       if (response.data) {
-        alert("Address updated successfully!");
+        toast.success("Address updated successfully!");
         navigate("/myAddress");
       }
     } catch (error) {
       if (error.response?.status === 403) {
-        alert("Session expired. Please login again.");
+        toast.error("Session expired. Please login again.");
       } else {
-        alert("Failed to update address. Please try again.");
+        toast.error("Failed to update address. Please try again.");
       }
       console.error("Error:", error);
     } finally {

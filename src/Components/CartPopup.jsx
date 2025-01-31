@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 const CartPopup = ({ onClose }) => {
   const navigate = useNavigate();
   const {
@@ -138,30 +139,39 @@ const CartPopup = ({ onClose }) => {
         return;
       }
 
+      const itemToRemove = cartItems.find(item => item.cartId === productId);
+      if (!itemToRemove) {
+        toast.error("Item not found in cart");
+        return;
+      }
+
       const response = await axios.delete(
-        'https://ecommerce-shop-qg3y.onrender.com/api/cart/removeCart',
+        `https://ecommerce-shop-qg3y.onrender.com/api/cart/removeCart`,
         {
           headers: {
-            'Authorization': `${token}`,
-            'Content-Type': 'application/json'
+            'Authorization': `${token}`
           },
-          data: {
-            productId: productId,
-          }
+          data: { productId }
         }
       );
 
+      const updatedCartItems = cartItems.filter(item => item.cartId !== productId);
+      setCartItems(updatedCartItems);
+      
       if (response.data.success) {
-        const updatedCartItems = cartItems.filter(item => item.cartId !== productId);
-        setCartItems(updatedCartItems);
         toast.success("Item removed from cart");
-        fetchCartData();
+      } else if (response.data.message === "Cart not found for this user") {
+        setCartItems([]);
+        toast.info("Cart is empty");
       } else {
-        toast.error(response.data.message || "Failed to remove item");
+        toast.warning("Failed to remove cart item");
       }
+
     } catch (error) {
       console.error("Error removing item:", error);
-      toast.error('Failed to remove item from cart');
+      const updatedCartItems = cartItems.filter(item => item.cartId !== productId);
+      setCartItems(updatedCartItems);
+      toast.warning("Failed to remove cart item");
     }
   };
 

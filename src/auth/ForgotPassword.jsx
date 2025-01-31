@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {toast} from 'react-toastify'
 
 const ForgotPassword = () => {
   const [identifier, setIdentifier] = useState('');
@@ -22,7 +23,7 @@ const ForgotPassword = () => {
     const isMobile = mobileRegex.test(identifier);
 
     if (!isEmail && !isMobile) {
-      alert('Please enter a valid email address or 10-digit mobile number');
+      ('Please enter a valid email address or 10-digit mobile number');
       return;
     }
 
@@ -31,12 +32,12 @@ const ForgotPassword = () => {
       // Store identifier in localStorage
       localStorage.setItem('resetIdentifier', identifier);
       
-      alert('OTP has been sent successfully! (Default OTP: 1234)');
+      toast.success('OTP has been sent successfully! (Default OTP: 1234)');
       setStep(2);
       
     } catch (error) {
       console.error('Error:', error);
-      alert(error.response?.data?.message || 'Failed to send OTP');
+      toast.success(error.response?.data?.message || 'Failed to send OTP');
     } finally {
       setLoading(false);
     }
@@ -47,12 +48,12 @@ const ForgotPassword = () => {
 
     // Verify OTP
     if (otp !== '1234') {
-      alert('Invalid OTP! Please use 1234 for testing.');
+      toast.error('Invalid OTP! Please use 1234 for testing.');
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      alert('Passwords do not match!');
+      toast.error('Passwords do not match!');
       return;
     }
     try {
@@ -82,13 +83,13 @@ const ForgotPassword = () => {
         localStorage.removeItem('resetIdentifier'); // Clean up
         navigate('/');
       } else {
-        alert(response.data.message || 'Failed to reset password');
+        toast.error(response.data.message || 'Failed to reset password');
       }
     } catch (error) {
       if (error.response?.status === 500) {
-        alert('Server error. Please try again later.');
+        toast.error('Server error. Please try again later.');
       } else {
-        alert(error.response?.data?.message || 'Failed to reset password. Please try again.');
+        TouchList.error(error.response?.data?.message || 'Failed to reset password. Please try again.');
       }
       console.error('API Error:', error);
     } finally {

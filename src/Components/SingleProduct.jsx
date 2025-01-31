@@ -7,6 +7,7 @@ import { useCart } from "../context/CartContext";
 import { useCompare } from "../context/CompareContext";
 import { TbBackground } from "react-icons/tb";
 import axios from "axios";
+import {toast} from 'react-toastify'
 
 const SingleProduct = () => {
   const navigate = useNavigate();
@@ -98,12 +99,12 @@ const handleAddToCart = () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    alert("You need to log in to add items to the cart.");
+    toast.warning("You need to log in to add items to the cart.");
     return;
   }
 
   if (!product?._id) {
-    alert("Invalid product. Please try again.");
+    toast.error("Invalid product. Please try again.");
     console.error("Error: Missing productId", product);
     return;
   }
@@ -145,7 +146,7 @@ const handleAddToCart = () => {
     })
     .catch((error) => {
       const errorMessage = error.response?.data?.message || "Failed to add product to cart. Please try again.";
-      alert(`❌ Error: ${errorMessage}`);
+      toast.error(`❌ Error: ${errorMessage}`);
       console.error("Error adding to cart:", error);
     })
     .finally(() => {

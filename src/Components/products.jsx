@@ -62,20 +62,21 @@ const Products = () => {
   };
 
   return (
-    <div className="w-full mx-auto py-8 md:py-16">
+    <div className="w-full mx-auto py-8 md:py-16" >
       <div className="text-center mb-16 md:mt-16 ">
         <h2 className="text-2xl md:text-[40px] font-bold text-[#3A3A3A] mb-3">
           Our Products
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8" > 
         {products.map((product, index) => (
           <div
             key={product.id || `product-${index}`}
             className="bg-[#F4F5F7] group relative w-full cursor-pointer mx-auto max-w-[300px] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
-          >
-            <div className="relative overflow-hidden">
+            onClick={() => handleProductClick(product)}
+         >
+            <div className="relative overflow-hidden" >
               <div className="relative">
                 <img
                   src={
