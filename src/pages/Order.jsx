@@ -4,7 +4,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Checkout = () => {
+const Order = () => {
   const [loading, setLoading] = useState(false);
   const [shippingAddress, setShippingAddress] = useState(null);
   const [error, setError] = useState(null);
@@ -289,4 +289,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default Order;
