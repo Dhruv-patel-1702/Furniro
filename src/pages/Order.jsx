@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Order = () => {
@@ -9,10 +9,10 @@ const Order = () => {
   const [shippingAddress, setShippingAddress] = useState(null);
   const [error, setError] = useState(null);
   const { cartItems, cartTotal, clearCart: clearCartFunction } = useCart();
-  console.log(cartItems)
+  console.log(cartItems);
   const navigate = useNavigate();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   const [orderDetails, setOrderDetails] = useState({
     orderId: "#ORD" + Math.floor(Math.random() * 1000000),
@@ -22,9 +22,18 @@ const Order = () => {
     tax: cartTotal * 0.1,
   });
 
+  const location = useLocation();
+  const { state } = location;
+
   useEffect(() => {
     fetchAddress();
   }, []);
+
+  useEffect(() => {
+    if (state?.selectedAddress) {
+      setSelectedAddress(state.selectedAddress);
+    }
+  }, [state]);
 
   useEffect(() => {
     if (shippingAddress) {
@@ -70,8 +79,6 @@ const Order = () => {
       setLoading(false);
     }
   };
-
-  
 
   const calculateTotal = () => {
     return cartTotal + orderDetails.shipping + orderDetails.tax;
@@ -119,7 +126,6 @@ const Order = () => {
         orderId: orderDetails.orderId,
       };
 
-      
       const response = await axios.post(
         "https://ecommerce-shop-qg3y.onrender.com/api/order/createOrder",
         orderData,
@@ -131,7 +137,7 @@ const Order = () => {
         }
       );
 
-      console.log('Response from API:', response.data);
+      console.log("Response from API:", response.data);
 
       if (response.data && response.data.success) {
         const orderId = response.data.data._id;
@@ -141,12 +147,12 @@ const Order = () => {
           "🎉 Order placed successfully! You can view your order details in My Orders page"
         );
 
-        if (typeof clearCartFunction === 'function') {
+        if (typeof clearCartFunction === "function") {
           clearCartFunction();
         } else {
-          console.warn('clearCart is not available');
+          console.warn("clearCart is not available");
         }
-        
+
         setTimeout(() => {
           navigate("/myorders");
         }, 2000);
@@ -163,24 +169,33 @@ const Order = () => {
     }
   };
 
+  const handleEdit = () => {
+    navigate("/myAddress", { state: { currentAddress: selectedAddress } });
+  };
+
   const renderShippingAddress = () => {
     if (loading) return <p className="text-gray-600">Loading address...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
-    if (!shippingAddress)
+    if (!selectedAddress)
       return <p className="text-gray-600">No address found</p>;
 
     return (
       <div className="space-y-1">
-        <p className="font-medium">{shippingAddress.fullName}</p>
-        <p>{shippingAddress.addressLine1}</p>
-        {shippingAddress.addressLine2 && <p>{shippingAddress.addressLine2}</p>}
-        {shippingAddress.landmark && (
-          <p>Landmark: {shippingAddress.landmark}</p>
+        <p className="font-medium">{selectedAddress.fullName}</p>
+        <p>{selectedAddress.addressLine1}</p>
+        {selectedAddress.addressLine2 && <p>{selectedAddress.addressLine2}</p>}
+        {selectedAddress.landmark && (
+          <p>Landmark: {selectedAddress.landmark}</p>
         )}
-        <p>{`${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.pincode}`}</p>
-        <p>{shippingAddress.country}</p>
-        <p>Phone: {shippingAddress.phoneNumber}</p>
-        <p>Address Type: {shippingAddress.addressType}</p>
+        <p>{`${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}`}</p>
+        <p>{selectedAddress.country}</p>
+        <p>Phone: {selectedAddress.phoneNumber}</p>
+        <button
+          onClick={() => handleEdit()}
+          className="flex-1 px-8 py-2 mt-2 bg-[#B88E2F] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
+        >
+          Change Address
+        </button>
       </div>
     );
   };
@@ -247,20 +262,6 @@ const Order = () => {
         <p className="font-bold">Total: ₹{calculateTotal().toFixed(2)}</p>
       </div>
 
-      <div className="bg-[#FFF9F1] p-6 rounded-lg mb-6 border border-[#B88E2F]/20">
-        <h2 className="text-xl font-semibold mb-4 text-[#B88E2F]">
-          Payment Method
-        </h2>
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            value="COD"
-            checked={selectedPaymentMethod === "COD"}
-            onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-          />
-          <span>Cash on Delivery</span>
-        </label>
-      </div>
 
       <div className="bg-[#FFF9F1] p-6 rounded-lg border border-[#B88E2F]/20">
         <h2 className="text-xl font-semibold mb-4 text-[#B88E2F]">
@@ -273,7 +274,7 @@ const Order = () => {
         onClick={createOrder}
         disabled={loading}
         className={`w-full ${
-          loading ? 'bg-[#B88E2F]/50' : 'bg-[#B88E2F]'
+          loading ? "bg-[#B88E2F]/50" : "bg-[#B88E2F]"
         } text-white py-3 mt-6 rounded-md flex items-center justify-center`}
       >
         {loading ? (
@@ -282,7 +283,7 @@ const Order = () => {
             Processing...
           </>
         ) : (
-          'Place Order'
+          "Place Order"
         )}
       </button>
     </div>

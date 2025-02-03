@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+// Function to handle scrolling to the top
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
 const Footer = () => {
+  useEffect(() => {
+    // Scroll to top when the component mounts
+    scrollToTop();
+  }, []);
+
   return (
     <footer className="w-full bg-white py-8 md:py-12 border-t">
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-48">
@@ -25,7 +35,8 @@ const Footer = () => {
             <ul className="space-y-3 md:space-y-4">
               <li>
                 <Link
-                  to="/"
+                  to="/home"
+                  onClick={scrollToTop}
                   className="text-sm md:text-base text-black hover:text-[#B88E2F] transition-colors"
                 >
                   Home
@@ -34,6 +45,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/shop"
+                  onClick={scrollToTop}
                   className="text-sm md:text-base text-black hover:text-[#B88E2F] transition-colors"
                 >
                   Shop
@@ -42,6 +54,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/blog"
+                  onClick={scrollToTop}
                   className="text-sm md:text-base text-black hover:text-[#B88E2F] transition-colors"
                 >
                   Blog
@@ -50,6 +63,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
+                  onClick={scrollToTop}
                   className="text-sm md:text-base text-black hover:text-[#B88E2F] transition-colors"
                 >
                   Contact

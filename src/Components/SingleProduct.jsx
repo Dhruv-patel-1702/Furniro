@@ -77,18 +77,13 @@ const SingleProduct = () => {
   ];
 
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("L");
+  const [selectedSize, setSelectedSize] = useState(product?.size?.[0] || "L");
   const [selectedColor, setSelectedColor] = useState("brown");
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
   const [isLoading, setIsLoading] = useState(false);
 
-  const images = product?.images || [
-    product?.image,
-    product?.image,
-    product?.image,
-    product?.image,
-  ];
+  const images = product?.images || [product?.image];
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -139,7 +134,7 @@ const handleAddToCart = () => {
           selectedColor,
           totalPrice
         });
-        alert(`✅ ${product.name} has been added to your cart successfully!`);
+        toast.success(`✅ ${product.name} has been added to your cart successfully!`);
       } else {
         throw new Error(response.data.message || "Failed to add to cart");
       }
@@ -151,7 +146,7 @@ const handleAddToCart = () => {
     })
     .finally(() => {
       setIsLoading(false);
-    });
+    }); 
 };
 
   
@@ -179,6 +174,17 @@ const handleAddToCart = () => {
             </Link>
             <span>{">"}</span>
             <span className="text-black">{product?.name || "Product"}</span>
+          </div>
+          <div className="flex flex-col lg:flex-row gap-4">
+            {/* Display the first image at the top */}
+            <div className="flex flex-col">
+              <img
+                src={images[0]} // Display the first image
+                alt={product.name}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            {/* Other product details go here */}
           </div>
         </div>
       </div>

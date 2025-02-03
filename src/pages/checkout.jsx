@@ -161,8 +161,7 @@ const Checkout = () => {
         }
       );
       if (response.data) {
-        toast.success("Order placed successfully!");
-        navigate("/order");
+        navigate("/myAddress");
       }
     } catch (error) {
       if (error.response?.status === 403) {

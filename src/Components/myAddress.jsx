@@ -46,7 +46,7 @@ const MyAddress = () => {
   };
 
   const handleEdit = (address) => {
-    navigate("/checkout", { state: { editAddress: address } });
+    navigate("/checkout", { state: { editAddress: address, selectedAddress: address } });
   };
 
   const handleDelete = async (addressId) => {
@@ -68,13 +68,68 @@ const MyAddress = () => {
       );
 
       if (response.data && response.data.success) {
-        fetchAddresses();
+        fetchAddresses(addressId);
       } else {
         console.error("Failed to delete address:", response.data);
       }
     } catch (error) {
       console.error("Error deleting address:", error);
     }
+  };
+
+  const handleSelect = async (addressId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found");
+        return;
+      }
+
+      const response = await axios.get(
+        `https://ecommerce-shop-qg3y.onrender.com/api/address/displayAddress?addressId=${addressId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data && response.data.success) {
+        navigate("/order", { state: { selectedAddress: response.data.data } });
+      } else {
+        console.error("Failed to fetch selected address:", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching selected address:", error);
+    }
+  };
+
+  const renderShippingAddress = () => {
+    if (loading) return <p className="text-gray-600">Loading address...</p>;
+    if (error) return <p className="text-red-500">{error}</p>;
+    if (!selectedAddress)
+      return <p className="text-gray-600">No address found</p>;
+
+    return (
+      <div className="space-y-1">
+        <p className="font-medium">{selectedAddress.fullName}</p>
+        <p>{selectedAddress.addressLine1}</p>
+        {selectedAddress.addressLine2 && <p>{selectedAddress.addressLine2}</p>}
+        {selectedAddress.landmark && (
+          <p>Landmark: {selectedAddress.landmark}</p>
+        )}
+        <p>{`${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}`}</p>
+        <p>{selectedAddress.country}</p>
+        <p>Phone: {selectedAddress.phoneNumber}</p>
+        <button
+          onClick={() => handleEdit()}
+          className="flex-1 px-8 py-2 mt-2 bg-[#B88E2F] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
+        >
+          Change Address
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -126,24 +181,42 @@ const MyAddress = () => {
                   <div className="flex gap-3 pt-4 border-t">
                     <button
                       onClick={() => handleEdit(address)}
-                      className="flex-1 px-4 py-2 bg-[#B88E2F] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
+                      className="flex-1 px-4 py-2 bg-[#6dc957] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(address._id)}
-                      className="flex-1 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition-colors"
+                      className="flex-1 px-4 py-2 bg-red-400 text-white rounded-md hover:bg-red-700 transition-colors"
                     >
                       Delete
                     </button>
                   </div>
+                  <button
+                    onClick={() => handleSelect(address._id)}
+                    className="flex-1 w-full px-4 py-2 bg-[#ceaf6d] text-white rounded-md hover:bg-[#947d4b] transition-colors"
+                  >
+                    Select Address
+                  </button>
                 </div>
               </div>
             ))
           ) : (
-            <p className="col-span-3 text-center text-gray-500">
-              No addresses found.
-            </p>
+            <>
+              <div className="text-center flex justify-center">
+              <div>
+              <p className="col-span-3 text-center text-gray-500">
+                No addresses found.
+              </p>
+              <button
+                onClick={() => navigate("/checkout")}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Add New Address
+              </button>
+              </div>
+              </div>
+            </>
           )}
         </div>
       </div>

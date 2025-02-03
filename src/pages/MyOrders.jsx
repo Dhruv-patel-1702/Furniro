@@ -91,7 +91,9 @@ const MyOrders = () => {
             
             {orders.length === 0 ? (
                 <div className="text-center py-8">
-                    <p className="text-gray-600">No orders found.</p>
+                    <div className="bg-white rounded-lg shadow-sm p-6">
+                        <p className="text-gray-600">No orders found.</p>
+                    </div>
                     <Link 
                         to="/shop" 
                         className="inline-block mt-4 px-6 py-2 bg-[#3BB77E] text-white rounded-full hover:bg-[#2a9c66] transition-colors"
@@ -131,12 +133,6 @@ const MyOrders = () => {
                                     <p className="text-sm text-gray-600">
                                         Payment Method: <span className="font-medium">Cash on Delivery</span>
                                     </p>
-                                    <Link
-                                        to={`/order/${order._id}`}
-                                        className="text-[#3BB77E] hover:text-[#2a9c66] font-medium flex items-center"
-                                    >
-                                        View Details →
-                                    </Link>
                                 </div>
                             </div>
                         </div>

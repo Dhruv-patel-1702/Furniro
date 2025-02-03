@@ -53,6 +53,9 @@ const Products = () => {
     navigate("/singleproduct", {
       state: { product: productData },
     });
+
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
   };
 
   const handleCompareClick = (event, product) => {
@@ -104,10 +107,7 @@ const Products = () => {
                 </span>
               )}
 
-              <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-6 md:px-9 py-2 md:py-3 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-sm md:text-base whitespace-nowrap"
-               onClick={() => handleProductClick(product)}>
-                Add to cart 
-              </button>
+             
 
               <div className="absolute bottom-4 md:bottom-6 left-0 right-0 flex justify-center gap-4 md:gap-7 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
                 <div className="flex items-center gap-1 md:gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">

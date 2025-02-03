@@ -15,6 +15,7 @@ const CartPopup = ({ onClose }) => {
     setIsCartOpen,
     cartTotal,
     setCartItems,
+    clearCart,
   } = useCart();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -85,7 +86,9 @@ const CartPopup = ({ onClose }) => {
         'https://ecommerce-shop-qg3y.onrender.com/api/cart/updateCart',
         {
           productId: itemId,
-          quantity: newQuantity
+          quantity: newQuantity,
+          productColour: currentItem.selectedColor,
+          productSize: currentItem.selectedSize
         },
         { 
           headers: { 
@@ -175,6 +178,10 @@ const CartPopup = ({ onClose }) => {
     }
   };
 
+  const handleClose = () => {
+    clearCart();
+    onClose();
+  };
 
   if (isLoading) {
     return <div className="text-center py-8">Loading cart...</div>;
@@ -212,11 +219,15 @@ const CartPopup = ({ onClose }) => {
                 {cartItems.map((item) => (
                   <div key={item.cartId} className="flex gap-4">
                     <div className="w-[100px] h-[100px] bg-[#F9F1E7] p-2">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-contain overflow-hidden"
-                      />
+                      {item.image ? (
+                        <img
+                          src={item.image[0]}
+                          alt={item.name}
+                          className="w-full h-full object-contain overflow-hidden"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+                      )}
                     </div>
 
                     {/* Product Details */}
@@ -269,15 +280,9 @@ const CartPopup = ({ onClose }) => {
 
                   {/* Action Buttons */}
                   <p className="border-t mb-6"></p>
-                  <div className="grid grid-cols-3 gap-2 px-6">
+                  <div className="flex items-center justify-center gap-x-2">
                     <button
-                      onClick={() => handleNavigation("/order")}
-                      className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
-                    >
-                      Cart
-                    </button>
-                    <button
-                      onClick={() => handleNavigation("/checkout")}
+                      onClick={() => handleNavigation("/myAddress")}
                       className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
                     >
                       Checkout

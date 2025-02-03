@@ -5,6 +5,7 @@ import {toast} from 'react-toastify'
 
 const ForgotPassword = () => {
   const [identifier, setIdentifier] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [otp, setOtp] = useState('');
@@ -32,7 +33,7 @@ const ForgotPassword = () => {
       // Store identifier in localStorage
       localStorage.setItem('resetIdentifier', identifier);
       
-      toast.success('OTP has been sent successfully! (Default OTP: 1234)');
+      
       setStep(2);
       
     } catch (error) {
@@ -47,10 +48,7 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     // Verify OTP
-    if (otp !== '1234') {
-      toast.error('Invalid OTP! Please use 1234 for testing.');
-      return;
-    }
+   
 
     if (newPassword !== confirmPassword) {
       toast.error('Passwords do not match!');
@@ -79,7 +77,7 @@ const ForgotPassword = () => {
       );
 
       if (response.data.success) {
-        alert('Password reset successful! Please login with your new password.');
+        toast.success('Password reset successful! Please login with your new password.');
         localStorage.removeItem('resetIdentifier'); // Clean up
         navigate('/');
       } else {
@@ -179,13 +177,13 @@ const ForgotPassword = () => {
           {loading
             ? 'Processing...'
             : step === 1
-            ? 'Send OTP'
+            ? 'Change Password'
             : 'Reset Password'}
         </button>
         
         <button
           type="button"
-          onClick={() => navigate('/login')}
+          onClick={() => navigate('/')}
           className="w-full bg-gray-500 text-white py-2 rounded-md mt-2 hover:bg-gray-600 transition-colors"
         >
           Back to Login

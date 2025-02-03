@@ -17,7 +17,7 @@ import Register from "./auth/Register";
 import Profile from "./Components/profile";
 import ForgotPassword from "./auth/ForgotPassword";
 import MyAddress from "./Components/myAddress";
-import Order from "./pages/Order";
+import Order from "./pages/order";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MyOrders from './pages/MyOrders';
