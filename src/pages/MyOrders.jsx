@@ -1,138 +1,154 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const MyOrders = () => {
+const AllOrders = () => {
+    const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    setError('Please login to view orders');
-                    return;
-                }
-
-                const response = await axios.get(
-                    'https://ecommerce-shop-qg3y.onrender.com/api/order/displayAllOrder',
-                    {
-                        headers: {
-                            'Authorization': `${token}`
-                        }
-                    }
-                );
-
-                if (response.data.success) {
-                    const sortedOrders = response.data.data.sort((a, b) => {
-                        return new Date(b.createdAt) - new Date(a.createdAt);
-                    });
-                    setOrders(sortedOrders);
-                }
-            } catch (error) {
-                console.error('Error fetching orders:', error);
-                setError('Failed to fetch orders');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchOrders();
+        fetchAllOrders();
     }, []);
 
-    const fetchOrderDetails = async (orderId) => {
-        console.log("Attempting to fetch details for order ID:", orderId);
-
+    const fetchAllOrders = async () => {
         try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                toast.error('Please login to view orders');
+                navigate('/login');
+                return;
+            }
+
             const response = await axios.get(
-                `https://ecommerce-shop-qg3y.onrender.com/api/order/displayOrder/${orderId}`,
+                'https://ecommerce-shop-qg3y.onrender.com/api/order/displayAllOrder',
                 {
                     headers: {
-                        'Authorization': `${localStorage.getItem('token')}`
+                        'Authorization': ` ${token}`
                     }
                 }
             );
 
             if (response.data.success) {
-                console.log("Order details fetched successfully:", response.data.data);
+                setOrders(response.data.data);
             } else {
-                setError('Failed to fetch order details: ' + response.data.message);
+                toast.error(response.data.message || 'Failed to fetch orders');
             }
         } catch (error) {
-            console.error('Error fetching order details:', error);
-            setError('Failed to fetch order details: ' + (error.response ? error.response.data.message : error.message));
+            console.error('Error fetching orders:', error);
+            toast.error(error.response?.data?.message || 'Error loading orders');
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
     };
 
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#3BB77E]"></div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                    {error}
-                </div>
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#b98f32]"></div>
             </div>
         );
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 md:mt-[220px] lg:mt-0">
-            <h1 className="text-2xl font-semibold text-[#253D4E] mb-6">My Orders</h1>
+        <div className="max-w-7xl mx-auto px-4 py-8 lg:mt-40 ">
+            <h1 className="text-3xl font-bold text-gray-800 mb-8">My Orders</h1>
             
             {orders.length === 0 ? (
-                <div className="text-center py-8">
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                        <p className="text-gray-600">No orders found.</p>
-                    </div>
-                    <Link 
-                        to="/shop" 
-                        className="inline-block mt-4 px-6 py-2 bg-[#3BB77E] text-white rounded-full hover:bg-[#2a9c66] transition-colors"
+                <div className="text-center py-12 ">
+                    <p className="text-gray-600 text-lg">No orders found</p>
+                    <button
+                        onClick={() => navigate('/shop')}
+                        className="mt-4 bg-[#b98f32] text-white px-6 py-2 rounded-full hover:bg-[#2a9c66] transition-colors"
                     >
-                        Continue Shopping
-                    </Link>
+                        Start Shopping
+                    </button>
                 </div>
             ) : (
-                <div className="space-y-6">
+                <div className="space-y-6 border-[2px]">
                     {orders.map((order) => (
-                        <div key={order._id} className="bg-white rounded-lg shadow-sm p-6">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                                <div className="space-y-1">
+                        <div key={order._id} className="bg-white rounded-lg shadow-md p-6">
+                            {/* Order Header */}
+                            <div className="flex justify-between items-start border-b pb-4 mb-4">
+                                <div>
                                     <p className="text-sm text-gray-600">Order ID:</p>
                                     <p className="font-medium">{order._id}</p>
+                                    <p className="text-sm text-gray-600 mt-1">Ordered on:</p>
+                                    <p className="font-medium">{formatDate(order.createdAt)}</p>
                                 </div>
-                                <div className="mt-2 md:mt-0">
-                                    <p className="text-sm text-gray-600">Ordered on:</p>
-                                    <p className="font-medium">
-                                        {new Date(order.createdAt).toLocaleString('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                            hour: '2-digit',
-                                            minute: '2-digit'
-                                        })}
-                                    </p>
-                                </div>
-                                <div className="mt-2 md:mt-0 text-right">
-                                    <p className="text-sm text-gray-600">Total Amount:</p>
-                                    <p className="text-lg font-semibold text-[#3BB77E]">₹{order.totalAmount}</p>
+                                <div className="text-right">
+                                    <p className="text-lg font-bold text-[#b98f32]">₹{order.totalAmount}</p>
+                                    <p className="text-sm text-gray-600">{order.paymentMethod}</p>
+                                    
                                 </div>
                             </div>
 
-                            <div className="border-t pt-4">
-                                <div className="flex justify-between items-center">
-                                    <p className="text-sm text-gray-600">
-                                        Payment Method: <span className="font-medium">Cash on Delivery</span>
-                                    </p>
+                            {/* Order Items */}
+                            <div className="space-y-4">
+                                {order.items.map((item, index) => (
+                                    <div key={index} className="flex items-start gap-4">
+                                        <div className="w-20 h-20 flex-shrink-0">
+                                            {item.productDetails?.product_images?.[0] ? (
+                                                <img
+                                                    src={item.productDetails.product_images[0]}
+                                                    alt={item.productName}
+                                                    className="w-full h-full object-cover rounded"
+                                                    onError={(e) => {
+                                                        e.target.onerror = null;
+                                                        e.target.parentElement.innerHTML = `
+                                                            <div class="w-full h-full bg-gray-100 rounded flex items-center justify-center">
+                                                                <span class="text-gray-400 text-xs text-center p-2">${item.productName}</span>
+                                                            </div>
+                                                        `;
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gray-100 rounded flex items-center justify-center">
+                                                    <span className="text-gray-400 text-xs text-center p-2">{item.productName}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="font-medium">{item.productName}</h3>
+                                            <div className="mt-1 text-sm text-gray-600 grid grid-cols-2 gap-2">
+                                                <p>Brand: {item.productDetails?.brand || 'N/A'}</p>
+                                                <p>Size: {item.productSize}</p>
+                                                <p>Color: {item.productColour}</p>
+                                                <p>Quantity: {item.quantity}</p>
+                                            </div>
+                                            <p className="mt-1 text-[#b98f32] font-medium">
+                                                ₹{item.price} × {item.quantity}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Delivery Address */}
+                            <div className="mt-4 pt-4 border-t">
+                                <h4 className="font-medium mb-2">Delivery Address</h4>
+                                <div className="text-sm text-gray-600">
+                                    <p className="font-medium text-gray-800">{order.deliveryAddress.fullName}</p>
+                                    <p className="mt-1">📱 {order.deliveryAddress.phoneNumber}</p>
+                                    <p>{order.deliveryAddress.addressLine1}</p>
+                                    {order.deliveryAddress.addressLine2 && (
+                                        <p>{order.deliveryAddress.addressLine2}</p>
+                                    )}
+                                    {order.deliveryAddress.landmark && (
+                                        <p>{order.deliveryAddress.landmark}</p>
+                                    )}
+                                    <p>{order.deliveryAddress.city}, {order.deliveryAddress.state} - {order.deliveryAddress.pincode}</p>
                                 </div>
                             </div>
                         </div>
@@ -143,4 +159,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders; 
+export default AllOrders; 

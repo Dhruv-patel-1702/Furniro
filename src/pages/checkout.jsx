@@ -40,7 +40,7 @@ const Checkout = () => {
         state: editAddress.state || "",
         pincode: editAddress.pincode || "",
         country: editAddress.country || "",
-        addressType: editAddress.addressType || "",
+        address_type: editAddress.address_type || "",
       });
     }
   }, [location]);
@@ -78,7 +78,7 @@ const Checkout = () => {
               state: defaultAddress.state || "",
               pincode: defaultAddress.pincode || "",
               country: defaultAddress.country || "",
-              addressType: defaultAddress.addressType || "",
+              address_type: defaultAddress.address_type || "",
             });
           }
         }
@@ -128,8 +128,8 @@ const Checkout = () => {
     if (!userDetails.country?.trim()) {
       newErrors.country = "Country is required";
     }
-    if (!userDetails.addressType) {
-      newErrors.addressType = "Please select address type";
+    if (!userDetails.address_type) {
+      newErrors.address_type = "Please select address type";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -160,7 +160,8 @@ const Checkout = () => {
           },
         }
       );
-      if (response.data) {
+      if (response.data && response.data.success) {
+        toast.success("Address added successfully!");
         navigate("/myAddress");
       }
     } catch (error) {
@@ -338,8 +339,8 @@ const Checkout = () => {
                 <div>
                   <label className="block text-sm mb-2">Address Type</label>
                   <select
-                    name="addressType"
-                    value={userDetails.addressType}
+                    name="address_type"
+                    value={userDetails.address_type}
                     onChange={handleInputChange}
                     className="w-full p-2 border border-gray-200 rounded"
                   >
@@ -368,57 +369,6 @@ const Checkout = () => {
           <div className="lg:pl-8">
             <div className="space-y-4">
               
-
-              {/* Payment Methods */}
-              <div className="space-y-3 pt-4">
-                <div className="flex items-start gap-2">
-                  <input
-                    type="radio"
-                    name="payment"
-                    id="bank"
-                    checked={paymentMethod === "bank"}
-                    onChange={() => setPaymentMethod("bank")}
-                    className="mt-1"
-                  />
-                  <div>
-                    <label htmlFor="bank" className="text-sm">
-                      Direct Bank Transfer
-                    </label>
-                    {paymentMethod === "bank" && (
-                      <p className="text-sm text-gray-500 mt-2">
-                        Make your payment directly into our bank account. Please
-                        use your Order ID as the payment reference. Your order
-                        will not be shipped until the funds have cleared in our
-                        account.
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="payment"
-                    id="cash"
-                    checked={paymentMethod === "cash"}
-                    onChange={() => setPaymentMethod("cash")}
-                  />
-                  <label htmlFor="cash" className="text-sm">
-                    Cash On Delivery
-                  </label>
-                </div>
-              </div>
-
-              <div className="text-sm text-gray-500 pt-4 ml-6">
-                Your personal data will be used to support your experience
-                throughout this website, to manage access to your account, and
-                for other purposes described in our{" "}
-                <a href="/privacy-policy" className="text-black underline">
-                  privacy policy
-                </a>
-                .
-              </div>
-
               <div className="flex justify-center space-x-4">
                 {isEditMode ? (
                   <button
@@ -434,7 +384,7 @@ const Checkout = () => {
                     disabled={isLoading}
                     className="w-full sm:w-[200px] bg-white text-black border border-gray-300 py-2.5 rounded text-sm hover:bg-black hover:text-white transition-colors mt-4 disabled:opacity-50"
                   >
-                    {isLoading ? "Proceed to Payment..." : "Proceed to Payment"}
+                    {isLoading ? "Adding Address..." : "Add New Address"}
                   </button>
                 )}
                 <Link to="/myAddress">

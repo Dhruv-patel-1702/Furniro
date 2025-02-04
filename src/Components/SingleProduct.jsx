@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ShareIcon from "@mui/icons-material/Share";
 import CompareIcon from "@mui/icons-material/Compare";
@@ -12,78 +12,42 @@ import {toast} from 'react-toastify'
 const SingleProduct = () => {
   const navigate = useNavigate();
   const { addToCart, setIsCartOpen } = useCart();
-  const { addToCompare } = useCompare();
+  const { addToCompare } = useCompare();  
   const location = useLocation();
   const product = location.state?.product;
 
-  const products = [
-    {
-      id: 1,
-      name: "Syltherine",
-      description: "Stylish cafe chair",
-      price: "Rp 2.500.000",
-      oldPrice: "Rp 3.500.000",
-      image: "./assets/Syltherine.png",
-      images: [
-        "./assets/Grifo.png",
-        "./assets/Grifo.png",
-        "./assets/Grifo.png",
-        "./assets/Grifo.png",
-      ],
-      discount: "-30%",
-    },
-    {
-      id: 2,
-      name: "Leviosa",
-      description: "Stylish cafe chair",
-      price: "Rp 2.500.000",
-      image: "./assets/Pingky.png",
-      images: [
-        "./assets/Pingky.png",
-        "./assets/Pingky.png",
-        "./assets/Pingky.png",
-        "./assets/Pingky.png",
-      ],
-    },
-    {
-      id: 3,
-      name: "Lolito",
-      description: "Luxury big sofa",
-      price: "Rp 7.000.000",
-      oldPrice: "Rp 14.000.000",
-      image: "./assets/Lolito.png",
-      discount: "-50%",
-      images: [
-        "./assets/Lolito.png",
-        "./assets/Lolito.png",
-        "./assets/Lolito.png",
-        "./assets/Lolito.png",
-      ],
-    },
-    {
-      id: 4,
-      name: "Respira",
-      description: "Outdoor bar table and stool",
-      price: "Rp 500.000",
-      image: "./assets/Respira.png",
-      isNew: true,
-      images: [
-        "./assets/Pingky.png",
-        "./assets/Pingky.png",
-        "./assets/Pingky.png",
-        "./assets/Pingky.png",
-      ],
-    },
-  ];
-
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(product?.size?.[0] || "L");
-  const [selectedColor, setSelectedColor] = useState("brown");
+  const [selectedSize, setSelectedSize] = useState(product?.size?.[0] || "6");
+  const [selectedColor, setSelectedColor] = useState(product?.colour?.[0] || "white");
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState("description");
   const [isLoading, setIsLoading] = useState(false);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   const images = product?.images || [product?.image];
+
+  useEffect(() => {
+    const fetchRelatedProducts = async () => {
+      try {
+        const response = await axios.get(`https://ecommerce-shop-qg3y.onrender.com/api/product/display?id=${product._id}`);
+        
+        // Check if the response contains the expected data structure
+        if (response.data.success && Array.isArray(response.data.data.similarProducts)) {
+          setRelatedProducts(response.data.data.similarProducts); // Update to use the correct path
+        } else {
+          console.log("Expected an array but got:", response.data);
+          setRelatedProducts([]); 
+        }
+      } catch (error) {
+        console.error("Error fetching related products:", error);
+        setRelatedProducts([]); 
+      }
+    };
+
+    if (product?._id) {
+      fetchRelatedProducts();
+    }
+  }, [product]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -101,6 +65,17 @@ const handleAddToCart = () => {
   if (!product?._id) {
     toast.error("Invalid product. Please try again.");
     console.error("Error: Missing productId", product);
+    return;
+  }
+
+  // Check if size and color are selected
+  if (!selectedSize) {
+    toast.warning("Size is not selected. Please select a size.");
+    return;
+  }
+
+  if (!selectedColor) {
+    toast.warning("Color is not selected. Please select a color.");
     return;
   }
 
@@ -194,24 +169,28 @@ const handleAddToCart = () => {
           <div className="flex flex-col-reverse lg:flex-row gap-4">
             {/* Thumbnails */}
             <div className="flex flex-row lg:flex-col gap-2 justify-start">
-              {product?.product_images?.map((image, index) => (
-                <div
-                  key={index}
-                  className={`w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] cursor-pointer transition-all
-                    ${
-                      selectedImage === index
-                        ? "border-2 border-[#B88E2F] bg-[#F9F1E7]"
-                        : "border border-[#D9D9D9] hover:border-[#B88E2F]"
-                    }`}
-                  onClick={() => setSelectedImage(index)}
-                >
-                  <img
-                    src={image}
-                    alt={`View ${index + 1}`}
-                    className="w-full h-full object-contain p-1"
-                  />
-                </div>
-              ))}
+              {Array.isArray(product?.product_images) && product.product_images.length > 0 ? (
+                product.product_images.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] cursor-pointer transition-all
+                      ${
+                        selectedImage === index
+                          ? "border-2 border-[#B88E2F] bg-[#F9F1E7]"
+                          : "border border-[#D9D9D9] hover:border-[#B88E2F]"
+                      }`}
+                    onClick={() => setSelectedImage(index)}
+                  >
+                    <img
+                      src={image}
+                      alt={`View ${index + 1}`}
+                      className="w-full h-full object-contain p-1"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div>No images available</div>
+              )}
             </div>
 
             {/* Main Image */}
@@ -442,69 +421,40 @@ const handleAddToCart = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-2 sm:px-52">
-            {products.map((product) => (
-              <div
-                key={product.id}
-                onClick={() => handleProductClick(product)}
-                className="bg-[#F4F5F7] group relative w-full cursor-pointer rounded-lg overflow-hidden"
-              >
-                <div className="relative">
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-full h-[150px] sm:h-[200px] md:h-[250px] object-cover transition-all duration-300 group-hover:blur-sm"
-                  />
-                  {product.discount && (
-                    <span className="absolute top-5 right-5 bg-[#E97171] text-white px-3 py-1 rounded-sm z-10 text-sm">
-                      {product.discount}
-                    </span>
-                  )}
-
-                  <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-[#B88E2F] px-4 py-2 rounded opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#B88E2F] hover:text-white z-20 text-base">
-                    Add to cart
-                  </button>
-
-                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
-                    <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
-                      <ShareIcon fontSize="small" />
-                      <span className="text-sm">Share</span>
-                    </div>
-                    <div
-                      onClick={handleCompareClick}
-                      className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors"
-                    >
-                      <CompareIcon fontSize="small" />
-                      <span className="text-sm">Compare</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-white cursor-pointer hover:text-[#B88E2F] transition-colors">
-                      <FavoriteBorderIcon fontSize="small" />
-                      <span className="text-sm">Like</span>
+          {Array.isArray(relatedProducts) && relatedProducts.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-2 sm:px-52">
+              {relatedProducts.map((relatedProduct) => (
+                <div
+                  key={relatedProduct._id}
+                  onClick={() => handleProductClick(relatedProduct)}
+                  className="bg-[#F4F5F7] group relative w-full cursor-pointer rounded-lg overflow-hidden"
+                >
+                  <div className="relative">
+                    <img
+                      src={relatedProduct.product_images[0]}
+                      alt={relatedProduct.name}
+                      className="w-full h-[150px] sm:h-[200px] md:h-[250px] object-cover transition-all duration-300 group-hover:blur-sm"
+                    />
+                    <div className="p-2 text-center">
+                      <h3 className="text-sm sm:text-lg md:text-lg sm:text-2xl font-semibold text-[#3A3A3A]">
+                        {relatedProduct.name}
+                      </h3>
+                      <p className="text-[#898989] my-1 text-xs sm:text-sm">
+                        {relatedProduct.description}
+                      </p>
+                      <div className="flex justify-center items-center gap-1">
+                        <span className="font-bold text-[#3A3A3A] text-sm sm:text-lg">
+                          Rs: {relatedProduct.price}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="p-2 text-center">
-                  <h3 className="text-sm sm:text-lg md:text-lg sm:text-2xl font-semibold text-[#3A3A3A]">
-                    {product.name}
-                  </h3>
-                  <p className="text-[#898989] my-1 text-xs sm:text-sm">
-                    {product.description}
-                  </p>
-                  <div className="flex justify-center items-center gap-1">
-                    <span className="font-bold text-[#3A3A3A] text-sm sm:text-lg">
-                      {product.price}
-                    </span>
-                    {product.oldPrice && (
-                      <span className="text-[#B0B0B0] line-through text-xs sm:text-sm">
-                        {product.oldPrice}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-[#9F9F9F]">No related products available.</div>
+          )}
 
           {/* Show More Button */}
           <div className="flex justify-center mt-12">

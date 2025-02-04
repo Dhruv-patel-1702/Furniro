@@ -111,7 +111,8 @@ const Shop = () => {
 
   return (
     <div className="w-full overflow-hidden">
-      {/* Hero Section */}
+        {/* Hero Section */}
+      <div>
       <div className="w-full h-[200px] md:h-[316px] bg-[url('/assets/shopbg.png')] bg-cover bg-center mt-[75px]">
         <div className="flex items-center gap-2 text-[#9F9F9F]"></div>
       </div>
@@ -119,8 +120,8 @@ const Shop = () => {
       {/* Filter and Sort Section */}
       <div className="w-full mx-auto px-4 md:px-8 lg:px-28 py-4 md:py-8 flex flex-col md:flex-row justify-between items-start md:items-center border-b bg-[#f9f1e7] space-y-4 md:space-y-0">
         {/* Left Side */}
-        <div className=" flex justify-between items-center  w-[1440px] mx-auto">
-          <div className="flex flex-wrap items-center gap-4  md:gap-8">
+        <div className="flex flex-wrap justify-between items-center w-full mx-auto">
+          <div className="flex flex-wrap items-center gap-4 md:gap-8 w-full md:w-auto">
             <button
               className="flex items-center gap-2 text-[#9F9F9F]"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -133,21 +134,17 @@ const Shop = () => {
                 </var>
               </span>
             </button>
-
             <div className="hidden md:flex items-center gap-4">
               <ViewModule className="text-[#B88E2F] cursor-pointer" />
               <ViewList className="text-[#9F9F9F] cursor-pointer" />
             </div>
-
             <div className="hidden md:block h-6 w-[1px] bg-[#9F9F9F]"></div>
-
             <p className="text-[#9F9F9F] text-sm md:text-base">
               Showing 1-16 of 32 results
             </p>
           </div>
-
           {/* Right Side */}
-          <div className="flex flex-wrap items-center gap-4 md:gap-8 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-4 md:gap-8 w-full md:w-auto justify-end mt-10">
             <div className="flex items-center gap-4 w-full md:w-auto">
               <span className="text-[#9F9F9F] text-sm md:text-base">Show</span>
               <div className="relative flex-1 md:flex-none">
@@ -159,13 +156,10 @@ const Shop = () => {
                 <KeyboardArrowDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#9F9F9F] pointer-events-none" />
               </div>
             </div>
-
             <div className="flex items-center gap-4 w-full md:w-auto">
-              <span className="text-[#9F9F9F] text-sm md:text-base">
-                Sort by
-              </span>
+              <span className="text-[#9F9F9F] text-sm md:text-base">Sort by</span>
               <div className="relative flex-1 md:flex-none">
-                <select className="w-[120px] md:w-auto appearance-none bg-white  border px-2 py-1 pr-8 rounded outline-none cursor-pointer text-sm md:text-base">
+                <select className="w-[120px] md:w-auto appearance-none bg-white border px-2 py-1 pr-8 rounded outline-none cursor-pointer text-sm md:text-base">
                   <option>Default</option>
                   <option>Price: Low to High</option>
                   <option>Price: High to Low</option>
@@ -396,6 +390,15 @@ const Shop = () => {
           </div>
         </div>
       </div>
+      </div>
+
+      {/* Related Products Section */}
+      {/* <div className="mt-16 mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+          Related Products
+        </h2>
+        <RelatedProducts products={products} handleProductClick={handleProductClick} />
+      </div> */}
     </div>
   );
 };

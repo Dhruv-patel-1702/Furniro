@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartPopup from "./CartPopup";
@@ -14,6 +14,20 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  useEffect(() => {
+    // Check if the cart should be open based on some condition
+    const shouldOpenCart = localStorage.getItem('shouldOpenCart');
+    if (shouldOpenCart === 'true') {
+      setIsCartOpen(true);
+      localStorage.removeItem('shouldOpenCart'); // Clear the flag after opening
+    }
+  }, [setIsCartOpen]);
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+    setIsMenuOpen(false);
   };
 
   return (
@@ -58,7 +72,7 @@ const Navbar = () => {
             </button>
             <button
               className="relative hover:text-[#B88E2F] transition-colors w-8 h-8"
-              onClick={() => setIsCartOpen(true)}
+              onClick={handleCartClick}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -141,14 +155,11 @@ const Navbar = () => {
                     <SearchIcon className="w-full h-full" />
                   </button>
                   <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
-                    <FavoriteBorderIcon className="w-full h-full" />
+                    <FavoriteBorderIcon className="w-full h-full" />  
                   </button>
                   <button
                     className="relative hover:text-[#B88E2F] transition-colors w-8 h-8"
-                    onClick={() => {
-                      setIsCartOpen(true);
-                      setIsMenuOpen(false);
-                    }}
+                    onClick={handleCartClick}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

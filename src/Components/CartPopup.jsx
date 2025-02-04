@@ -154,7 +154,11 @@ const CartPopup = ({ onClose }) => {
           headers: {
             'Authorization': `${token}`
           },
-          data: { productId }
+          data: { 
+            productId:productId, 
+            productColour: itemToRemove.selectedColor,
+            productSize: itemToRemove.selectedSize
+          }
         }
       );
 
@@ -178,10 +182,6 @@ const CartPopup = ({ onClose }) => {
     }
   };
 
-  const handleClose = () => {
-    clearCart();
-    onClose();
-  };
 
   if (isLoading) {
     return <div className="text-center py-8">Loading cart...</div>;
@@ -282,7 +282,7 @@ const CartPopup = ({ onClose }) => {
                   <p className="border-t mb-6"></p>
                   <div className="flex items-center justify-center gap-x-2">
                     <button
-                      onClick={() => handleNavigation("/myAddress")}
+                      onClick={() => handleNavigation("/order")}
                       className="col-span-1 py-2 px-4 border border-[#B88E2F] text-[#B88E2F] text-center hover:bg-[#B88E2F] hover:text-white transition-colors rounded-full"
                     >
                       Checkout

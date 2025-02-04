@@ -26,20 +26,17 @@ const Order = () => {
   const { state } = location;
 
   useEffect(() => {
-    fetchAddress();
+    if (location.state?.selectedAddress) {
+      setSelectedAddress(location.state.selectedAddress);
+      setShippingAddress(location.state.selectedAddress);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (!location.state?.selectedAddress) {
+      fetchAddress();
+    }
   }, []);
-
-  useEffect(() => {
-    if (state?.selectedAddress) {
-      setSelectedAddress(state.selectedAddress);
-    }
-  }, [state]);
-
-  useEffect(() => {
-    if (shippingAddress) {
-      setSelectedAddress(shippingAddress);
-    }
-  }, [shippingAddress]);
 
   const fetchAddress = async () => {
     setLoading(true);
@@ -140,11 +137,12 @@ const Order = () => {
       console.log("Response from API:", response.data);
 
       if (response.data && response.data.success) {
+        localStorage.setItem('shouldOpenCart', 'true');
         const orderId = response.data.data._id;
         localStorage.setItem("lastOrderId", orderId);
 
         toast.success(
-          "🎉 Order placed successfully! You can view your order details in My Orders page"
+          "🎉 Order placed successfully! You can view your order details in My Orders page" 
         );
 
         if (typeof clearCartFunction === "function") {
@@ -155,6 +153,7 @@ const Order = () => {
 
         setTimeout(() => {
           navigate("/myorders");
+          window.location.reload();
         }, 2000);
       } else {
         throw new Error(response.data.message || "Failed to create order");
@@ -175,27 +174,25 @@ const Order = () => {
 
   const renderShippingAddress = () => {
     if (loading) return <p className="text-gray-600">Loading address...</p>;
-    if (error) return <p className="text-red-500">{error}</p>;
-    if (!selectedAddress)
-      return <p className="text-gray-600">No address found</p>;
+    if (!selectedAddress) return <p className="text-gray-600">No address selected</p>;
 
     return (
-      <div className="space-y-1">
-        <p className="font-medium">{selectedAddress.fullName}</p>
-        <p>{selectedAddress.addressLine1}</p>
-        {selectedAddress.addressLine2 && <p>{selectedAddress.addressLine2}</p>}
-        {selectedAddress.landmark && (
-          <p>Landmark: {selectedAddress.landmark}</p>
-        )}
-        <p>{`${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.pincode}`}</p>
-        <p>{selectedAddress.country}</p>
-        <p>Phone: {selectedAddress.phoneNumber}</p>
-        <button
-          onClick={() => handleEdit()}
-          className="flex-1 px-8 py-2 mt-2 bg-[#B88E2F] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
-        >
-          Change Address
-        </button>
+      <div className="space-y-2">
+        <div className="space-y-1 text-gray-600">
+          <p>{selectedAddress.fullName}</p>
+          <p>📞 {selectedAddress.phoneNumber}</p>
+          <p>
+            {selectedAddress.addressLine1}
+            {selectedAddress.addressLine2 && `, ${selectedAddress.addressLine2}`}
+          </p>
+          {selectedAddress.landmark && (
+            <p>Landmark: {selectedAddress.landmark}</p>
+          )}
+          <p>
+            {selectedAddress.city}, {selectedAddress.state}, {selectedAddress.pincode}
+          </p>
+          <p>Type: {selectedAddress.address_type}</p>
+        </div>
       </div>
     );
   };
@@ -268,9 +265,16 @@ const Order = () => {
           Shipping Address
         </h2>
         {renderShippingAddress()}
+        <button
+          onClick={() => handleEdit()}
+          className="flex-1 px-8 py-2 mt-2 bg-[#B88E2F] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
+        >
+          change Address
+        </button>
       </div>
 
       <button
+        type="button"
         onClick={createOrder}
         disabled={loading}
         className={`w-full ${

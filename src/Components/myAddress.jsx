@@ -77,31 +77,15 @@ const MyAddress = () => {
     }
   };
 
-  const handleSelect = async (addressId) => {
+  const handleSelect = (address) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("No token found");
-        return;
-      }
-
-      const response = await axios.get(
-        `https://ecommerce-shop-qg3y.onrender.com/api/address/displayAddress?addressId=${addressId}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-            "Content-Type": "application/json",
-          },
+      navigate("/order", { 
+        state: { 
+          selectedAddress: address  // Changed to pass the entire address object
         }
-      );
-
-      if (response.data && response.data.success) {
-        navigate("/order", { state: { selectedAddress: response.data.data } });
-      } else {
-        console.error("Failed to fetch selected address:", response.data);
-      }
+      });
     } catch (error) {
-      console.error("Error fetching selected address:", error);
+      console.error("Error selecting address:", error);
     }
   };
 
@@ -135,7 +119,15 @@ const MyAddress = () => {
   return (
     <div className="container mx-auto px-4 py-20">
       <div className="mt-32 mb-32">
-        <h1 className="text-2xl font-bold mb-6 text-center">My Addresses</h1>
+       <div className="flex justify-between items-center">
+       <h1 className="text-2xl font-bold mb-6 text-center">My Addresses</h1>
+        <button
+                onClick={() => navigate("/checkout")}
+                className="mt-4 px-4 py-2 mb-6 bg-[#ceaf6d] text-white rounded-md hover:bg-bg-[#ceaf6d] transition-colors"
+              >
+               <span className="text-xl">+ </span> Add New Address
+              </button>
+       </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {Array.isArray(addresses) && addresses.length > 0 ? (
             addresses.map((address) => (
@@ -147,18 +139,13 @@ const MyAddress = () => {
               >
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <input
-                      type="radio"
-                      name="selectedAddress"
-                      checked={selectedAddress === address._id}
-                      onChange={() => setSelectedAddress(address._id)}
-                      className="mt-1"
-                    />
+                    
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-2">
                         {address.fullName}
                       </h3>
                       <div className="space-y-2 text-gray-600">
+                          <p className="font-medium">📞 {address.phoneNumber}</p>
                         <p>
                           Address :{" "}
                           {`${address.addressLine1}${
@@ -167,21 +154,19 @@ const MyAddress = () => {
                               : ""
                           }`}
                         </p>
-                        <p>
-                          {address.landmark && `Landmark: ${address.landmark}`}
-                        </p>
-                        <p>
+                          {address.landmark && ` ${address.landmark}`}
+                       
                           {address.city}, {address.state}
-                        </p>
-                        <p>PIN: {address.pincode}</p>
-                        <p className="font-medium">📞 {address.phoneNumber}</p>
+                       
+                          , {address.pincode}
+                            , {address.address_type}
                       </div>
                     </div>
                   </div>
                   <div className="flex gap-3 pt-4 border-t">
                     <button
                       onClick={() => handleEdit(address)}
-                      className="flex-1 px-4 py-2 bg-[#6dc957] text-white rounded-md hover:bg-[#a17e2a] transition-colors"
+                      className="flex-1 px-4 py-2 text-black border-black border-[1px] bg-white rounded-md hover:bg-[#ceaf6d] hover:text-white hover:border-none transition-colors"
                     >
                       Edit
                     </button>
@@ -193,7 +178,7 @@ const MyAddress = () => {
                     </button>
                   </div>
                   <button
-                    onClick={() => handleSelect(address._id)}
+                    onClick={() => handleSelect(address)}
                     className="flex-1 w-full px-4 py-2 bg-[#ceaf6d] text-white rounded-md hover:bg-[#947d4b] transition-colors"
                   >
                     Select Address
@@ -208,12 +193,7 @@ const MyAddress = () => {
               <p className="col-span-3 text-center text-gray-500">
                 No addresses found.
               </p>
-              <button
-                onClick={() => navigate("/checkout")}
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Add New Address
-              </button>
+            
               </div>
               </div>
             </>

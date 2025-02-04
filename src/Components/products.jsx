@@ -41,9 +41,17 @@ const Products = () => {
     return <div className="text-center py-8 text-red-500">{error}</div>;
   }
 
-  const handleProductClick = (product) => {
+  const handleProductClick = async (product) => {
     event.preventDefault();
     event.stopPropagation();
+
+    // Fetch product details from the API
+    try {
+      const response = await axios.get(`https://ecommerce-shop-qg3y.onrender.com/api/product/display?id=${product._id}`);
+      console.log("Product details:", response.data); // Log the response to the console
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
 
     const productData = {
       ...product,
@@ -71,7 +79,7 @@ const Products = () => {
           Our Products
         </h2>
       </div>
-
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8" > 
         {products.map((product, index) => (
           <div
@@ -135,9 +143,9 @@ const Products = () => {
               <p className="text-[#898989] my-2 text-sm line-clamp-2">
                 {product.description}
               </p>
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex justify-center items-center gap-2 ">
                 <span className="font-bold text-[#3A3A3A] text-lg">
-                  {product.price}
+                  Rs.{product.price}
                 </span>
                 {product.oldPrice && (
                   <span className="text-[#B0B0B0] line-through text-sm">

@@ -36,7 +36,12 @@ const Login = () => {
       if (isEmail) {
         loginData.email = identifier.toLowerCase().trim();
       } else {  
-        loginData.mobile = identifier.trim();
+        if (isMobile) {
+          loginData.mobile = identifier.trim();
+        } else {
+          toast.error("Mobile number and Email Required");
+          return;
+        }
       }
 
       const response = await axios.post(
@@ -88,7 +93,10 @@ const Login = () => {
             <input
               type="text"
               value={identifier}
-              onChange={(e) => setIdentifier(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setIdentifier(value);
+              }}
               placeholder="Enter your email or mobile"
               className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-black"
             />
@@ -161,7 +169,7 @@ const Login = () => {
         <div className="mt-8">
           <div className="flex items-center justify-center">
             <div className="border-t border-gray-200 w-full"></div>
-            <span className="px-4 text-sm text-black">Or with</span>
+            <span className="px-4 text-sm text-black">Or</span>
             <div className="border-t border-gray-200 w-full"></div>
           </div>
 

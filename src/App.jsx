@@ -22,7 +22,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MyOrders from './pages/MyOrders';
 
-
 function App() {
   return (
     <CartProvider>
@@ -49,7 +48,6 @@ function App() {
           </Routes>
           <Footer />
         </BrowserRouter>
-        <ToastContainer />
       </CompareProvider>
     </CartProvider>
   );
