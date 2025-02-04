@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
       const newItem = {
         ...product,
         cartId: Date.now(),
-        quantity: product.quantity || 1
+        quantity: product.quantity 
       };
       return [...prevItems, newItem];
     });

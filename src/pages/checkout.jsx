@@ -215,6 +215,22 @@ const Checkout = () => {
     }
   };
 
+  const handleClearForm = () => {
+    setUserDetails({
+      fullName: "",
+      phoneNumber: "",
+      addressLine1: "",
+      addressLine2: "",
+      landmark: "",
+      city: "",
+      state: "",
+      pincode: "",
+      country: "",
+      address_type: "",
+    });
+    setErrors({});
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -387,11 +403,18 @@ const Checkout = () => {
                     {isLoading ? "Adding Address..." : "Add New Address"}
                   </button>
                 )}
+              
                 <Link to="/myAddress">
                   <button className="w-full sm:w-[200px] bg-white text-black border border-gray-300 py-2.5 rounded text-sm hover:bg-black hover:text-white transition-colors mt-4 disabled:opacity-50">
                     View All Address
                   </button>
                 </Link>
+              <button
+                  onClick={handleClearForm}
+                  className="w-full sm:w-[200px] bg-white text-black border border-gray-300 py-2.5 rounded text-sm hover:bg-black hover:text-white transition-colors mt-4"
+                >
+                  Clear Form
+                </button>
               </div>
             </div>
           </div>

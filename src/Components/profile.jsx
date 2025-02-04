@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { PiEyeSlashLight } from "react-icons/pi";
+import { IoEyeSharp } from "react-icons/io5";
 
 const Profile = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -250,7 +252,7 @@ const Profile = () => {
               <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
                 <i className="fas fa-phone"></i>
               </span>
-              <input
+              {/* <input
                 type="text"
                 value={editableDetails?.mobile || ""}
                 onChange={(e) =>
@@ -261,7 +263,30 @@ const Profile = () => {
                 }
                 className="block w-full rounded-md border border-gray-300 py-3 px-3 focus:outline-none focus:ring-1 focus:ring-[#b88e2f] focus:border-[#b88e2f]"
                 placeholder="Enter your mobile number"
-              />
+              /> */}
+
+<input
+        type="tel"
+        name="mobile"
+        value={editableDetails?.mobile || ""}
+        placeholder="Enter your mobile number"
+        onChange={(e) =>
+          setEditableDetails({
+            ...editableDetails,
+            mobile: e.target.value,
+          })
+        }
+        className="block w-full rounded-md border border-gray-300 py-3 px-3 focus:outline-none focus:ring-1 focus:ring-[#b88e2f] focus:border-[#b88e2f]"
+        pattern="\d*"
+        onInput={(e) => {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 10) {
+            value = value.slice(0, 10);
+          }
+          e.target.value = value;
+          setEditableDetails({ ...editableDetails, mobile: value });
+        }}
+      />
             </div>
           </div>
 
@@ -360,18 +385,12 @@ const Profile = () => {
                   <button
                     type="button"
                     className="absolute inset-y-0 right-4 flex items-center"
-                    onClick={() => setShowOldPassword((prevState) => !prevState)}
+                    onClick={() =>
+                      setShowOldPassword((prevState) => !prevState)
+                    }
                   >
-                    {showOldPassword ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                      </svg>
-                    ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                      </svg>
-                    )}
+                    {showOldPassword ?  <IoEyeSharp /> : <PiEyeSlashLight />}
+                    
                   </button>
                 </div>
 
@@ -400,18 +419,11 @@ const Profile = () => {
                   <button
                     type="button"
                     className="absolute inset-y-0 right-4 flex items-center"
-                    onClick={() => setShowNewPassword((prevState) => !prevState)}
+                    onClick={() =>
+                      setShowNewPassword((prevState) => !prevState)
+                    }
                   >
-                    {showNewPassword ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                      </svg>
-                    ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                      </svg>
-                    )}
+                    {showNewPassword  ?  <IoEyeSharp /> : <PiEyeSlashLight />}
                   </button>
                 </div>
                 <button

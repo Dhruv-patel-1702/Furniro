@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PiEyeSlashLight } from "react-icons/pi";
+import { IoEyeSharp } from "react-icons/io5";
 
 const Register = () => {
   const [userPassword, setUserPassword] = useState("");
@@ -186,21 +188,18 @@ const Register = () => {
                 </svg>
               </div>
               <input
-                type="tel"
-                name="mobile"
-                placeholder="Enter your mobile number"
-                onChange={handleChange}
-                required
-                className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-black"
-                onInput={(e) => {
-                  const value = e.target.value;
-                  if (/^\d*$/.test(value) && value.length <= 10) {
-                    handleChange(e);
-                  } else {
-                    e.target.value = value.replace(/\D/g, "");
-                  }
-                }}
-              />
+  type="tel"
+  name="mobile"
+  placeholder="Enter your mobile number"
+  onChange={handleChange}
+  required
+  className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-black"
+  onInput={(e) => {
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+    handleChange(e);
+  }}
+/>
+
             </div>
           </div>
 
@@ -225,7 +224,10 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your password"
-                onChange={handleChange}
+                onChange={(e) => {
+                  setUserPassword(e.target.value);
+                  handleChange(e);
+                }}
                 required
                 className="w-full pl-12 pr-10 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-black"
               />
@@ -234,34 +236,7 @@ const Register = () => {
                 className="absolute inset-y-0 right-4 flex items-center"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
+                {showPassword ? <IoEyeSharp /> : <PiEyeSlashLight />}
               </button>
             </div>
           </div>
@@ -288,7 +263,10 @@ const Register = () => {
                 type={ShowconformPassword ? "text" : "password"}
                 name="confirmPassword"
                 placeholder="Confirm your password"
-                onChange={handleChange}
+                onChange={(e) => {
+                  setUserConfirmPassword(e.target.value);
+                  handleChange(e);
+                }}
                 required
                 className="w-full pl-12 pr-10 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-black"
               />
@@ -297,34 +275,7 @@ const Register = () => {
                 className="absolute inset-y-0 right-4 flex items-center"
                 onClick={() => setShowconformPassword(!ShowconformPassword)}
               >
-                {ShowconformPassword ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
+                {ShowconformPassword ? <IoEyeSharp /> : <PiEyeSlashLight />}
               </button>
             </div>
           </div>

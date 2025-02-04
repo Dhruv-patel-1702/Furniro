@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 const Order = () => {
   const [loading, setLoading] = useState(false);
   const [shippingAddress, setShippingAddress] = useState(null);
+  console.log(shippingAddress)
   const [error, setError] = useState(null);
   const { cartItems, cartTotal, clearCart: clearCartFunction } = useCart();
-  console.log(cartItems);
+  console.log(cartItems[0].categoryId);
   const navigate = useNavigate();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [selectedAddress, setSelectedAddress] = useState(null);
-
+  
   const [orderDetails, setOrderDetails] = useState({
     orderId: "#ORD" + Math.floor(Math.random() * 1000000),
     date: new Date().toISOString().split("T")[0],
@@ -29,14 +30,10 @@ const Order = () => {
     if (location.state?.selectedAddress) {
       setSelectedAddress(location.state.selectedAddress);
       setShippingAddress(location.state.selectedAddress);
-    }
-  }, [location.state]);
-
-  useEffect(() => {
-    if (!location.state?.selectedAddress) {
+    } else {
       fetchAddress();
     }
-  }, []);
+  }, [location.state]);
 
   const fetchAddress = async () => {
     setLoading(true);
@@ -63,7 +60,7 @@ const Order = () => {
         const defaultAddress =
           response.data.data.find((addr) => addr.isDefault) ||
           response.data.data[0];
-
+          console.log(defaultAddress)
         setShippingAddress(defaultAddress);
         setError(null);
       } else {
@@ -78,11 +75,11 @@ const Order = () => {
   };
 
   const calculateTotal = () => {
-    return cartTotal + orderDetails.shipping + orderDetails.tax;
+    return cartTotal + 0 + 0;
   };
 
   const createOrder = async () => {
-    if (!selectedAddress) {
+    if (!selectedAddress && !shippingAddress) {
       toast.error("Please select a delivery address");
       return;
     }
@@ -100,24 +97,26 @@ const Order = () => {
         navigate("/");
         return;
       }
-
+      
+console.log(cartItems)
       const formattedItems = cartItems.map((item) => ({
         productId: item.cartId,
-        productName: item.name || item.title,
+        productName: item.name ,
         price: parseFloat(item.price),
         quantity: parseInt(item.quantity),
-        productDescription: item.description || "Product Description",
-        productCategory: item.category || "General",
-        productSize: item.size || "Standard",
-        productColour: item.color || "Default",
-        product_details: item.details || "Product Details",
+        productDescription: item.description,
+        productCategory: item.categoryId ,
+        productSize: item.selectedSize ,
+        productColour: item.selectedColor ,
+        product_details: item.details ,
       }));
-
+      console.log(formattedItems)
+      
       const orderData = {
         items: formattedItems,
         totalAmount: calculateTotal(),
         paymentMethod: "Cash on Delivery",
-        deliveryAddress: selectedAddress._id,
+        deliveryAddress: shippingAddress._id,
         shippingCharges: orderDetails.shipping,
         tax: orderDetails.tax,
         orderId: orderDetails.orderId,
@@ -174,24 +173,18 @@ const Order = () => {
 
   const renderShippingAddress = () => {
     if (loading) return <p className="text-gray-600">Loading address...</p>;
-    if (!selectedAddress) return <p className="text-gray-600">No address selected</p>;
+    if (!shippingAddress) return <p className="text-gray-600">No address selected</p>;
 
     return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-80">
         <div className="space-y-1 text-gray-600">
-          <p>{selectedAddress.fullName}</p>
-          <p>📞 {selectedAddress.phoneNumber}</p>
-          <p>
-            {selectedAddress.addressLine1}
-            {selectedAddress.addressLine2 && `, ${selectedAddress.addressLine2}`}
-          </p>
-          {selectedAddress.landmark && (
-            <p>Landmark: {selectedAddress.landmark}</p>
-          )}
-          <p>
-            {selectedAddress.city}, {selectedAddress.state}, {selectedAddress.pincode}
-          </p>
-          <p>Type: {selectedAddress.address_type}</p>
+          <p>{shippingAddress.fullName}</p>
+          <p>📞 {shippingAddress.phoneNumber}</p>
+          {shippingAddress.addressLine1}
+          {shippingAddress.addressLine2 && `, ${shippingAddress.addressLine2}`}
+          {shippingAddress.landmark && ", " + shippingAddress.landmark}
+          {shippingAddress.city}, {shippingAddress.state}, {shippingAddress.pincode}
+          , {shippingAddress.address_type}
         </div>
       </div>
     );
@@ -199,20 +192,6 @@ const Order = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 mt-28 mb-10">
-      <div className="bg-[#FFF9F1] p-6 rounded-lg mb-6 border border-[#B88E2F]/20">
-        <h2 className="text-xl font-semibold mb-4 text-[#B88E2F]">
-          Order Information
-        </h2>
-        <p>
-          <strong>Order ID:</strong> {orderDetails.orderId}
-        </p>
-        <p>
-          <strong>Date:</strong> {orderDetails.date}
-        </p>
-        <p>
-          <strong>Status:</strong> {orderDetails.status}
-        </p>
-      </div>
 
       <div className="bg-[#FFF9F1] p-6 rounded-lg mb-6 border border-[#B88E2F]/20">
         <h2 className="text-xl font-semibold mb-4 text-[#B88E2F]">
@@ -225,13 +204,17 @@ const Order = () => {
           >
             <div className="w-16 h-16 bg-gray-100">
               <img
-                src={item.image}
+                src={item.image[0]}
                 alt={item.name}
                 className="w-full h-full object-cover overflow-hidden"
               />
             </div>
             <div className="flex-1">
               <h3 className="font-medium">{item.name || item.title}</h3>
+              {/* <h2 className="font"> Description: {item.description}</h2> */}
+                <span>size:{item.selectedSize} </span>
+                <br />
+                <span>colour:{item.selectedColor}</span>
               <div className="text-sm text-gray-600">
                 <span>
                   {item.quantity} x ₹{item.price}
@@ -254,9 +237,9 @@ const Order = () => {
           Price Details
         </h2>
         <p>Subtotal: ₹{cartTotal.toFixed(2)}</p>
-        <p>Shipping: ₹{orderDetails.shipping.toFixed(2)}</p>
-        <p>Tax: ₹{orderDetails.tax.toFixed(2)}</p>
-        <p className="font-bold">Total: ₹{calculateTotal().toFixed(2)}</p>
+        <p>Shipping: ₹{orderDetails.shipping}</p>
+        <p>Tax: ₹{orderDetails.tax}</p>
+        <p className="font-bold">Total: ₹{cartTotal.toFixed(2 )}</p>
       </div>
 
 

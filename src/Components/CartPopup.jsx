@@ -39,15 +39,19 @@ const CartPopup = ({ onClose }) => {
 
       if (response.data.success && response.data.data.length > 0) {
         const cartData = response.data.data[0];
+        console.log(cartData);
         const transformedItems = cartData.items.map(item => ({
           cartId: item.productId,
           name: item.productName,
           image: item.productImage,
           price: item.price,
           quantity: item.quantity,
-          selectedSize: item.size || item.productSize || (item.productDetails?.size?.[0] || 'N/A'),
-          selectedColor: item.colour || item.productColour || (item.productDetails?.colour?.[0] || 'N/A')
+          description: item.productDescription,
+          categoryId: item.productCategroy,
+          selectedSize: item.size || item.productSize || (item.productDetails?.size?.[0]),
+          selectedColor: item.colour || item.productColour || (item.productDetails?.colour?.[0])
         }));
+        console.log(transformedItems);
         setCartItems(transformedItems);
       } else {
         setCartItems([]);
@@ -133,55 +137,44 @@ const CartPopup = ({ onClose }) => {
     }
   };
 
-  const handleRemoveItem = async (productId) => {
+  
+  const handleRemoveItem = async (productId, productColour, productSize) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        toast.error("Please login to remove items");
-        navigate("/");
-        return;
-      }
-
-      const itemToRemove = cartItems.find(item => item.cartId === productId);
-      if (!itemToRemove) {
-        toast.error("Item not found in cart");
-        return;
-      }
-
-      const response = await axios.delete(
-        `https://ecommerce-shop-qg3y.onrender.com/api/cart/removeCart`,
-        {
-          headers: {
-            'Authorization': `${token}`
-          },
-          data: { 
-            productId:productId, 
-            productColour: itemToRemove.selectedColor,
-            productSize: itemToRemove.selectedSize
-          }
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error('Please login to remove items');
+            navigate('/login');
+            return;
         }
-      );
 
-      const updatedCartItems = cartItems.filter(item => item.cartId !== productId);
-      setCartItems(updatedCartItems);
-      
-      if (response.data.success) {
-        toast.success("Item removed from cart");
-      } else if (response.data.message === "Cart not found for this user") {
-        setCartItems([]);
-        toast.info("Cart is empty");
-      } else {
-        toast.warning("Failed to remove cart item");
-      }
+        // Log the parameters being sent
+        console.log("Removing item with parameters:", { productId, productColour, productSize });
 
+        const response = await axios({
+            method: 'DELETE',
+            url: 'https://ecommerce-shop-qg3y.onrender.com/api/cart/removeCart',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            },
+            data: {
+                productId: productId,
+                productColour: productColour,
+                productSize: productSize
+            }
+        });
+
+        if (response.data.success) {
+            toast.success('Item removed from cart');
+            fetchCartData() ; // Refresh cart after deletion
+        } else {
+            toast.error(response.data.message || 'Failed to remove item');
+        }
     } catch (error) {
-      console.error("Error removing item:", error);
-      const updatedCartItems = cartItems.filter(item => item.cartId !== productId);
-      setCartItems(updatedCartItems);
-      toast.warning("Failed to remove cart item");
+        console.error('Error removing item:', error);
+        toast.error('Failed to remove item from cart');
     }
-  };
-
+};
 
   if (isLoading) {
     return <div className="text-center py-8">Loading cart...</div>;
@@ -237,7 +230,7 @@ const CartPopup = ({ onClose }) => {
                           {item.name}
                         </h3>
                         <button
-                          onClick={() => handleRemoveItem(item.cartId)}
+                          onClick={() => handleRemoveItem(item.cartId, item.selectedColor, item.selectedSize)}
                           className="text-gray-400 hover:text-gray-600 cursor-pointer"
                           aria-label={`Remove ${item.name} from cart`}
                         >

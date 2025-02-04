@@ -7,15 +7,16 @@ import { useCart } from "../context/CartContext";
 import { useCompare } from "../context/CompareContext";
 import { TbBackground } from "react-icons/tb";
 import axios from "axios";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
 const SingleProduct = () => {
   const navigate = useNavigate();
   const { addToCart, setIsCartOpen } = useCart();
-  const { addToCompare } = useCompare();  
+  const { addToCompare } = useCompare();
   const location = useLocation();
   const product = location.state?.product;
 
+  const [currentProduct, setCurrentProduct] = useState(product);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState(product?.size?.[0] || "6");
   const [selectedColor, setSelectedColor] = useState(product?.colour?.[0] || "white");
@@ -24,23 +25,28 @@ const SingleProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const images = product?.images || [product?.image];
+  const images = currentProduct?.images || [currentProduct?.image];
 
   useEffect(() => {
     const fetchRelatedProducts = async () => {
       try {
-        const response = await axios.get(`https://ecommerce-shop-qg3y.onrender.com/api/product/display?id=${product._id}`);
-        
+        const response = await axios.get(
+          `https://ecommerce-shop-qg3y.onrender.com/api/product/display?id=${product._id}`
+        );
+
         // Check if the response contains the expected data structure
-        if (response.data.success && Array.isArray(response.data.data.similarProducts)) {
+        if (
+          response.data.success &&
+          Array.isArray(response.data.data.similarProducts)
+        ) {
           setRelatedProducts(response.data.data.similarProducts); // Update to use the correct path
         } else {
           console.log("Expected an array but got:", response.data);
-          setRelatedProducts([]); 
+          setRelatedProducts([]);
         }
       } catch (error) {
         console.error("Error fetching related products:", error);
-        setRelatedProducts([]); 
+        setRelatedProducts([]);
       }
     };
 
@@ -49,90 +55,113 @@ const SingleProduct = () => {
     }
   }, [product]);
 
+  useEffect(() => {
+    if (product) {
+      setCurrentProduct(product);
+      setSelectedSize(product.size[0]);
+      setSelectedColor(product.colour[0]);
+    }
+  }, [product]);
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
-const handleAddToCart = () => {
-  const url = "https://ecommerce-shop-qg3y.onrender.com/api/cart/addToCart";
-  const token = localStorage.getItem("token");
+  const handleAddToCart = () => {
+    const url = "https://ecommerce-shop-qg3y.onrender.com/api/cart/addToCart";
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    toast.warning("You need to log in to add items to the cart.");
-    return;
-  }
+    if (!token) {
+      toast.warning("You need to log in to add items to the cart.");
+      return;
+    }
 
-  if (!product?._id) {
-    toast.error("Invalid product. Please try again.");
-    console.error("Error: Missing productId", product);
-    return;
-  }
+    if (!product?._id) {
+      toast.error("Invalid product. Please try again.");
+      console.error("Error: Missing productId", product);
+      return;
+    }
 
-  // Check if size and color are selected
-  if (!selectedSize) {
-    toast.warning("Size is not selected. Please select a size.");
-    return;
-  }
+    // Check if size and color are selected
+    if (!selectedSize) {
+      toast.warning("Size is not selected. Please select a size.");
+      return;
+    }
 
-  if (!selectedColor) {
-    toast.warning("Color is not selected. Please select a color.");
-    return;
-  }
+    if (!selectedColor) {
+      toast.warning("Color is not selected. Please select a color.");
+      return;
+    }
 
-  const totalPrice = quantity * parseFloat(product.price);
+    const totalPrice = quantity * parseFloat(product.price);
 
-  const data = {
-    productId: product._id,
-    quantity: quantity,
-    price: parseFloat(product.price),
-    totalPrice: totalPrice,
-    productSize: selectedSize,
-    productColour: selectedColor,
+    const data = {
+      productId: product._id,
+      quantity: quantity,
+      price: parseFloat(product.price),
+      totalPrice: totalPrice,
+      productSize: selectedSize,
+      productColour: selectedColor,
+    };
+
+    setIsLoading(true);
+
+    axios
+      .post(url, data, {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          // Add to cart context to update cart count
+          addToCart({
+            ...product,
+            quantity,
+            selectedSize,
+            selectedColor,
+            totalPrice,
+          });
+          toast.success(
+            `✅ ${product.name} has been added to your cart successfully!`
+          );
+        } else {
+          throw new Error(response.data.message || "Failed to add to cart");
+        }
+      })
+      .catch((error) => {
+        const errorMessage =
+          error.response?.data?.message ||
+          "Failed to add product to cart. Please try again.";
+        toast.error(`❌ Error: ${errorMessage}`);
+        console.error("Error adding to cart:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
-
-  setIsLoading(true);
-
-  axios
-    .post(url, data, {
-      headers: {
-        Authorization: `${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => {
-      if (response.data.success) {
-        // Add to cart context to update cart count
-        addToCart({
-          ...product,
-          quantity,
-          selectedSize,
-          selectedColor,
-          totalPrice
-        });
-        toast.success(`✅ ${product.name} has been added to your cart successfully!`);
-      } else {
-        throw new Error(response.data.message || "Failed to add to cart");
-      }
-    })
-    .catch((error) => {
-      const errorMessage = error.response?.data?.message || "Failed to add product to cart. Please try again.";
-      toast.error(`❌ Error: ${errorMessage}`);
-      console.error("Error adding to cart:", error);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    }); 
-};
-
-  
 
   const handleCompareClick = () => {
     addToCompare(product);
     navigate("/compare");
   };
 
-  const handleProductClick = (product) => {
-    console.log("Product clicked:", product);
+  const handleProductClick = async (relatedProduct) => {
+    try {
+      const response = await axios.get(
+        `https://ecommerce-shop-qg3y.onrender.com/api/product/display?id=${relatedProduct._id}`
+      );
+      if (response.data.success) {
+        setCurrentProduct(response.data.data.product);
+        // Set default size and color with brown background
+        setSelectedSize(response.data.data.product.size[0]); // Set default size
+        setSelectedColor(response.data.data.product.colour[0]); // Set default color
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
   };
 
   return (
@@ -148,14 +177,16 @@ const handleAddToCart = () => {
               Shop
             </Link>
             <span>{">"}</span>
-            <span className="text-black">{product?.name || "Product"}</span>
+            <span className="text-black">
+              {currentProduct?.name || "Product"}
+            </span>
           </div>
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Display the first image at the top */}
             <div className="flex flex-col">
               <img
                 src={images[0]} // Display the first image
-                alt={product.name}
+                alt={currentProduct.name}
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -169,8 +200,9 @@ const handleAddToCart = () => {
           <div className="flex flex-col-reverse lg:flex-row gap-4">
             {/* Thumbnails */}
             <div className="flex flex-row lg:flex-col gap-2 justify-start">
-              {Array.isArray(product?.product_images) && product.product_images.length > 0 ? (
-                product.product_images.map((image, index) => (
+              {Array.isArray(currentProduct?.product_images) &&
+              currentProduct.product_images.length > 0 ? (
+                currentProduct.product_images.map((image, index) => (
                   <div
                     key={index}
                     className={`w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] cursor-pointer transition-all
@@ -197,8 +229,8 @@ const handleAddToCart = () => {
             <div className="flex-1">
               <div className="w-full h-[250px] sm:h-[400px] lg:h-[500px] bg-[#F9F1E7] p-2 lg:p-6">
                 <img
-                  src={product?.product_images?.[selectedImage]}
-                  alt={product?.name}
+                  src={currentProduct?.product_images?.[selectedImage]}
+                  alt={currentProduct?.name}
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -208,24 +240,23 @@ const handleAddToCart = () => {
           {/* Product Info Section */}
           <div className="space-y-4 px-2 mt-6 sm:px-4">
             <h1 className="text-xl mb-1 sm:text-2xl lg:text-3xl font-medium">
-              {product?.name}
+              {currentProduct?.name}
             </h1>
             <span className="text-lg sm:text-xl lg:text-xl text-[#9F9F9F]  ">
-              Rs : {product?.price}
+              Rs : {currentProduct?.price}
             </span>
             <p>{product?.description}</p>
             {/* Size Selection */}
             <div className="space-y-2">
               <h3 className="font-bold text-lg">Size</h3>
               <div className="flex flex-wrap gap-2">
-                {product?.size?.map((size, index) => (
+                {currentProduct?.size?.map((size, index) => (
                   <div
                     key={index}
                     className={`py-1 px-3 rounded border border-[#bf9943] cursor-pointer
-                      ${
-                        selectedSize === size
-                          ? "bg-[#bf9943] text-white"
-                          : "hover:bg-[#bf9943] hover:text-white"
+                      ${selectedSize === size
+                        ? "bg-[#bf9943] text-white"
+                        : "hover:bg-[#bf9943] hover:text-white"
                       }`}
                     onClick={() => setSelectedSize(size)}
                   >
@@ -241,14 +272,13 @@ const handleAddToCart = () => {
               <div className="flex items-center gap-2 mt-2">
                 <h3 className="font-bold text-lg">Color:</h3>
                 <div className="flex flex-wrap gap-2">
-                  {product?.colour?.map((colour, index) => (
+                  {currentProduct?.colour?.map((colour, index) => (
                     <div
                       key={index}
                       className={`py-1 px-3 rounded border border-[#bf9943] cursor-pointer
-                        ${
-                          selectedColor === colour
-                            ? "bg-[#bf9943] text-white"
-                            : "hover:bg-[#bf9943] hover:text-white"
+                        ${selectedColor === colour
+                          ? "bg-[#bf9943] text-white"
+                          : "hover:bg-[#bf9943] hover:text-white"
                         }`}
                       onClick={() => setSelectedColor(colour)}
                     >
@@ -453,7 +483,9 @@ const handleAddToCart = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center text-[#9F9F9F]">No related products available.</div>
+            <div className="text-center text-[#9F9F9F]">
+              No related products available.
+            </div>
           )}
 
           {/* Show More Button */}
