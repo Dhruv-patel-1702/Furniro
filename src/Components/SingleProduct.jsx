@@ -157,6 +157,8 @@ const SingleProduct = () => {
         // Set default size and color with brown background
         setSelectedSize(response.data.data.product.size[0]); // Set default size
         setSelectedColor(response.data.data.product.colour[0]); // Set default color
+        // Update related products with similar products
+        setRelatedProducts(response.data.data.similarProducts); // Update related products
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } catch (error) {
