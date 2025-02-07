@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartPopup from "./CartPopup";
@@ -7,13 +7,32 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+import Profile from '../Components/profile'
 
 const Navbar = () => {
   const { cartItems, setIsCartOpen } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleItemClick = (item) => {
+    console.log(item); // Handle item selection
+    if (item === 'Logout') {
+      localStorage.removeItem("token"); // Clear the token
+      // Redirect to login or home page
+      window.location.href = '/'; // Change this to your desired route
+    }
+    setIsDropdownOpen(false); // Close dropdown after selection
   };
 
   useEffect(() => {
@@ -24,6 +43,42 @@ const Navbar = () => {
       localStorage.removeItem('shouldOpenCart'); // Clear the flag after opening
     }
   }, [setIsCartOpen]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get("https://ecommerce-shop-qg3y.onrender.com/api/user/profileDisplay", {
+            headers: { Authorization: `${token}` }
+          });
+          // Check if response.data and response.data.data.name exist
+          if (response.data && response.data.data && response.data.data.name) {
+            setUserName(response.data.data.name);
+          } else {
+            console.error("Name not found in response:", response.data);
+          }
+        } catch (error) {
+          console.error("Error fetching user profile:", error);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleCartClick = () => {
     setIsCartOpen(true);
@@ -59,11 +114,23 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-8">
-           <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
-           <button className="hover:text-[#B88E2F] transition-colors w-8 h-8" >
-              <PersonOutlineIcon className="w-full h-full" />
-            </button>
-           </Link>
+            <div className="relative" ref={dropdownRef}>
+              <button onClick={toggleDropdown} className="space-x-1 flex mt-2 hover:text-[#B88E2F]">
+                <PersonOutlineIcon className="w-8 h-8" />
+                <span>{userName}</span>
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 bg-white shadow-lg rounded mt-2 transition-all duration-300">
+                  <ul className="flex flex-col">
+                   <Link to="/profile"> <li className="p-2 hover:bg-gray-200" onClick={() => handleItemClick('My Profile')}>My Profile</li></Link>
+                    <li className="p-2 hover:bg-gray-200" onClick={() => handleItemClick('My Requirements')}>My Requirements</li>
+                    <li className="p-2 hover:bg-gray-200" onClick={() => handleItemClick('Notifications')}>Notifications</li>
+                    <li className="p-2 hover:bg-gray-200" onClick={() => handleItemClick('My Booking')}>My Booking</li>
+                    <li className="p-2 hover:bg-gray-200" onClick={() => handleItemClick('Logout')}>Logout</li>
+                  </ul>
+                </div>
+              )}
+            </div>
             <button className="hover:text-[#B88E2F] transition-colors w-8 h-8">
               <SearchIcon className="w-full h-full" />
             </button>

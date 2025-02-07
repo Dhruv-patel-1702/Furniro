@@ -109,6 +109,7 @@ const Profile = () => {
   const confirmLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
+    window.location.reload();
   };
 
   const handleSaveInformation = async () => {
@@ -265,28 +266,28 @@ const Profile = () => {
                 placeholder="Enter your mobile number"
               /> */}
 
-<input
-        type="tel"
-        name="mobile"
-        value={editableDetails?.mobile || ""}
-        placeholder="Enter your mobile number"
-        onChange={(e) =>
-          setEditableDetails({
-            ...editableDetails,
-            mobile: e.target.value,
-          })
-        }
-        className="block w-full rounded-md border border-gray-300 py-3 px-3 focus:outline-none focus:ring-1 focus:ring-[#b88e2f] focus:border-[#b88e2f]"
-        pattern="\d*"
-        onInput={(e) => {
-          let value = e.target.value.replace(/\D/g, "");
-          if (value.length > 10) {
-            value = value.slice(0, 10);
-          }
-          e.target.value = value;
-          setEditableDetails({ ...editableDetails, mobile: value });
-        }}
-      />
+              <input
+                type="tel"
+                name="mobile"
+                value={editableDetails?.mobile || ""}
+                placeholder="Enter your mobile number"
+                onChange={(e) =>
+                  setEditableDetails({
+                    ...editableDetails,
+                    mobile: e.target.value,
+                  })
+                }
+                className="block w-full rounded-md border border-gray-300 py-3 px-3 focus:outline-none focus:ring-1 focus:ring-[#b88e2f] focus:border-[#b88e2f]"
+                pattern="\d*"
+                onInput={(e) => {
+                  let value = e.target.value.replace(/\D/g, "");
+                  if (value.length > 10) {
+                    value = value.slice(0, 10);
+                  }
+                  e.target.value = value;
+                  setEditableDetails({ ...editableDetails, mobile: value });
+                }}
+              />
             </div>
           </div>
 
@@ -389,8 +390,7 @@ const Profile = () => {
                       setShowOldPassword((prevState) => !prevState)
                     }
                   >
-                    {showOldPassword ?  <IoEyeSharp /> : <PiEyeSlashLight />}
-                    
+                    {showOldPassword ? <IoEyeSharp /> : <PiEyeSlashLight />}
                   </button>
                 </div>
 
@@ -423,7 +423,7 @@ const Profile = () => {
                       setShowNewPassword((prevState) => !prevState)
                     }
                   >
-                    {showNewPassword  ?  <IoEyeSharp /> : <PiEyeSlashLight />}
+                    {showNewPassword ? <IoEyeSharp /> : <PiEyeSlashLight />}
                   </button>
                 </div>
                 <button

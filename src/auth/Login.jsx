@@ -55,6 +55,7 @@ const Login = () => {
       console.log("API Response:", result);
 
       if (response.status === 200 && result.success && result.data) {
+        window.location.reload();
         localStorage.setItem("token", result.data);
 
         if (result.userId) {
@@ -62,7 +63,6 @@ const Login = () => {
         }
 
         toast.success("Login successful!");
-        navigate("/home");
       } else {
         const errorMessage =
           result.message || "Login failed. Please try again.";

@@ -5,12 +5,13 @@ import CompareIcon from "@mui/icons-material/Compare";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useCompare } from "../context/CompareContext";
 import axios from "axios";
+// import { toast } from "react-hot-toast";
 
 const Products = () => {
   const navigate = useNavigate();
   const { addToCompare } = useCompare();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoAading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -41,29 +42,17 @@ const Products = () => {
     return <div className="text-center py-8 text-red-500">{error}</div>;
   }
 
-  const handleProductClick = async (product) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    // Fetch product details from the API
-    try {
-      const response = await axios.get(`https://ecommerce-shop-qg3y.onrender.com/api/product/display?id=${product._id}`);
-      console.log("Product details:", response.data); // Log the response to the console
-    } catch (error) {
-      console.error("Error fetching product details:", error);
+  const handleProductClick = (product) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // toast.error("Please log in to view product details.");
+      navigate("/");
+      return;
     }
 
-    const productData = {
-      ...product,
-      images: product.images || [product.image, product.image, product.image],
-    };
-
     navigate("/singleproduct", {
-      state: { product: productData },
+      state: { product: { ...product, images: product.images || [product.image] } },
     });
-
-    // Scroll to the top of the page
-    window.scrollTo(0, 0);
   };
 
   const handleCompareClick = (event, product) => {

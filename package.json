@@ -15,7 +15,7 @@
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@mui/base": "^5.0.0-beta.68",
     "@mui/icons-material": "^6.4.0",
-    "@mui/material": "^6.4.1",
+    "@mui/material": "^6.4.3",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
